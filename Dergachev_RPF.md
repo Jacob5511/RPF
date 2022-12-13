@@ -59,7 +59,7 @@
 
 **[ИНСТРУМЕНТЫ РАЗРАБОТКИ]**
 
-•	Unity, SQLite, Mirror, Jango
+•	Unity, Firebase
 
 **[ЭТАПЫ РАЗРАБОТКИ]**
 
