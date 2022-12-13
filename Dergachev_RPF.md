@@ -59,7 +59,7 @@
 
 **[ИНСТРУМЕНТЫ РАЗРАБОТКИ]**
 
-•	Unity, Firebase
+•	Unity, Firebase, Adobe Photoshop
 
 **[ЭТАПЫ РАЗРАБОТКИ]**
 
