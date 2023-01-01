@@ -73,7 +73,7 @@
 
 **[ИНСТРУМЕНТЫ РАЗРАБОТКИ]**
 
-•	Unity, Firebase, Adobe Photoshop
+•	Unity, Django, SQLite, Adobe Photoshop
 
 **[ЭТАПЫ РАЗРАБОТКИ]**
 
