@@ -73,7 +73,7 @@
 
 **[ИНСТРУМЕНТЫ РАЗРАБОТКИ]**
 
-•	Unity, Django, SQLite, Adobe Photoshop
+•	Unity, Flask, phpmyadmin, Adobe Photoshop
 
 **[ЭТАПЫ РАЗРАБОТКИ]**
 
