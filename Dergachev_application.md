@@ -61,7 +61,7 @@
 
 **[ИНСТРУМЕНТЫ РАЗРАБОТКИ]**
 
-•	Unity, Flask, phpmyadmin, Adobe Photoshop
+•	Unity, Flask, phpmyadmin, Adobe Illustrator
 
 **[ЭТАПЫ РАЗРАБОТКИ]**
 
