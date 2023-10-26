@@ -1035,6 +1035,8 @@ def find_chief():
 
 
 @app.route('/get_responses', methods=['POST'])
+# Входные данные: имя клиента
+# Функци возвращает список поваров, которые ответили на заявку
 def get_responses():
     connection = engine.connect()
     username = request.form['username']
