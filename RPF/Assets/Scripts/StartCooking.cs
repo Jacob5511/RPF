@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class StartCooking : MonoBehaviour
 {
-    // Для доступа к компоненту About_Recipe.
+    // Р”Р»СЏ РґРѕСЃС‚СѓРїР° Рє РєРѕРјРїРѕРЅРµРЅС‚Сѓ About_Recipe.
     About_Recipe load_recipes;
 
-    // Метод, вызываемый при старте объекта.
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё СЃС‚Р°СЂС‚Рµ РѕР±СЉРµРєС‚Р°.
     private void Start()
     {
-        // Находим объект типа About_Recipe в сцене.
+        // РќР°С…РѕРґРёРј РѕР±СЉРµРєС‚ С‚РёРїР° About_Recipe РІ СЃС†РµРЅРµ.
         load_recipes = FindObjectOfType<About_Recipe>();
     }
 
-    // Метод для начала процесса приготовления.
+    // РњРµС‚РѕРґ РґР»СЏ РЅР°С‡Р°Р»Р° РїСЂРѕС†РµСЃСЃР° РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
     public void Start_Cooking()
     {
-        // Вызываем метод Start_Cooking у объекта load_recipes.
+        // Р’С‹Р·С‹РІР°РµРј РјРµС‚РѕРґ Start_Cooking Сѓ РѕР±СЉРµРєС‚Р° load_recipes.
         load_recipes.Start_Cooking();
     }
 
