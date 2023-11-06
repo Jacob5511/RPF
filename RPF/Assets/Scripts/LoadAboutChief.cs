@@ -10,45 +10,45 @@ using TMPro;
 public class LoadAboutChief : MonoBehaviour
 {
     string url = "http://22.cshse.beget.tech/add_announcement";
-    public RawImage chief_image; // Поле для отображения изображения шеф-повара
-    public TMP_Text chief_name, views, score, short_about, phone_number, metro; // Поля для текстовой информации о шеф-поваре
-    public RectTransform content; // RectTransform, используемый для управления макетом контента
-    public AspectRatioFitter image_aspect_ratio; // Компонент для управления соотношением сторон изображения
+    public RawImage chief_image; // РџРѕР»Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ С€РµС„-РїРѕРІР°СЂР°
+    public TMP_Text chief_name, views, score, short_about, phone_number, metro; // РџРѕР»СЏ РґР»СЏ С‚РµРєСЃС‚РѕРІРѕР№ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С€РµС„-РїРѕРІР°СЂРµ
+    public RectTransform content; // RectTransform, РёСЃРїРѕР»СЊР·СѓРµРјС‹Р№ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РјР°РєРµС‚РѕРј РєРѕРЅС‚РµРЅС‚Р°
+    public AspectRatioFitter image_aspect_ratio; // РљРѕРјРїРѕРЅРµРЅС‚ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРѕРѕС‚РЅРѕС€РµРЅРёРµРј СЃС‚РѕСЂРѕРЅ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 
     private void Start()
     {
         Application.targetFrameRate = 60;
-        chief_name.text = BetweenScenes.name; // Устанавливаем имя шеф-повара
-        chief_image.texture = BetweenScenes.texture; // Устанавливаем изображение шеф-повара
-        image_aspect_ratio.aspectRatio = BetweenScenes.aspect_ratio; // Устанавливаем соотношение сторон изображения
-        Load(); // Вызываем метод Load() для загрузки информации о шеф-поваре
+        chief_name.text = BetweenScenes.name; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёРјСЏ С€РµС„-РїРѕРІР°СЂР°
+        chief_image.texture = BetweenScenes.texture; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ С€РµС„-РїРѕРІР°СЂР°
+        image_aspect_ratio.aspectRatio = BetweenScenes.aspect_ratio; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ СЃС‚РѕСЂРѕРЅ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
+        Load(); // Р’С‹Р·С‹РІР°РµРј РјРµС‚РѕРґ Load() РґР»СЏ Р·Р°РіСЂСѓР·РєРё РёРЅС„РѕСЂРјР°С†РёРё Рѕ С€РµС„-РїРѕРІР°СЂРµ
     }
 
     public void Load()
     {
-        StartCoroutine(Load_About_Chief()); // Запускаем загрузку информации о шеф-поваре
+        StartCoroutine(Load_About_Chief()); // Р—Р°РїСѓСЃРєР°РµРј Р·Р°РіСЂСѓР·РєСѓ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С€РµС„-РїРѕРІР°СЂРµ
     }
 
     private IEnumerator Load_About_Chief()
     {
-        // Создаем форму для отправки данных на сервер
+        // РЎРѕР·РґР°РµРј С„РѕСЂРјСѓ РґР»СЏ РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РЅР° СЃРµСЂРІРµСЂ
         WWWForm form = new WWWForm();
-        form.AddField("username", chief_name.text); // Отправляем имя шеф-повара
+        form.AddField("username", chief_name.text); // РћС‚РїСЂР°РІР»СЏРµРј РёРјСЏ С€РµС„-РїРѕРІР°СЂР°
         form.AddField("is_add", "False");
         form.AddField("action", "False");
 
-        // Отправляем POST-запрос на указанный URL
+        // РћС‚РїСЂР°РІР»СЏРµРј POST-Р·Р°РїСЂРѕСЃ РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ URL
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
-            yield return www.SendWebRequest(); // Ждем завершения запроса
+            yield return www.SendWebRequest(); // Р–РґРµРј Р·Р°РІРµСЂС€РµРЅРёСЏ Р·Р°РїСЂРѕСЃР°
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                string loaded = www.downloadHandler.text; // Получаем ответ от сервера и разбираем его в объект Chief
+                string loaded = www.downloadHandler.text; // РџРѕР»СѓС‡Р°РµРј РѕС‚РІРµС‚ РѕС‚ СЃРµСЂРІРµСЂР° Рё СЂР°Р·Р±РёСЂР°РµРј РµРіРѕ РІ РѕР±СЉРµРєС‚ Chief
 
                 Chief answer_data = JsonUtility.FromJson<Chief>(loaded);
 
-                // Обновляем текстовую информацию о шеф-поваре
+                // РћР±РЅРѕРІР»СЏРµРј С‚РµРєСЃС‚РѕРІСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С€РµС„-РїРѕРІР°СЂРµ
                 chief_name.text = answer_data.name;
                 views.text = answer_data.views;
                 score.text = answer_data.score.ToString().Replace(",", ".");
@@ -56,13 +56,13 @@ public class LoadAboutChief : MonoBehaviour
                 phone_number.text = answer_data.phone_number;
                 metro.text = answer_data.metro;
 
-                LayoutRebuilder.ForceRebuildLayoutImmediate(content); // Перестраиваем макет контента
+                LayoutRebuilder.ForceRebuildLayoutImmediate(content); // РџРµСЂРµСЃС‚СЂР°РёРІР°РµРј РјР°РєРµС‚ РєРѕРЅС‚РµРЅС‚Р°
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
             }
-            www.Dispose(); // Освобождаем ресурсы, связанные с запросом
+            www.Dispose(); // РћСЃРІРѕР±РѕР¶РґР°РµРј СЂРµСЃСѓСЂСЃС‹, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ Р·Р°РїСЂРѕСЃРѕРј
         }
     }
 }
