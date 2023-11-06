@@ -13,6 +13,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from werkzeug.utils import secure_filename
+import uuid
+import urllib2
 
 username = "cshse_22"
 passwd = "wxrdqQ1!"
@@ -26,10 +28,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # smtp_obj = smtplib.SMTP('smtp.gmail.com', 587)
-    # smtp_obj.starttls()
-    # smtp_obj.login('yakov.dergachev.00@gmail.com', 'rrxmdyccusziyrlu')
-    # smtp_obj.sendmail("test", "yakov.dergachev.yad@gmail.com", "123")
     return 'Иди отсюда, розбийник'
 
 
@@ -77,6 +75,7 @@ def email():
 
     is_exist = connection.execute("select id from users where email = %s", email).fetchone()
     if is_exist is None:
+        connection.close()
         return 'Такой почты нет'
     code = random.randint(1000, 9999)
 
@@ -133,6 +132,7 @@ def add_request():
     price = request.form['price']
     sp = connection.execute("select id from requests_to_shief where request_name = %s", request_name).fetchone()
     if sp is not None:
+        connection.close()
         return 'this_request_already_exist'
     connection.execute("insert into requests_to_shief(username, request_name, metro, price) values(%s, %s,%s,%s)",
                        (username, request_name, metro, price))
@@ -173,48 +173,25 @@ def update_recipe():
     connection = engine.connect()
     trans = connection.begin()
     id = request.form['id']
+
     old_main_picture = connection.execute("select picture from recipes where id = %s", id).fetchone()[0]
-    old_main_picture = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + old_main_picture.split('/')[-1]
 
-    def check_exist(path):
-        check_exist_picture = connection.execute("select count_links_on_picture from images where image_path = %s",
-                                                 path).fetchone()
-        if check_exist_picture is None:
-            connection.execute("insert into images(image_path, count_links_on_picture) values (%s, %s)",
-                               (path, 1))
-        else:
-            connection.execute("update images set count_links_on_picture = %s where image_path = %s",
-                               (check_exist_picture[0] + 1, path))
-
-    def check(path):
-        count_links = connection.execute("select count_links_on_picture from images where image_path = %s",
-                                         path).fetchone()
-        if count_links[0] == 1:
-            os.remove(path)
-            connection.execute("delete from images where image_path = %s", path)
-        else:
-            connection.execute("update images set count_links_on_picture = %s where image_path = %s",
-                               (count_links[0] - 1, path))
-
-    check(old_main_picture)
+    os.remove(old_main_picture)
 
     old_pictures = connection.execute("select links_to_pictures from about_recipe where recipes_id = %s", id).fetchone()
     old_pictures = old_pictures[0].split()
-    for link in old_pictures:
-        path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + link.split('/')[-1]
-        check(path)
+    for i in old_pictures:
+        os.remove(i)
+
     sp_image_path = ''
     main_picture = request.files['picture0']
-    main_picture_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + secure_filename(main_picture.filename)
+    main_picture_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + str(uuid.uuid4()) + '.jpg'
     main_picture.save(main_picture_path)
-    check_exist(main_picture_path)
     for i in range(1, len(request.files)):
         picture = request.files['picture' + str(i)]
-        print(picture)
-        image_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + secure_filename(picture.filename)
+        image_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + str(uuid.uuid4()) + '.jpg'
         sp_image_path += image_path + ' '
         picture.save(image_path)
-        check_exist(image_path)
     recipe_name = request.form['recipe_name']
     description = request.form['description']
     ingredients = request.form['ingredients']
@@ -272,33 +249,22 @@ def upload():
     connection = engine.connect()
     trans = connection.begin()
 
-    def check_exist(path):
-        check_exist_picture = connection.execute("select count_links_on_picture from images where image_path = %s",
-                                                 path).fetchone()
-        if check_exist_picture is None:
-            connection.execute("insert into images(image_path, count_links_on_picture) values (%s, %s)",
-                               (path, 1))
-        else:
-            connection.execute("update images set count_links_on_picture = %s where image_path = %s",
-                               (check_exist_picture[0] + 1, path))
-
     username = request.form['username']
     sp_image_path = ''
     main_picture = request.files['picture0']
-    main_picture_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + secure_filename(main_picture.filename)
+    print("------------------------------------------------------")
+    main_picture_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + str(uuid.uuid4()) + '.jpg'
     main_picture.save(main_picture_path)
-    check_exist(main_picture_path)
     for i in range(1, len(request.files)):
         picture = request.files['picture' + str(i)]
-        print(picture)
-        image_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + secure_filename(picture.filename)
+        image_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + str(uuid.uuid4()) + '.jpg'
         sp_image_path += image_path + ' '
         picture.save(image_path)
-        check_exist(image_path)
     recipe_name = request.form['recipe_name']
     all_recipes_of_user = connection.execute("select recipe_name from recipes where username = %s", username).fetchall()
     all_recipes_of_user_eq = [str(i[0].encode('utf-8')).strip().decode('utf-8') for i in all_recipes_of_user]
     if recipe_name in all_recipes_of_user_eq:
+        connection.close()
         return 'no'
     description = request.form['description']
     ingredients = request.form['ingredients']
@@ -355,18 +321,59 @@ def add_chief():
     # username = username.encode('utf-8').decode('utf-8')
     username = request.form['username']
     item = request.files['image']
-    item_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + secure_filename(item.filename)
-    item.save(item_path)
     phone_number = request.form['phone_number']
     metro = request.form['metro']
     short_about_yourself = request.form['short_about_yourself']
     is_update = request.form['is_update']
-    print("---------", is_update)
-    if is_update == 'True':
-        connection.execute(
-            "update chiefs set image_path=%s, phone_number=%s, metro=%s, short_about_yourself=%s where chief_name=%s",
-            item_path, phone_number, metro, short_about_yourself, username)
-    else:
+    flag = False
+    for i in phone_number:
+        print(i.isdigit())
+        if i.isdigit():
+            flag = True
+    if (is_update == 'True') and (phone_number or metro or short_about_yourself or item):
+        # Подготавливаем SQL-запрос с учетом условий
+        sql = "update chiefs set"
+        values = []
+
+        if item:
+            try:
+                old_image = \
+                    connection.execute('select image_path from chiefs where chief_name = %s', username).fetchone()[0]
+                os.remove(old_image)
+            except:
+                pass
+            item_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + str(uuid.uuid4()) + '.jpg'
+            item.save(item_path)
+            sql += " image_path = %s,"
+            values.append(item_path)
+
+        if phone_number and flag:
+            sql += " phone_number = %s,"
+            values.append(phone_number)
+
+        if metro.strip():
+            sql += " metro = %s,"
+            values.append(metro)
+
+        if short_about_yourself.strip():
+            sql += " short_about_yourself = %s,"
+            values.append(short_about_yourself)
+
+        # Убираем последнюю запятую и добавляем условие для WHERE
+        sql = sql.rstrip(",") + " where chief_name = %s"
+        values.append(username)
+
+        # Выполняем SQL-запрос
+        connection.execute(sql, values)
+        print('-----------------', sql, values, phone_number.strip(), phone_number)
+
+    # if is_update == 'True':
+    #     connection.execute(
+    #         "update chiefs set image_path=%s, phone_number=%s, metro=%s, short_about_yourself=%s where chief_name=%s",
+    #         item_path, phone_number, metro, short_about_yourself, username)
+    elif is_update == 'False':
+        item_path = '/home/c/cshse/cshse.beget.tech/public_html/22/foto/' + str(uuid.uuid4()) + '.jpg'
+        item.save(item_path)
         connection.execute(
             "insert into chiefs(image_path, chief_name, phone_number, metro, short_about_yourself) "
             "values(%s,%s,%s,%s,%s)",
@@ -374,7 +381,9 @@ def add_chief():
 
     trans.commit()
     connection.close()
-
+    print('+++++++++++++++++++++++++++++++_-------------------------', is_update, is_update == 'false',
+          is_update == 'False')
+    print(is_update == u'False', is_update == u'false')
     return 'ok'
 
 
@@ -429,20 +438,9 @@ def delete_recipe():
     main_picture = connection.execute("select picture from recipes where id = %s", recipe_id).fetchone()[0]
     links_to_pictures = connection.execute("select links_to_pictures from about_recipe where recipes_id = %s",
                                            recipe_id).fetchone()[0].split()
-
-    def check(path):
-        count_links = connection.execute("select count_links_on_picture from images where image_path = %s",
-                                         path).fetchone()
-        if count_links[0] == 1:
-            os.remove(path)
-            connection.execute("delete from images where image_path = %s", path)
-        else:
-            connection.execute("update images set count_links_on_picture = %s where image_path = %s",
-                               (count_links[0] - 1, path))
-
-    check(main_picture)
-    for link in links_to_pictures:
-        check(link)
+    os.remove(main_picture)
+    for i in links_to_pictures:
+        os.remove(i)
     sp = connection.execute("select id, recipes_id from ingredients where recipes_id like %s",
                             '%' + recipe_id + '%').fetchall()
 
@@ -470,7 +468,6 @@ def my_responses():
 
     sp_my_responses = connection.execute("select responsed from chiefs where chief_name = %s", username).fetchone()[
         0].split(',')
-    print(sp_my_responses, id)
     if id != '-1':
         sp_my_responses.remove(id)
         sp_chiefs = connection.execute('select chiefs from requests_to_shief where id=%s', id).fetchone()[
@@ -506,8 +503,7 @@ def send_estimate():
     connection = engine.connect()
     recipe_id = request.form['recipe_id']
     star_count = request.form['star_count']
-    username = request.form['username']
-
+    chief_name = connection.execute('select username from recipes where id = %s', recipe_id).fetchone()[0]
     # Получаем текущее значение поля 'views'
     sp = connection.execute("SELECT sum_score,score_count FROM recipes WHERE id = %s", recipe_id).fetchone()
     old_sum_score = sp[0]
@@ -517,7 +513,17 @@ def send_estimate():
     new_score = (old_sum_score + float(star_count)) / (old_count_score + 1)
     connection.execute("UPDATE recipes SET sum_score = %s, score_count = %s, score = %s WHERE id = %s",
                        (old_sum_score + float(star_count), old_count_score + 1, new_score, recipe_id))
-    connection.execute("update chiefs set score = %s where chief_name = %s", (new_score, username))
+    all_chiefs_score = connection.execute('select score, score_count from recipes where username = %s',
+                                          chief_name).fetchall()
+    sp = []
+    for i in all_chiefs_score:
+        print(i, '------------------------------')
+        if int(i[1]) > 0:
+            sp.append(float(i[0]))
+    sum_chiefs_score = sum(sp)
+    len_chiefs_score = len(sp)
+    avg_chiefs_score = sum_chiefs_score / len_chiefs_score
+    connection.execute("update chiefs set score = %s where chief_name = %s", (avg_chiefs_score, chief_name))
     connection.close()
     return 'ok'
 
@@ -550,8 +556,9 @@ def add_announcement():
     connection = engine.connect()
     username = request.form['username']
     is_add = request.form['is_add']
-    print('---------------', is_add)
+    action = request.form['action']
     if is_add == 'False':
+        add_or_remove = connection.execute('select is_add from chiefs where chief_name = %s', username).fetchone()[0]
         chief_data = connection.execute(
             "SELECT * FROM chiefs where chief_name = %s", username).fetchone()
         chief = {
@@ -561,14 +568,15 @@ def add_announcement():
             'score': str(chief_data[4]),
             'phone_number': chief_data[5],
             'metro': chief_data[6],
-            'short_about_chief': chief_data[7]
+            'short_about_chief': chief_data[7],
+            'add_or_remove': add_or_remove
         }
         connection.close()
         return jsonify(chief)
     else:
         connection.execute(
             "UPDATE chiefs SET is_add = %s WHERE chief_name = %s",
-            (1, username))
+            (int(action), username))
         connection.close()
         return 'add'
 
@@ -636,6 +644,7 @@ def add_person(username, password, email):
     trans = connection.begin()
     all_users = connection.execute("select username from users where username=%s", username).fetchall()
     if len(all_users) != 0:
+        connection.close()
         return False
     connection.execute("insert into users(username,password,email) values (%s,%s,%s)", username, password, email)
     trans.commit()
@@ -651,6 +660,7 @@ def get_password(username):
     connection.close()
     print('--------------------', hash)
     if hash is None:
+        connection.close()
         return 'no'
     else:
         return hash[0]
@@ -667,7 +677,7 @@ def get_fridge():
     is_exist = connection.execute("select ingredients from fridges where username = %s", username).fetchone()
     trans.commit()
     connection.close()
-    if is_exist is None:
+    if is_exist is None or len(is_exist[0]) == 0:
         return 'no_results'
     else:
         return is_exist[0]
@@ -717,13 +727,13 @@ def main_url():
     request_main = []
     word = ''
     for i in search_data:
-        if i.isalpha():
+        if i.isalpha() or i.isdigit():
             word += i
         else:
             if word != '':
                 request_main.append(word)
             word = ''
-    if word != '' and word[0].isalpha():
+    if word != '' and (word[0].isalpha() or word[0].isdigit()):
         request_main.append(word)
     sp_names = tuple('%' + i.strip() + '%' for i in request_main)
     where_clause = " OR ".join(['recipe_name LIKE %s' for _ in range(len(sp_names))])
@@ -743,6 +753,7 @@ def main_url():
         recipes_results = connection.execute("SELECT * FROM recipes WHERE id > %s LIMIT 25",
                                              int(index_last_recipe)).fetchall()
         if len(recipes_results) == 0:
+            connection.close()
             return 'no_results'
 
     elif search_data != '':
@@ -772,18 +783,32 @@ def main_url():
         if can_i_make_recipe == '1':
             sp_ingredients = connection.execute("select ingredients from fridges where username = %s",
                                                 username).fetchone()
-            if sp_ingredients is None:
+            if sp_ingredients is None or len(sp_ingredients[0]) == 0:
+                connection.close()
                 return 'you_have_not_ingredients'
             ingredients = sp_ingredients[0].split('|&')
 
             query = '''select recipes_id from ingredients where ingredient in :ingredient'''
             indexes = connection.execute(text(query), ingredient=ingredients).fetchall()
             print(indexes)
+            if indexes is None or len(indexes) == 0:
+                connection.close()
+                return 'no_results'
             set_indexes = set(indexes[0][0].split(','))
+            set_indexes_2 = set()
             for string in indexes:
                 print('set_index', set_indexes & set(string[0].split(',')))
                 string = string[0].split(',')
                 set_indexes &= set(string)
+                set_indexes_2 |= set(string)
+            print(set_indexes)
+            print(set_indexes_2)
+            res = ()
+            for i in set_indexes:
+                res += (i,)
+            for i in set_indexes_2:
+                res += (i,)
+            set_indexes = res
             print('set_index', set_indexes)
             if my_recipes == '1':
                 query_names = "select * from recipes where (" + where_clause + ") and id in %s and username = %s and " \
@@ -817,10 +842,6 @@ def main_url():
                 parameters_ingredients = {'ids': recipes_ids, 'rf': rating_from, 'rt': rating_to}
                 parameters_names = sp_names + (rating_from, rating_to)
 
-            # query_ingredients += ' and id > :id'
-            # parameters_ingredients.update({'id': int(index_last_recipe)})
-            # query_names += ' and id > %s'
-            # parameters_names += (int(index_last_recipe),)
             if sort_by_views == '1':
                 query_ingredients += ' order by views desc'
                 query_names += ' order by views desc'
@@ -836,35 +857,9 @@ def main_url():
             recipes_results += connection.execute(query_names, parameters_names).fetchall()
 
         if len(recipes_results) == 0:
+            connection.close()
             return "no_results"
 
-        # if sort_by_views == "1":
-        #     query_ingredients_sort = '''
-        #             SELECT * FROM recipes
-        #             WHERE id IN :recipes_ids AND score BETWEEN :rf AND :rt ORDER BY views DESC
-        #         '''
-        #     recipes_results = connection.execute(
-        #         text(query_ingredients_sort),
-        #         recipes_ids=recipes_ids, rf=rating_from, rt=rating_to).fetchall()
-        #     query_names_sort = "SELECT * FROM recipes WHERE (" + where_clause + ") AND score BETWEEN %s AND %s ORDER BY views DESC"
-        #     recipes_results += connection.execute(query_names_sort, sp_names + (rating_from, rating_to)).fetchall()
-        # else:
-        #     query_ingredients = '''
-        #             SELECT * FROM recipes
-        #             WHERE id IN :recipes_ids AND score BETWEEN :rf AND :rt AND views BETWEEN :vf AND :vt
-        #         '''
-        #     recipes_results = connection.execute(text(query_ingredients), recipes_ids=recipes_ids, rf=rating_from,
-        #                                          rt=rating_to,
-        #                                          vf=views_from,
-        #                                          vt=views_to).fetchall()
-        #     query_names = "SELECT * FROM recipes WHERE (" + where_clause + ") AND score BETWEEN %s AND %s AND views BETWEEN %s AND %s"
-        #     print('+++++++++++====================', rating_from, rating_to, views_from, views_to)
-        #     print(query_names, '----------', sp_names + (rating_from, rating_to, views_from, views_to))
-        #     recipes_results += connection.execute(query_names,
-        #                                           sp_names + (rating_from, rating_to, views_from, views_to)).fetchall()
-        # print('recipes_results', recipes_results, recipes_ids, where_clause, sp_names)
-        # if len(recipes_results) == 0:
-        #     return 'no_results'
 
     else:
         print('333333333333333')
@@ -872,7 +867,8 @@ def main_url():
         if can_i_make_recipe == '1':
             sp_ingredients = connection.execute("select ingredients from fridges where username = %s",
                                                 username).fetchone()
-            if sp_ingredients is None:
+            if sp_ingredients is None or len(sp_ingredients[0]) == 0:
+                connection.close()
                 return 'you_have_not_ingredients'
             sp_ingredients = sp_ingredients[0].split('|&')
             ingredients = []
@@ -883,11 +879,24 @@ def main_url():
             query = '''select recipes_id from ingredients where ingredient in :ingredient'''
             indexes = connection.execute(text(query), ingredient=ingredients).fetchall()
             print(indexes)
+            if indexes is None or len(indexes) == 0:
+                connection.close()
+                return 'no_results'
             set_indexes = set(indexes[0][0].split(','))
+            set_indexes_2 = set()
             for string in indexes:
                 print('set_index', set_indexes & set(string[0].split(',')))
                 string = string[0].split(',')
                 set_indexes &= set(string)
+                set_indexes_2 |= set(string)
+            print(set_indexes)
+            print(set_indexes_2)
+            res = ()
+            for i in set_indexes:
+                res += (i,)
+            for i in set_indexes_2:
+                res += (i,)
+            set_indexes = res
             print('set_index', set_indexes)
             if my_recipes == '1':
                 query = "select * from recipes where id in :ids and username = :username and score between :rf and :rt"
@@ -896,8 +905,6 @@ def main_url():
                 query = "select * from recipes where id in :ids and score between :rf and :rt"
                 parameters = {'ids': list(set_indexes), 'rf': rating_from, 'rt': rating_to}
 
-            # query += ' and id > :id'
-            # parameters.update({'id': int(index_last_recipe)})
             if sort_by_views == '1':
                 query += ' order by views desc'
             else:
@@ -915,8 +922,6 @@ def main_url():
                 query = "select * from recipes where score between :rf and :rt"
                 parameters = {'rf': rating_from, 'rt': rating_to}
 
-            # query += ' and id > :id'
-            # parameters.update({'id': int(index_last_recipe)})
             if sort_by_views == '1':
                 query += ' order by views desc'
             else:
@@ -925,18 +930,8 @@ def main_url():
             query += ' LIMIT 25 OFFSET ' + count
             recipes_results = connection.execute(text(query), **parameters).fetchall()
         if len(recipes_results) == 0:
+            connection.close()
             return 'no_results'
-
-        # if sort_by_views == "1":
-        #     recipes_results = connection.execute(
-        #         "SELECT * FROM recipes WHERE score BETWEEN %s AND %s ORDER BY views DESC", (rating_from,
-        #                                                                                     rating_to)).fetchall()
-        # else:
-        #     recipes_results = connection.execute(
-        #         "SELECT * FROM recipes WHERE score BETWEEN %s AND %s AND views BETWEEN %s AND %s",
-        #         (rating_from, rating_to, views_from, views_to)).fetchall()
-        # if len(recipes_results) == 0:
-        #     return 'no_results'
     res = []
     set_sp_for_id = set()
     for recipe in recipes_results:
@@ -999,6 +994,7 @@ def find_chief():
                                                  vf=views_from,
                                                  vt=views_to, is_add=1).fetchall()
         if len(recipes_results) == 0:
+            connection.close()
             return 'no_results'
 
     else:
@@ -1016,6 +1012,7 @@ def find_chief():
                 "is_add = %s",
                 (metro, rating_from, rating_to, views_from, views_to, 1)).fetchall()
         if len(recipes_results) == 0:
+            connection.close()
             return 'no_results'
     res = []
     set_sp_for_id = set()
@@ -1040,11 +1037,15 @@ def find_chief():
 def get_responses():
     connection = engine.connect()
     username = request.form['username']
-    sp_chiefs = connection.execute('select chiefs from requests_to_shief where username = %s', username).fetchone()
-    if sp_chiefs is None:
+    sp_chiefs_request = connection.execute('select chiefs from requests_to_shief where username = %s',
+                                           username).fetchall()
+    sp_chiefs = set()
+    for sp in sp_chiefs_request:
+        sp_chiefs |= set(sp[0].split(','))
+    if len(sp_chiefs) == 0:
+        connection.close()
         return 'no'
-    sp_chiefs = sp_chiefs[0]
-    sp_chiefs = sp_chiefs.split(',')
+    sp_chiefs = list(sp_chiefs)
     result = connection.execute(text('select * from chiefs where chief_name in :sp'), sp=sp_chiefs).fetchall()
     res = []
     set_sp_for_id = set()
@@ -1063,6 +1064,35 @@ def get_responses():
     return jsonify(res)
 
 
+# Входные данные: имя клиента, id запроса, удалить запрос или нет
+# Функция возвращает обновленный список запросов либо "no"
+@app.route('/get_my_requests_to_chief', methods=['POST'])
+def get_my_requests_to_chief():
+    connection = engine.connect()
+    username = request.form['username']
+    id = request.form['id']
+    is_delete = request.form['is_delete']
+    if is_delete:
+        connection.execute('delete from requests_to_shief where id = %s', id)
+    result = connection.execute('select * from requests_to_shief where username = %s', username).fetchall()
+    res = []
+    if result is None or len(result) == 0:
+        connection.close()
+        return 'no'
+    sp_ids = set()
+    for recipe in result:
+        id = recipe[0]
+        request_name = recipe[2]
+        metro = recipe[3]
+        price = recipe[4]
+        if id not in sp_ids:
+            sp_ids.add(id)
+            a = {'id': id, 'request_name': request_name, 'metro': metro, 'price': price}
+            res.append(a)
+    connection.close()
+    return jsonify(res)
+
+
 @app.route('/load_all_requests', methods=['POST'])
 # Входные данные: сам текстовый запрос, цена от, цена до, метро
 # Функция возвращает запросы к повару кототрые подходят под запрос
@@ -1075,19 +1105,21 @@ def load_all_requests():
     request_main = []
     word = ''
     for i in search_data:
-        if i.isalpha():
+        if i.isalpha() or i.isdigit():
             word += i
         else:
             if word != '':
                 request_main.append(word)
             word = ''
-    if word != '' and word[0].isalpha():
+    if word != '' and (word[0].isalpha() or word[0].isdigit()):
         request_main.append(word)
     if price_from == '': price_from = 0
     if price_to == '': price_to = 9999999999
     sp = tuple('%' + i.strip() + '%' for i in request_main)
     where_clause = " OR ".join(['request_name LIKE %s' for _ in range(len(sp))])
     print('++++++++++++++++++++++++++++', sp, where_clause, request_main)
+    if len(request_main) == 0:
+        search_data = ''
     if search_data == '' and metro == '' and price_from == 0 and price_to == 9999999999:
         recipes_results = connection.execute("select * from requests_to_shief limit 100").fetchall()
     elif search_data != '':
@@ -1108,6 +1140,7 @@ def load_all_requests():
                                                  price_to=price_to).fetchall()
 
     if len(recipes_results) == 0:
+        connection.close()
         return 'no_results'
     res = []
     sp_ids = set()
