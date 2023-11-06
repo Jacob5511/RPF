@@ -17,7 +17,7 @@ public class MyChiefAccount : MonoBehaviour
     public Animator image_for_anim_anim_component, photo_anim, back, name_anim, number, metro_anim, short_about_anim, next_area;
     public VerticalLayoutGroup content_vlg;
 
-    // Вызывается при запуске сцены.
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё Р·Р°РїСѓСЃРєРµ СЃС†РµРЅС‹.
     private void Start()
     {
         Application.targetFrameRate = 60;
@@ -40,7 +40,7 @@ public class MyChiefAccount : MonoBehaviour
         next_area.SetBool("is_open", value);
     }
 
-    // Запускает анимацию для отображения дополнительной информации о шеф-поваре.
+    // Р—Р°РїСѓСЃРєР°РµС‚ Р°РЅРёРјР°С†РёСЋ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С€РµС„-РїРѕРІР°СЂРµ.
     public void MakeChanges()
     {
         scroll_for_anim.SetActive(true);
@@ -48,7 +48,7 @@ public class MyChiefAccount : MonoBehaviour
         Invoke("TurnOn", 1f);
     }
 
-    // Возвращает обратно к обычному отображению информации о шеф-поваре.
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕР±СЂР°С‚РЅРѕ Рє РѕР±С‹С‡РЅРѕРјСѓ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЋ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С€РµС„-РїРѕРІР°СЂРµ.
     public void Back()
     {
         content_vlg.enabled = false;
@@ -79,7 +79,7 @@ public class MyChiefAccount : MonoBehaviour
         scroll_for_anim.SetActive(false);
     }
 
-    // Загружает рецепты, на которые откликнулись пользователи.
+    // Р—Р°РіСЂСѓР¶Р°РµС‚ СЂРµС†РµРїС‚С‹, РЅР° РєРѕС‚РѕСЂС‹Рµ РѕС‚РєР»РёРєРЅСѓР»РёСЃСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё.
     public void My_Responses()
     {
         up.SetActive(false);
@@ -89,7 +89,7 @@ public class MyChiefAccount : MonoBehaviour
         StartCoroutine(LoadMyResponses());
     }
 
-    // Загружает рецепты, на которые откликнулись пользователи, по заданному идентификатору.
+    // Р—Р°РіСЂСѓР¶Р°РµС‚ СЂРµС†РµРїС‚С‹, РЅР° РєРѕС‚РѕСЂС‹Рµ РѕС‚РєР»РёРєРЅСѓР»РёСЃСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё, РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂСѓ.
     public IEnumerator LoadMyResponses(string id = "-1")
     {
         WWWForm form = new WWWForm();
@@ -122,16 +122,16 @@ public class MyChiefAccount : MonoBehaviour
         }
     }
 
-    // Загружает анонсы рецептов в интерфейс из JSON-строки.
+    // Р—Р°РіСЂСѓР¶Р°РµС‚ Р°РЅРѕРЅСЃС‹ СЂРµС†РµРїС‚РѕРІ РІ РёРЅС‚РµСЂС„РµР№СЃ РёР· JSON-СЃС‚СЂРѕРєРё.
     private void Load(string json)
     {
-        // Преобразуем JSON-строку в объекты рецептов.
+        // РџСЂРµРѕР±СЂР°Р·СѓРµРј JSON-СЃС‚СЂРѕРєСѓ РІ РѕР±СЉРµРєС‚С‹ СЂРµС†РµРїС‚РѕРІ.
         RootObjectRequests requestData = JsonUtility.FromJson<RootObjectRequests>("{\"requests\":" + json + "}");
         for (int i = 0; i < requestData.requests.Length; i++)
         {
             RecipeDataRequests request = requestData.requests[i];
 
-            // Создаем экземпляр префаба анонса рецепта и заполняем его данными.
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р° Р°РЅРѕРЅСЃР° СЂРµС†РµРїС‚Р° Рё Р·Р°РїРѕР»РЅСЏРµРј РµРіРѕ РґР°РЅРЅС‹РјРё.
             GameObject instantiatedPrefab = Instantiate(announcement_prefab, content);
             TextMeshProUGUI recipe_name = instantiatedPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI metro_tmp = instantiatedPrefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -139,14 +139,14 @@ public class MyChiefAccount : MonoBehaviour
             instantiatedPrefab.name = request.id;
             recipe_name.text = request.request_name;
             metro_tmp.text = request.metro;
-            price.text = request.price + " руб";
+            price.text = request.price + " СЂСѓР±";
 
-            // Обновляем размеры элементов интерфейса.
+            // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂС‹ СЌР»РµРјРµРЅС‚РѕРІ РёРЅС‚РµСЂС„РµР№СЃР°.
             LayoutRebuilder.ForceRebuildLayoutImmediate(content);
         }
     }
 
-    // Обновляем размеры элементов интерфейса.
+    // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂС‹ СЌР»РµРјРµРЅС‚РѕРІ РёРЅС‚РµСЂС„РµР№СЃР°.
     private IEnumerator LoadImage(string imageURL, RawImage image)
     {
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL))
@@ -169,10 +169,10 @@ public class MyChiefAccount : MonoBehaviour
         }
     }
 
-    // Загружает данные о шеф-поваре с сервера и отображает их в интерфейсе.
+    // Р—Р°РіСЂСѓР¶Р°РµС‚ РґР°РЅРЅС‹Рµ Рѕ С€РµС„-РїРѕРІР°СЂРµ СЃ СЃРµСЂРІРµСЂР° Рё РѕС‚РѕР±СЂР°Р¶Р°РµС‚ РёС… РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
     private IEnumerator LoadAboutChief()
     {
-        // Формируем запрос для загрузки данных о шеф-поваре.
+        // Р¤РѕСЂРјРёСЂСѓРµРј Р·Р°РїСЂРѕСЃ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… Рѕ С€РµС„-РїРѕРІР°СЂРµ.
         WWWForm form = new WWWForm();
 
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
@@ -180,21 +180,21 @@ public class MyChiefAccount : MonoBehaviour
         string username = user.username;
         form.AddField("username", username);
 
-        // Отправляем запрос на сервер.
+        // РћС‚РїСЂР°РІР»СЏРµРј Р·Р°РїСЂРѕСЃ РЅР° СЃРµСЂРІРµСЂ.
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                // Отправляем запрос на сервер.
+                // РћС‚РїСЂР°РІР»СЏРµРј Р·Р°РїСЂРѕСЃ РЅР° СЃРµСЂРІРµСЂ.
                 string answer = www.downloadHandler.text;
                 Chief chief = JsonUtility.FromJson<Chief>(answer);
 
-                // Загружаем изображение шеф-повара и отображаем его в компоненте RawImage.
+                // Р—Р°РіСЂСѓР¶Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ С€РµС„-РїРѕРІР°СЂР° Рё РѕС‚РѕР±СЂР°Р¶Р°РµРј РµРіРѕ РІ РєРѕРјРїРѕРЅРµРЅС‚Рµ RawImage.
                 StartCoroutine(LoadImage($"http://22.cshse.beget.tech/foto/{Path.GetFileName(chief.foto_path)}", photo));
 
-                // Заполняем текстовые поля данными о шеф-поваре.
+                // Р—Р°РїРѕР»РЅСЏРµРј С‚РµРєСЃС‚РѕРІС‹Рµ РїРѕР»СЏ РґР°РЅРЅС‹РјРё Рѕ С€РµС„-РїРѕРІР°СЂРµ.
                 chief_name.text = chief.name;
                 short_about.text = chief.short_about_chief;
                 phone_number.text = chief.phone_number;
@@ -202,14 +202,5 @@ public class MyChiefAccount : MonoBehaviour
                 score.text = chief.score.ToString().Replace(",", ".");
                 views.text = chief.views;
 
-                // Обновляем размеры элементов интерфейса.
-                LayoutRebuilder.ForceRebuildLayoutImmediate(content);
-            }
-            else
-            {
-                Debug.LogError("Image upload failed: " + www.error);
-            }
-            www.Dispose();
-        }
-    }
-}
+                // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂС‹ СЌР»РµРјРµРЅС‚РѕРІ РёРЅС‚РµСЂС„РµР№СЃР°.
+                LayoutRebuilder.ForceRebuildLayoutI
