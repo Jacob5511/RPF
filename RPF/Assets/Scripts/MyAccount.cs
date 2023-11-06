@@ -23,11 +23,11 @@ public class MyAccount : MonoBehaviour
     public AspectRatioFitter image_aspect_ratio;
     public Animator there_is_no_requests, there_is_no_responses, ingredient_saved, there_is_no_ingredient, all_fields_must;
 
-    // Определение множества переменных для различных компонентов интерфейса и URL-адресов сервера.
+    // РћРїСЂРµРґРµР»РµРЅРёРµ РјРЅРѕР¶РµСЃС‚РІР° РїРµСЂРµРјРµРЅРЅС‹С… РґР»СЏ СЂР°Р·Р»РёС‡РЅС‹С… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ РёРЅС‚РµСЂС„РµР№СЃР° Рё URL-Р°РґСЂРµСЃРѕРІ СЃРµСЂРІРµСЂР°.
     public void Load()
     {
-        // Загрузка данных о шеф-поваре и отображение их в интерфейсе.
-        // Включение и отключение соответствующих панелей интерфейса.
+        // Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рѕ С€РµС„-РїРѕРІР°СЂРµ Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РёС… РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
+        // Р’РєР»СЋС‡РµРЅРёРµ Рё РѕС‚РєР»СЋС‡РµРЅРёРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… РїР°РЅРµР»РµР№ РёРЅС‚РµСЂС„РµР№СЃР°.
         chief_name.text = BetweenScenes.name;
         chief_image.texture = BetweenScenes.texture;
         image_aspect_ratio.aspectRatio = BetweenScenes.aspect_ratio;
@@ -65,15 +65,15 @@ public class MyAccount : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
             }
             www.Dispose();
         }
     }
     private void Start()
     {
-        // Устанавливаем целевую частоту кадров приложения.
-        // Получаем информацию о текущем пользователе из файла.
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С†РµР»РµРІСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ РєР°РґСЂРѕРІ РїСЂРёР»РѕР¶РµРЅРёСЏ.
+        // РџРѕР»СѓС‡Р°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РµРєСѓС‰РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ РёР· С„Р°Р№Р»Р°.
         Application.targetFrameRate = 60;
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
@@ -82,7 +82,7 @@ public class MyAccount : MonoBehaviour
     }
     public IEnumerator GetFridge(string username)
     {
-        // Загрузка холодильника пользователя с сервера.
+        // Р—Р°РіСЂСѓР·РєР° С…РѕР»РѕРґРёР»СЊРЅРёРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ СЃРµСЂРІРµСЂР°.
         WWWForm form = new WWWForm();
         form.AddField("username", username);
 
@@ -115,7 +115,7 @@ public class MyAccount : MonoBehaviour
                 else
                 {
                     there_is_no_ingredient.SetTrigger("must");
-                    print("У вас пока нет ни одного ингредиента");
+                    print("РЈ РІР°СЃ РїРѕРєР° РЅРµС‚ РЅРё РѕРґРЅРѕРіРѕ РёРЅРіСЂРµРґРёРµРЅС‚Р°");
                 }
                 
             }
@@ -128,8 +128,8 @@ public class MyAccount : MonoBehaviour
     }
     public void MyRequests()
     {
-        // Отображение страницы "Мои запросы к шеф-повару".
-        // Загрузка соответствующих запросов.
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃС‚СЂР°РЅРёС†С‹ "РњРѕРё Р·Р°РїСЂРѕСЃС‹ Рє С€РµС„-РїРѕРІР°СЂСѓ".
+        // Р—Р°РіСЂСѓР·РєР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р·Р°РїСЂРѕСЃРѕРІ.
         scroll_my_requests_to_chief.SetActive(true);
         scroll_about_chief.SetActive(false);
         main_group.SetActive(false);
@@ -140,7 +140,7 @@ public class MyAccount : MonoBehaviour
     }
     public void BackFromMyRequests()
     {
-        // Возврат назад из раздела "Мои запросы к шеф-повару".
+        // Р’РѕР·РІСЂР°С‚ РЅР°Р·Р°Рґ РёР· СЂР°Р·РґРµР»Р° "РњРѕРё Р·Р°РїСЂРѕСЃС‹ Рє С€РµС„-РїРѕРІР°СЂСѓ".
         scroll_my_requests_to_chief.SetActive(false);
         scroll_about_chief.SetActive(false);
         main_group.SetActive(true);
@@ -151,7 +151,7 @@ public class MyAccount : MonoBehaviour
     }
     public IEnumerator Get_My_Requests_To_Chief(bool is_delete, string id = "-1")
     {
-        // Загрузка запросов пользователя к шеф-повару с сервера.
+        // Р—Р°РіСЂСѓР·РєР° Р·Р°РїСЂРѕСЃРѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рє С€РµС„-РїРѕРІР°СЂСѓ СЃ СЃРµСЂРІРµСЂР°.
         WWWForm form = new WWWForm();
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
@@ -174,7 +174,7 @@ public class MyAccount : MonoBehaviour
                 string answer = www.downloadHandler.text;
                 if (answer == "no")
                 {
-                    print("Запросов нет");
+                    print("Р—Р°РїСЂРѕСЃРѕРІ РЅРµС‚");
                     there_is_no_requests.SetTrigger("must");
                 }
                 else
@@ -183,7 +183,7 @@ public class MyAccount : MonoBehaviour
                     for (int i = 0; i < requestData.requests.Length; i++)
                     {
                         RecipeDataRequests request = requestData.requests[i];
-                        // Создаем экземпляр префаба
+                        // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р°
                         GameObject instantiatedPrefab = Instantiate(request_prefab, my_requests_to_chief_content);
                         instantiatedPrefab.name = request.id;
                         TMP_Text recipe_name_request = instantiatedPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -192,12 +192,12 @@ public class MyAccount : MonoBehaviour
 
                         recipe_name_request.text = request.request_name;
                         metro_request.text = request.metro;
-                        price_request.text = request.price + " руб";
+                        price_request.text = request.price + " СЂСѓР±";
 
-                        // Обновляем размер префаба в родительском объекте
+                        // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ РїСЂРµС„Р°Р±Р° РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ
                         LayoutRebuilder.ForceRebuildLayoutImmediate(parentObject);
                     }
-                    // Устанавливаем размер маски в соответствии с содержимым
+                    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ РјР°СЃРєРё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СЃРѕРґРµСЂР¶РёРјС‹Рј
                     Canvas.ForceUpdateCanvases();
                     scrollRect.verticalNormalizedPosition = 1f;
                 }
@@ -211,8 +211,8 @@ public class MyAccount : MonoBehaviour
     }
     public void MyFridge()
     {
-        // Отображение страницы "Мой холодильник".
-        // Загрузка холодильника пользователя.
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃС‚СЂР°РЅРёС†С‹ "РњРѕР№ С…РѕР»РѕРґРёР»СЊРЅРёРє".
+        // Р—Р°РіСЂСѓР·РєР° С…РѕР»РѕРґРёР»СЊРЅРёРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         scroll_my_requests_to_chief.SetActive(false);
         scroll_about_chief.SetActive(false);
         main_group.SetActive(false);
@@ -229,8 +229,8 @@ public class MyAccount : MonoBehaviour
     }
     public void BackFromMyFridge()
     {
-        // Отображение страницы "Мой холодильник".
-        // Загрузка холодильника пользователя.
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃС‚СЂР°РЅРёС†С‹ "РњРѕР№ С…РѕР»РѕРґРёР»СЊРЅРёРє".
+        // Р—Р°РіСЂСѓР·РєР° С…РѕР»РѕРґРёР»СЊРЅРёРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         for (int i = 0; i < parent_for_ingredient_prefab.childCount; i++)
         {
             Destroy(parent_for_ingredient_prefab.GetChild(i).gameObject);
@@ -247,21 +247,21 @@ public class MyAccount : MonoBehaviour
     }
     public void AddIngredient()
     {
-        // Добавление нового ингредиента в холодильник.
+        // Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ РёРЅРіСЂРµРґРёРµРЅС‚Р° РІ С…РѕР»РѕРґРёР»СЊРЅРёРє.
         GameObject inst = Instantiate(ingredient_prefab, parent_for_ingredient_prefab.transform);
         ingredietns.Add(inst);
         LayoutRebuilder.ForceRebuildLayoutImmediate(parent_for_ingredient_prefab);
     }
     public void DeleteIngredient()
     {
-        // Удаление последнего ингредиента из холодильника.
+        // РЈРґР°Р»РµРЅРёРµ РїРѕСЃР»РµРґРЅРµРіРѕ РёРЅРіСЂРµРґРёРµРЅС‚Р° РёР· С…РѕР»РѕРґРёР»СЊРЅРёРєР°.
         Destroy(parent_for_ingredient_prefab.GetChild(parent_for_ingredient_prefab.childCount - 1).gameObject);
         ingredietns.Remove(parent_for_ingredient_prefab.GetChild(parent_for_ingredient_prefab.childCount - 1).gameObject);
         LayoutRebuilder.ForceRebuildLayoutImmediate(parent_for_ingredient_prefab);
     }
     public void Save()
     {
-        // Сохранение холодильника пользователя на сервере.
+        // РЎРѕС…СЂР°РЅРµРЅРёРµ С…РѕР»РѕРґРёР»СЊРЅРёРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃРµСЂРІРµСЂРµ.
         List<string> ing_text = new List<string>();
         foreach(GameObject ing in ingredietns)
         {
@@ -270,7 +270,7 @@ public class MyAccount : MonoBehaviour
             TMP_Text units = ing.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>();
             if (name.text == "" || quantity.text == "" || units.text == "")
             {
-                print("Все поля должны быть заполнены");
+                print("Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹");
                 all_fields_must.SetTrigger("must");
                 return;
             }
@@ -280,7 +280,7 @@ public class MyAccount : MonoBehaviour
     }
     public void Back_From_About_Chief()
     {
-        // Возврат назад из раздела информации о шеф-поваре.
+        // Р’РѕР·РІСЂР°С‚ РЅР°Р·Р°Рґ РёР· СЂР°Р·РґРµР»Р° РёРЅС„РѕСЂРјР°С†РёРё Рѕ С€РµС„-РїРѕРІР°СЂРµ.
         scroll_my_requests_to_chief.SetActive(false);
         scroll_fridge.SetActive(false);
         scroll_responses.SetActive(true);
@@ -290,8 +290,8 @@ public class MyAccount : MonoBehaviour
     }
     public void Chief_Responses()
     {
-        // Отображение страницы "Отклики к шеф-повару".
-        // Загрузка соответствующих откликов.
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃС‚СЂР°РЅРёС†С‹ "РћС‚РєР»РёРєРё Рє С€РµС„-РїРѕРІР°СЂСѓ".
+        // Р—Р°РіСЂСѓР·РєР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… РѕС‚РєР»РёРєРѕРІ.
         scroll_my_requests_to_chief.SetActive(false);
         scroll_fridge.SetActive(false);
         scroll_responses.SetActive(true);
@@ -319,7 +319,7 @@ public class MyAccount : MonoBehaviour
                 string answer = www.downloadHandler.text;
                 if (answer == "no")
                 {
-                    print("Откликов пока нет");
+                    print("РћС‚РєР»РёРєРѕРІ РїРѕРєР° РЅРµС‚");
                     there_is_no_responses.SetTrigger("must");
                 }
                 else
@@ -341,7 +341,7 @@ public class MyAccount : MonoBehaviour
     }
     private IEnumerator LoadImage(string imageURL, RawImage image, Animator circle)
     {
-        // Загрузка изображения по URL и установка его в компонент RawImage.
+        // Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РїРѕ URL Рё СѓСЃС‚Р°РЅРѕРІРєР° РµРіРѕ РІ РєРѕРјРїРѕРЅРµРЅС‚ RawImage.
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL))
         {
             yield return www.SendWebRequest();
@@ -365,15 +365,15 @@ public class MyAccount : MonoBehaviour
     }
     private void Load(string json)
     {
-        // Загрузка данных о шеф-поварах и отображение их в интерфейсе.
+        // Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рѕ С€РµС„-РїРѕРІР°СЂР°С… Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РёС… РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
         FindChiefObject itemseData = JsonUtility.FromJson<FindChiefObject>("{\"items\":" + json + "}");
         for (int i = 0; i < itemseData.items.Length; i++)
         {
             FindChiefData item = itemseData.items[i];
-            // Создаем экземпляр префаба
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р°
             GameObject instantiatedPrefab = Instantiate(prefab, parentObject);
 
-            // Получаем доступ к компонентам RawImage и TextMeshProUGUI
+            // РџРѕР»СѓС‡Р°РµРј РґРѕСЃС‚СѓРї Рє РєРѕРјРїРѕРЅРµРЅС‚Р°Рј RawImage Рё TextMeshProUGUI
             RawImage rawImageComponent = instantiatedPrefab.transform.GetChild(1).GetChild(0).GetComponent<RawImage>();
             Animator circle = instantiatedPrefab.transform.GetChild(7).GetComponent<Animator>();
             circle.SetBool("is_circling", true);
@@ -385,16 +385,16 @@ public class MyAccount : MonoBehaviour
             score.text = item.score;
             views.text = item.views;
 
-            // Обновляем размер префаба в родительском объекте
+            // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ РїСЂРµС„Р°Р±Р° РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ
             LayoutRebuilder.ForceRebuildLayoutImmediate(parentObject);
         }
-        // Устанавливаем размер маски в соответствии с содержимым
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ РјР°СЃРєРё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СЃРѕРґРµСЂР¶РёРјС‹Рј
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 1f;
     }
     private IEnumerator SaveFridge(List<string> ing_text)
     {
-        // Сохранение холодильника пользователя на сервере.
+        // РЎРѕС…СЂР°РЅРµРЅРёРµ С…РѕР»РѕРґРёР»СЊРЅРёРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃРµСЂРІРµСЂРµ.
         WWWForm form = new WWWForm();
 
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
@@ -413,7 +413,7 @@ public class MyAccount : MonoBehaviour
                 string answer = www.downloadHandler.text;
                 if(answer == "ok")
                 {
-                    Debug.Log("Ингредиенты успешно сохранены");
+                    Debug.Log("РРЅРіСЂРµРґРёРµРЅС‚С‹ СѓСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅС‹");
                     ingredient_saved.SetTrigger("must");
                 }
             }
