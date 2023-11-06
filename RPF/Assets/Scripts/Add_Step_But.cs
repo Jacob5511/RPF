@@ -6,29 +6,29 @@ using UnityEngine.UI;
 public class Add_Step_But : MonoBehaviour
 {
     Animator anim;
-    // Аниматор для управления анимациями объекта.
+    // РђРЅРёРјР°С‚РѕСЂ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ Р°РЅРёРјР°С†РёСЏРјРё РѕР±СЉРµРєС‚Р°.
 
     public GameObject inputs, timers, delete_timer;
-    // Ссылки на игровые объекты для инпутов, таймеров и кнопки удаления таймеров.
+    // РЎСЃС‹Р»РєРё РЅР° РёРіСЂРѕРІС‹Рµ РѕР±СЉРµРєС‚С‹ РґР»СЏ РёРЅРїСѓС‚РѕРІ, С‚Р°Р№РјРµСЂРѕРІ Рё РєРЅРѕРїРєРё СѓРґР°Р»РµРЅРёСЏ С‚Р°Р№РјРµСЂРѕРІ.
 
     Add_Step add_step;
-    // Ссылка на компонент Add_Step для управления шагами в рецепте.
+    // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ Add_Step РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ С€Р°РіР°РјРё РІ СЂРµС†РµРїС‚Рµ.
 
     public ImagePathScripts image_path_scripts;
-    // Ссылка на компонент ImagePathScripts для работы с изображениями.
+    // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ ImagePathScripts РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёР·РѕР±СЂР°Р¶РµРЅРёСЏРјРё.
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-        // Получение ссылки на аниматор объекта.
+        // РџРѕР»СѓС‡РµРЅРёРµ СЃСЃС‹Р»РєРё РЅР° Р°РЅРёРјР°С‚РѕСЂ РѕР±СЉРµРєС‚Р°.
 
         add_step = FindObjectOfType<Add_Step>().GetComponent<Add_Step>();
-        // Получение ссылки на компонент Add_Step через поиск в сцене.
+        // РџРѕР»СѓС‡РµРЅРёРµ СЃСЃС‹Р»РєРё РЅР° РєРѕРјРїРѕРЅРµРЅС‚ Add_Step С‡РµСЂРµР· РїРѕРёСЃРє РІ СЃС†РµРЅРµ.
     }
 
     public void Change()
     {
-        // Метод для смены состояния анимации объекта.
+        // РњРµС‚РѕРґ РґР»СЏ СЃРјРµРЅС‹ СЃРѕСЃС‚РѕСЏРЅРёСЏ Р°РЅРёРјР°С†РёРё РѕР±СЉРµРєС‚Р°.
 
         if (anim.GetBool("is_open_add_step"))
             anim.SetBool("is_open_add_step", false);
@@ -38,7 +38,7 @@ public class Add_Step_But : MonoBehaviour
 
     public void Delete_Timer()
     {
-        // Метод для удаления последнего таймера.
+        // РњРµС‚РѕРґ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ РїРѕСЃР»РµРґРЅРµРіРѕ С‚Р°Р№РјРµСЂР°.
 
         if (image_path_scripts.inputs_prefab.Count > 0)
         {
@@ -51,13 +51,13 @@ public class Add_Step_But : MonoBehaviour
                 delete_timer.SetActive(false);
             }
         }
-        // Задержка перед обновлением макета шагов.
+        // Р—Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РѕР±РЅРѕРІР»РµРЅРёРµРј РјР°РєРµС‚Р° С€Р°РіРѕРІ.
         StartCoroutine(add_step.DelayedLayoutRebuild());
     }
 
     public void Add_Inputs()
     {
-        // Метод для добавления нового инпута таймера.
+        // РњРµС‚РѕРґ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РЅРѕРІРѕРіРѕ РёРЅРїСѓС‚Р° С‚Р°Р№РјРµСЂР°.
 
         GameObject inst = Instantiate(inputs, timers.transform);
 
@@ -68,7 +68,7 @@ public class Add_Step_But : MonoBehaviour
             delete_timer.SetActive(true);
         }
 
-        // Обновление макета шагов.
+        // РћР±РЅРѕРІР»РµРЅРёРµ РјР°РєРµС‚Р° С€Р°РіРѕРІ.
         LayoutRebuilder.ForceRebuildLayoutImmediate(add_step.content.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(add_step.content.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(add_step.content.GetComponent<RectTransform>());
