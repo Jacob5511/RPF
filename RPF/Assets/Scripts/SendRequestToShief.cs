@@ -7,55 +7,55 @@ using UnityEngine.SceneManagement;
 
 public class SendRequestToShief : MonoBehaviour
 {
-    // Ссылка на сервер, куда будет отправлен запрос.
+    // РЎСЃС‹Р»РєР° РЅР° СЃРµСЂРІРµСЂ, РєСѓРґР° Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅ Р·Р°РїСЂРѕСЃ.
     private string serverURL = "http://22.cshse.beget.tech/add_request";
 
-    // Ссылки на элементы интерфейса для ввода данных запроса.
+    // РЎСЃС‹Р»РєРё РЅР° СЌР»РµРјРµРЅС‚С‹ РёРЅС‚РµСЂС„РµР№СЃР° РґР»СЏ РІРІРѕРґР° РґР°РЅРЅС‹С… Р·Р°РїСЂРѕСЃР°.
     public TMP_InputField request_name, metro, price;
 
-    // Аниматоры для отображения различных состояний запроса.
+    // РђРЅРёРјР°С‚РѕСЂС‹ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ СЂР°Р·Р»РёС‡РЅС‹С… СЃРѕСЃС‚РѕСЏРЅРёР№ Р·Р°РїСЂРѕСЃР°.
     public Animator not_allowed_same, success, all_field_must;
 
-    // Вызывается при запуске объекта.
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё Р·Р°РїСѓСЃРєРµ РѕР±СЉРµРєС‚Р°.
     private void Start()
     {
-        // Устанавливаем целевую частоту кадров на 60 FPS (кадров в секунду).
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С†РµР»РµРІСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ РєР°РґСЂРѕРІ РЅР° 60 FPS (РєР°РґСЂРѕРІ РІ СЃРµРєСѓРЅРґСѓ).
         Application.targetFrameRate = 60;
     }
 
-    // Метод для отправки запроса.
+    // РњРµС‚РѕРґ РґР»СЏ РѕС‚РїСЂР°РІРєРё Р·Р°РїСЂРѕСЃР°.
     public void UploadRequest()
     {
-        // Проверяем, что все необходимые поля заполнены.
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РІСЃРµ РЅРµРѕР±С…РѕРґРёРјС‹Рµ РїРѕР»СЏ Р·Р°РїРѕР»РЅРµРЅС‹.
         if (request_name.text == "" || metro.text == "" || price.text == "")
         {
-            // Если какое-либо поле не заполнено, запускаем анимацию "all_field_must".
+            // Р•СЃР»Рё РєР°РєРѕРµ-Р»РёР±Рѕ РїРѕР»Рµ РЅРµ Р·Р°РїРѕР»РЅРµРЅРѕ, Р·Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ "all_field_must".
             all_field_must.SetTrigger("must");
-            return; // Прерываем выполнение метода.
+            return; // РџСЂРµСЂС‹РІР°РµРј РІС‹РїРѕР»РЅРµРЅРёРµ РјРµС‚РѕРґР°.
         }
 
-        // Если все поля заполнены, отправляем запрос.
+        // Р•СЃР»Рё РІСЃРµ РїРѕР»СЏ Р·Р°РїРѕР»РЅРµРЅС‹, РѕС‚РїСЂР°РІР»СЏРµРј Р·Р°РїСЂРѕСЃ.
         StartCoroutine(SendRequest());
     }
 
-    // Метод для отправки запроса на сервер.
+    // РњРµС‚РѕРґ РґР»СЏ РѕС‚РїСЂР°РІРєРё Р·Р°РїСЂРѕСЃР° РЅР° СЃРµСЂРІРµСЂ.
     private IEnumerator SendRequest()
     {
-        // Создаем форму для отправки данных.
+        // РЎРѕР·РґР°РµРј С„РѕСЂРјСѓ РґР»СЏ РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С….
         WWWForm form = new WWWForm();
 
-        // Загружаем информацию о пользователе из файла.
+        // Р—Р°РіСЂСѓР¶Р°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ РёР· С„Р°Р№Р»Р°.
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
         string username = user.username;
 
-        // Добавляем поля данных в форму.
+        // Р”РѕР±Р°РІР»СЏРµРј РїРѕР»СЏ РґР°РЅРЅС‹С… РІ С„РѕСЂРјСѓ.
         form.AddField("username", username);
         form.AddField("request_name", request_name.text);
         form.AddField("metro", metro.text);
         form.AddField("price", price.text);
 
-        // Создаем и отправляем UnityWebRequest.
+        // РЎРѕР·РґР°РµРј Рё РѕС‚РїСЂР°РІР»СЏРµРј UnityWebRequest.
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
         {
             yield return www.SendWebRequest();
@@ -65,12 +65,12 @@ public class SendRequestToShief : MonoBehaviour
                 string answer = www.downloadHandler.text;
                 if (answer == "this_request_already_exist")
                 {
-                    // Если запрос уже существует, запускаем анимацию "not_allowed_same".
+                    // Р•СЃР»Рё Р·Р°РїСЂРѕСЃ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, Р·Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ "not_allowed_same".
                     not_allowed_same.SetTrigger("must");
                 }
                 else
                 {
-                    // Если запрос успешно отправлен, запускаем анимацию "success" и переходим в другую сцену через 1.5 секунды.
+                    // Р•СЃР»Рё Р·Р°РїСЂРѕСЃ СѓСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅ, Р·Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ "success" Рё РїРµСЂРµС…РѕРґРёРј РІ РґСЂСѓРіСѓСЋ СЃС†РµРЅСѓ С‡РµСЂРµР· 1.5 СЃРµРєСѓРЅРґС‹.
                     success.SetTrigger("must");
                     yield return new WaitForSeconds(1.5f);
                     SceneManager.LoadScene("MainScene");
@@ -79,7 +79,7 @@ public class SendRequestToShief : MonoBehaviour
             }
             else
             {
-                // В случае ошибки при отправке запроса выводим сообщение в консоль.
+                // Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РїСЂРё РѕС‚РїСЂР°РІРєРµ Р·Р°РїСЂРѕСЃР° РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РІ РєРѕРЅСЃРѕР»СЊ.
                 Debug.LogError("Server error: " + www.error + ", or you've already submitted this request");
             }
             www.Dispose();
