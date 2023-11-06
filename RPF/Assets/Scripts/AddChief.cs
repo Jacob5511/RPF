@@ -13,44 +13,44 @@ using System;
 public class AddChief : MonoBehaviour
 {
     string url = "http://22.cshse.beget.tech/add_chief";
-    // URL-адрес для отправки данных на сервер.
+    // URL-Г Г¤Г°ГҐГ± Г¤Г«Гї Г®ГІГЇГ°Г ГўГЄГЁ Г¤Г Г­Г­Г»Гµ Г­Г  Г±ГҐГ°ГўГҐГ°.
 
     public Animator camera_but_anim, gallery_but_anim, all_fields_must;
-    // Аниматоры для анимаций кнопок камеры, галереи и сообщений об ошибках.
+    // ГЂГ­ГЁГ¬Г ГІГ®Г°Г» Г¤Г«Гї Г Г­ГЁГ¬Г Г¶ГЁГ© ГЄГ­Г®ГЇГ®ГЄ ГЄГ Г¬ГҐГ°Г», ГЈГ Г«ГҐГ°ГҐГЁ ГЁ Г±Г®Г®ГЎГ№ГҐГ­ГЁГ© Г®ГЎ Г®ГёГЁГЎГЄГ Гµ.
 
     public RawImage image;
     string imagePath = "";
-    // Переменные для работы с изображением и его пути.
+    // ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ Г¤Г«Гї Г°Г ГЎГ®ГІГ» Г± ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГҐГ¬ ГЁ ГҐГЈГ® ГЇГіГІГЁ.
 
     string template = "+7 (***) ***-**-**";
-    // Шаблон для отображения телефонного номера.
+    // ГГ ГЎГ«Г®Г­ Г¤Г«Гї Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГї ГІГҐГ«ГҐГґГ®Г­Г­Г®ГЈГ® Г­Г®Г¬ГҐГ°Г .
 
     public TMP_InputField phone_number, metro, short_about_yourself;
     public TMP_Text text, chief_name;
-    // Поля для ввода текста и отображения имени шефа.
+    // ГЏГ®Г«Гї Г¤Г«Гї ГўГўГ®Г¤Г  ГІГҐГЄГ±ГІГ  ГЁ Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГї ГЁГ¬ГҐГ­ГЁ ГёГҐГґГ .
 
     public GameObject placeholder;
     public int count = 0;
-    // Пустой объект-заполнитель для поля ввода.
+    // ГЏГіГ±ГІГ®Г© Г®ГЎГєГҐГЄГІ-Г§Г ГЇГ®Г«Г­ГЁГІГҐГ«Гј Г¤Г«Гї ГЇГ®Г«Гї ГўГўГ®Г¤Г .
 
 
     private void Start()
     {
-        // Инициализация при запуске сцены.
+        // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї ГЇГ°ГЁ Г§Г ГЇГіГ±ГЄГҐ Г±Г¶ГҐГ­Г».
 
         Application.targetFrameRate = 60;
-        // Установка целевой частоты кадров.
+        // Г“Г±ГІГ Г­Г®ГўГЄГ  Г¶ГҐГ«ГҐГўГ®Г© Г·Г Г±ГІГ®ГІГ» ГЄГ Г¤Г°Г®Гў.
 
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
         chief_name.text = user.username;
         
-        // Загрузка имени пользователя из файла и отображение его на экране.
+        // Г‡Г ГЈГ°ГіГ§ГЄГ  ГЁГ¬ГҐГ­ГЁ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї ГЁГ§ ГґГ Г©Г«Г  ГЁ Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГҐ ГҐГЈГ® Г­Г  ГЅГЄГ°Г Г­ГҐ.
     }
 
     public void SelectImage()
     {
-        // Выбор изображения из галереи или камеры.
+        // Г‚Г»ГЎГ®Г° ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї ГЁГ§ ГЈГ Г«ГҐГ°ГҐГЁ ГЁГ«ГЁ ГЄГ Г¬ГҐГ°Г».
 
         if (!camera_but_anim.GetBool("is_open"))
         {
@@ -67,7 +67,7 @@ public class AddChief : MonoBehaviour
 
     void Anim()
     {
-        // Закрытие анимации выбора изображения.
+        // Г‡Г ГЄГ°Г»ГІГЁГҐ Г Г­ГЁГ¬Г Г¶ГЁГЁ ГўГ»ГЎГ®Г°Г  ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї.
 
         if (camera_but_anim.GetBool("is_open"))
         {
@@ -80,7 +80,7 @@ public class AddChief : MonoBehaviour
 
     public void Camera()
     {
-        // Сделать фото с помощью камеры.
+        // Г‘Г¤ГҐГ«Г ГІГј ГґГ®ГІГ® Г± ГЇГ®Г¬Г®Г№ГјГѕ ГЄГ Г¬ГҐГ°Г».
 
         Anim();
         if (NativeCamera.IsCameraBusy())
@@ -90,7 +90,7 @@ public class AddChief : MonoBehaviour
 
     public void Gallery()
     {
-        // Выбор изображения из галереи.
+        // Г‚Г»ГЎГ®Г° ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї ГЁГ§ ГЈГ Г«ГҐГ°ГҐГЁ.
 
         Anim();
         if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
@@ -103,14 +103,14 @@ public class AddChief : MonoBehaviour
 
     private void TakePicture(int maxSize)
     {
-        // Сделать фото с помощью камеры.
+        // Г‘Г¤ГҐГ«Г ГІГј ГґГ®ГІГ® Г± ГЇГ®Г¬Г®Г№ГјГѕ ГЄГ Г¬ГҐГ°Г».
 
         NativeCamera.Permission permission = NativeCamera.TakePicture((imagePath) =>
         {
             Debug.Log("Image path: " + imagePath);
             if (imagePath != null)
             {
-                // Создание текстуры из захваченного изображения
+                // Г‘Г®Г§Г¤Г Г­ГЁГҐ ГІГҐГЄГ±ГІГіГ°Г» ГЁГ§ Г§Г ГµГўГ Г·ГҐГ­Г­Г®ГЈГ® ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї
                 Texture2D texture = NativeCamera.LoadImageAtPath(imagePath, maxSize, false, true);
                 if (texture == null)
                 {
@@ -130,7 +130,7 @@ public class AddChief : MonoBehaviour
 
     private IEnumerator LoadImageFromGallery()
     {
-        // Открыть галерею и дождаться, пока пользователь выберет изображение.
+        // ГЋГІГЄГ°Г»ГІГј ГЈГ Г«ГҐГ°ГҐГѕ ГЁ Г¤Г®Г¦Г¤Г ГІГјГ±Гї, ГЇГ®ГЄГ  ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гј ГўГ»ГЎГҐГ°ГҐГІ ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГҐ.
 
         var pickImageOperation = NativeGallery.GetImageFromGallery((path) =>
         {
@@ -141,20 +141,20 @@ public class AddChief : MonoBehaviour
             }
         });
 
-        // Дождитесь завершения операции выбора изображения
+        // Г„Г®Г¦Г¤ГЁГІГҐГ±Гј Г§Г ГўГҐГ°ГёГҐГ­ГЁГї Г®ГЇГҐГ°Г Г¶ГЁГЁ ГўГ»ГЎГ®Г°Г  ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї
         yield return pickImageOperation;
     }
 
     private IEnumerator LoadImage(string imagePath)
     {
-        // Загрузить изображение по указанному пути.
+        // Г‡Г ГЈГ°ГіГ§ГЁГІГј ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГҐ ГЇГ® ГіГЄГ Г§Г Г­Г­Г®Г¬Гі ГЇГіГІГЁ.
 
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("file://" + imagePath);
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
-            // Получить текстуру из загруженного изображения
+            // ГЏГ®Г«ГіГ·ГЁГІГј ГІГҐГЄГ±ГІГіГ°Гі ГЁГ§ Г§Г ГЈГ°ГіГ¦ГҐГ­Г­Г®ГЈГ® ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї
             Texture2D texture = DownloadHandlerTexture.GetContent(www);
             float c = (texture.width * 1.0f) / texture.height;
             AspectRatioFitter image_aspect = image.GetComponent<AspectRatioFitter>();
@@ -170,7 +170,7 @@ public class AddChief : MonoBehaviour
 
     public void UploadImage()
     {
-        // Загрузка изображения на сервер.
+        // Г‡Г ГЈГ°ГіГ§ГЄГ  ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї Г­Г  Г±ГҐГ°ГўГҐГ°.
         if (imagePath == "" || phone_number.text == "" || metro.text == "" || short_about_yourself.text == "")
         {
             all_fields_must.SetTrigger("must");
@@ -181,14 +181,14 @@ public class AddChief : MonoBehaviour
 
     public void Update_Chief()
     {
-        // Обновление информации о шефе.
+        // ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГЁ Г® ГёГҐГґГҐ.
 
         StartCoroutine(SendImage(true));
     }
 
     private IEnumerator SendImage(bool is_update)
     {
-        // Отправка данных на сервер.
+        // ГЋГІГЇГ°Г ГўГЄГ  Г¤Г Г­Г­Г»Гµ Г­Г  Г±ГҐГ°ГўГҐГ°.
 
         WWWForm form = new WWWForm();
         form.AddField("username", chief_name.text);
@@ -211,12 +211,12 @@ public class AddChief : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success && www.downloadHandler.text == "ok")
             {
-                Debug.Log("Шеф добавлен или Информация обновлена");
+                Debug.Log("ГГҐГґ Г¤Г®ГЎГ ГўГ«ГҐГ­ ГЁГ«ГЁ Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГї Г®ГЎГ­Г®ГўГ«ГҐГ­Г ");
                 SceneManager.LoadScene("MainForChief");
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Г‹ГЁГЎГ® Г®ГёГЁГЎГЄГ  Г±Г® Г±ГІГ®Г°Г®Г­Г» Г±ГҐГ°ГўГҐГ°Г " + www.error + ", Г«ГЁГЎГ® ГІГ ГЄГ®Г© Г°ГҐГ¶ГҐГЇГІ ГўГ» ГіГ¦ГҐ ГЇГЁГ±Г Г«ГЁ");
             }
             www.Dispose();
         }
@@ -224,7 +224,7 @@ public class AddChief : MonoBehaviour
 
     public void OnChangesPhoneNumber()
     {
-        // Изменение формата ввода телефонного номера.
+        // Г€Г§Г¬ГҐГ­ГҐГ­ГЁГҐ ГґГ®Г°Г¬Г ГІГ  ГўГўГ®Г¤Г  ГІГҐГ«ГҐГґГ®Г­Г­Г®ГЈГ® Г­Г®Г¬ГҐГ°Г .
 
         if (phone_number.text.Length == count - 1)
         {
