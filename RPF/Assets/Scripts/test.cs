@@ -15,11 +15,11 @@ namespace US.UI
 
         private void Start()
         {
-            // Получаем ссылку на компонент ScrollRect в родительском объекте и компонент TMP_InputField в текущем объекте
+            // РџРѕР»СѓС‡Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РєРѕРјРїРѕРЅРµРЅС‚ ScrollRect РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ Рё РєРѕРјРїРѕРЅРµРЅС‚ TMP_InputField РІ С‚РµРєСѓС‰РµРј РѕР±СЉРµРєС‚Рµ
             _scrollRect = GetComponentInParent<ScrollRect>();
             _input = GetComponent<TMP_InputField>();
-            _input.DeactivateInputField();  // Выключаем компонент ввода текста
-            _input.onDeselect.AddListener(_ => _preventScrollRectDrag = false); // Подписываемся на событие "onDeselect"
+            _input.DeactivateInputField();  // Р’С‹РєР»СЋС‡Р°РµРј РєРѕРјРїРѕРЅРµРЅС‚ РІРІРѕРґР° С‚РµРєСЃС‚Р°
+            _input.onDeselect.AddListener(_ => _preventScrollRectDrag = false); // РџРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РЅР° СЃРѕР±С‹С‚РёРµ "onDeselect"
         }
 
         public void OnBeginDrag(PointerEventData data)
@@ -27,29 +27,29 @@ namespace US.UI
             if (_preventScrollRectDrag)
                 return;
 
-            // Начало перетаскивания - перенаправляем событие в ScrollRect
+            // РќР°С‡Р°Р»Рѕ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ - РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ РІ ScrollRect
             _scrollRect.OnBeginDrag(data);
             _isDragging = true;
 
-            _input.DeactivateInputField(); // Выключаем компонент ввода текста
+            _input.DeactivateInputField(); // Р’С‹РєР»СЋС‡Р°РµРј РєРѕРјРїРѕРЅРµРЅС‚ РІРІРѕРґР° С‚РµРєСЃС‚Р°
         }
 
         public void OnDrag(PointerEventData data)
         {
-            // Продолжение перетаскивания - перенаправляем событие в ScrollRect
+            // РџСЂРѕРґРѕР»Р¶РµРЅРёРµ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ - РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ РІ ScrollRect
             _scrollRect.OnDrag(data);
         }
 
         public void OnEndDrag(PointerEventData data)
         {
-            // Окончание перетаскивания - перенаправляем событие в ScrollRect
+            // РћРєРѕРЅС‡Р°РЅРёРµ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ - РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ РІ ScrollRect
             _scrollRect.OnEndDrag(data);
             _isDragging = false;
         }
 
         public void OnScroll(PointerEventData data)
         {
-            // Обработка скроллинга - перенаправляем событие в ScrollRect
+            // РћР±СЂР°Р±РѕС‚РєР° СЃРєСЂРѕР»Р»РёРЅРіР° - РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ РІ ScrollRect
             _scrollRect.OnScroll(data);
         }
 
@@ -57,8 +57,8 @@ namespace US.UI
         {
             if (!_isDragging && !data.dragging)
             {
-                // Если не происходит перетаскивания и событие не связано с перетаскиванием
-                // Включаем компонент ввода текста и предотвращаем перетаскивание ScrollRect
+                // Р•СЃР»Рё РЅРµ РїСЂРѕРёСЃС…РѕРґРёС‚ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ Рё СЃРѕР±С‹С‚РёРµ РЅРµ СЃРІСЏР·Р°РЅРѕ СЃ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёРµРј
+                // Р’РєР»СЋС‡Р°РµРј РєРѕРјРїРѕРЅРµРЅС‚ РІРІРѕРґР° С‚РµРєСЃС‚Р° Рё РїСЂРµРґРѕС‚РІСЂР°С‰Р°РµРј РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёРµ ScrollRect
                 _input.ActivateInputField();
                 _preventScrollRectDrag = true;
             }
