@@ -5,81 +5,81 @@ using TMPro;
 
 public class Panel_Units : MonoBehaviour
 {
-    // Ссылка на аниматор панели для выбора единиц измерения.
+    // РЎСЃС‹Р»РєР° РЅР° Р°РЅРёРјР°С‚РѕСЂ РїР°РЅРµР»Рё РґР»СЏ РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ.
     Animator panel;
 
-    // Метод, вызываемый при старте компонента.
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё СЃС‚Р°СЂС‚Рµ РєРѕРјРїРѕРЅРµРЅС‚Р°.
     private void Start()
     {
-        // Находим и сохраняем ссылку на аниматор панели с тегом "panel_units".
+        // РќР°С…РѕРґРёРј Рё СЃРѕС…СЂР°РЅСЏРµРј СЃСЃС‹Р»РєСѓ РЅР° Р°РЅРёРјР°С‚РѕСЂ РїР°РЅРµР»Рё СЃ С‚РµРіРѕРј "panel_units".
         panel = GameObject.FindGameObjectWithTag("panel_units").GetComponent<Animator>();
     }
 
-    // Метод, вызываемый при изменении выбора единиц измерения.
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё РёР·РјРµРЅРµРЅРёРё РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ.
     public void OnChanged()
     {
-        // Сохраняем ссылку на текущий объект в BetweenScenes.units.
+        // РЎРѕС…СЂР°РЅСЏРµРј СЃСЃС‹Р»РєСѓ РЅР° С‚РµРєСѓС‰РёР№ РѕР±СЉРµРєС‚ РІ BetweenScenes.units.
         BetweenScenes.units = gameObject.gameObject;
 
-        // Если панель открыта, закрываем её; иначе открываем.
+        // Р•СЃР»Рё РїР°РЅРµР»СЊ РѕС‚РєСЂС‹С‚Р°, Р·Р°РєСЂС‹РІР°РµРј РµС‘; РёРЅР°С‡Рµ РѕС‚РєСЂС‹РІР°РµРј.
         if (panel.GetBool("is_open"))
             panel.SetBool("is_open", false);
         else
             panel.SetBool("is_open", true);
     }
 
-    // Метод для выбора единиц измерения "граммы".
+    // РњРµС‚РѕРґ РґР»СЏ РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ "РіСЂР°РјРјС‹".
     public void Grams()
     {
-        // Устанавливаем текстовое значение в BetweenScenes.units.
-        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "граммы";
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ BetweenScenes.units.
+        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "РіСЂР°РјРјС‹";
         BetweenScenes.units.transform.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = "";
 
-        // Закрываем панель.
+        // Р—Р°РєСЂС‹РІР°РµРј РїР°РЅРµР»СЊ.
         panel.SetBool("is_open", false);
     }
 
-    // Метод для выбора единиц измерения "миллилитры".
+    // РњРµС‚РѕРґ РґР»СЏ РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ "РјРёР»Р»РёР»РёС‚СЂС‹".
     public void Millilitres()
     {
-        // Устанавливаем текстовое значение в BetweenScenes.units.
-        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "миллилитры";
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ BetweenScenes.units.
+        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "РјРёР»Р»РёР»РёС‚СЂС‹";
         BetweenScenes.units.transform.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = "";
 
-        // Закрываем панель.
+        // Р—Р°РєСЂС‹РІР°РµРј РїР°РЅРµР»СЊ.
         panel.SetBool("is_open", false);
     }
 
-    // Метод для выбора единиц измерения "чайная ложка".
+    // РњРµС‚РѕРґ РґР»СЏ РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ "С‡Р°Р№РЅР°СЏ Р»РѕР¶РєР°".
     public void Smal_Spoon()
     {
-        // Устанавливаем текстовое значение в BetweenScenes.units.
-        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "чайная\nложка";
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ BetweenScenes.units.
+        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "С‡Р°Р№РЅР°СЏ\nР»РѕР¶РєР°";
         BetweenScenes.units.transform.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = "";
 
-        // Закрываем панель.
+        // Р—Р°РєСЂС‹РІР°РµРј РїР°РЅРµР»СЊ.
         panel.SetBool("is_open", false);
     }
 
-    // Метод для выбора единиц измерения "столовая ложка".
+    // РњРµС‚РѕРґ РґР»СЏ РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ "СЃС‚РѕР»РѕРІР°СЏ Р»РѕР¶РєР°".
     public void BigSpoon()
     {
-        // Устанавливаем текстовое значение в BetweenScenes.units.
-        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "столовая\nложка";
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ BetweenScenes.units.
+        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "СЃС‚РѕР»РѕРІР°СЏ\nР»РѕР¶РєР°";
         BetweenScenes.units.transform.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = "";
 
-        // Закрываем панель.
+        // Р—Р°РєСЂС‹РІР°РµРј РїР°РЅРµР»СЊ.
         panel.SetBool("is_open", false);
     }
 
-    // Метод для выбора единиц измерения "штуки".
+    // РњРµС‚РѕРґ РґР»СЏ РІС‹Р±РѕСЂР° РµРґРёРЅРёС† РёР·РјРµСЂРµРЅРёСЏ "С€С‚СѓРєРё".
     public void Pieces()
     {
-        // Устанавливаем текстовое значение в BetweenScenes.units.
-        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "штуки";
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ BetweenScenes.units.
+        BetweenScenes.units.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "С€С‚СѓРєРё";
         BetweenScenes.units.transform.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = "";
 
-        // Закрываем панель.
+        // Р—Р°РєСЂС‹РІР°РµРј РїР°РЅРµР»СЊ.
         panel.SetBool("is_open", false);
     }
 
