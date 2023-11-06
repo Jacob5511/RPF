@@ -26,7 +26,7 @@ public class LoadAllRequests : MonoBehaviour
 
     private IEnumerator Check_And_Load()
     {
-        // Проверка наличия интернет-соединения
+        // РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёСЏ
         yield return StartCoroutine(game_manager.CheckInternetConnection(isConnected =>
         {
             if (!isConnected)
@@ -36,13 +36,13 @@ public class LoadAllRequests : MonoBehaviour
             }
         }));
 
-        // Восстановление данных поиска
+        // Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С… РїРѕРёСЃРєР°
         search_bar.text = BetweenScenes.search_data;
         price_from.text = BetweenScenes.price_from;
         price_to.text = BetweenScenes.price_to;
         metro_input.text = BetweenScenes.metro;
 
-        // Загрузка рецептов
+        // Р—Р°РіСЂСѓР·РєР° СЂРµС†РµРїС‚РѕРІ
         StartCoroutine(Main_Load_Ricipes());
     }
 
@@ -54,7 +54,7 @@ public class LoadAllRequests : MonoBehaviour
         form.AddField("price_to", price_to.text);
         form.AddField("metro", metro_input.text);
 
-        // Отправка POST-запроса для получения рецептов
+        // РћС‚РїСЂР°РІРєР° POST-Р·Р°РїСЂРѕСЃР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЂРµС†РµРїС‚РѕРІ
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             yield return www.SendWebRequest();
@@ -65,13 +65,13 @@ public class LoadAllRequests : MonoBehaviour
 
                 if (json == "no_results")
                 {
-                    // Обработка случая, когда нет результатов
+                    // РћР±СЂР°Р±РѕС‚РєР° СЃР»СѓС‡Р°СЏ, РєРѕРіРґР° РЅРµС‚ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
                     no_results.Play("No_Results");
                     no_results_text.Play("No_Results_text");
                 }
                 else
                 {
-                    // Очистка существующих рецептов
+                    // РћС‡РёСЃС‚РєР° СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёС… СЂРµС†РµРїС‚РѕРІ
                     int childCount = parentObject.childCount;
                     for (int i = childCount - 1; i >= 0; i--)
                     {
@@ -81,13 +81,13 @@ public class LoadAllRequests : MonoBehaviour
                     loading_screen_anim.SetTrigger("must_close");
                     scroll.SetActive(true);
 
-                    // Загрузка и отображение новых рецептов
+                    // Р—Р°РіСЂСѓР·РєР° Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РЅРѕРІС‹С… СЂРµС†РµРїС‚РѕРІ
                     Load(json);
                 }
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
             }
             www.Dispose();
         }
@@ -95,7 +95,7 @@ public class LoadAllRequests : MonoBehaviour
 
     public void Send_Data()
     {
-        // Отправка данных для поиска
+        // РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… РґР»СЏ РїРѕРёСЃРєР°
         search_bar.text = search_bar.text.Trim();
         if (open_panel.GetBool("is_open"))
         {
@@ -110,7 +110,7 @@ public class LoadAllRequests : MonoBehaviour
 
     public void SendSort()
     {
-        // Отправка данных для сортировки и загрузка рецептов
+        // РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё Рё Р·Р°РіСЂСѓР·РєР° СЂРµС†РµРїС‚РѕРІ
         //open_panel.SetBool("is_open", false);
         animation_script.Open_Panel();
         StartCoroutine(Main_Load_Ricipes());
@@ -118,13 +118,13 @@ public class LoadAllRequests : MonoBehaviour
 
     private void Load(string json)
     {
-        // Загрузка и отображение рецептов на основе полученных данных
+        // Р—Р°РіСЂСѓР·РєР° Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ СЂРµС†РµРїС‚РѕРІ РЅР° РѕСЃРЅРѕРІРµ РїРѕР»СѓС‡РµРЅРЅС‹С… РґР°РЅРЅС‹С…
         RootObjectRequests requestData = JsonUtility.FromJson<RootObjectRequests>("{\"requests\":" + json + "}");
         for (int i = 0; i < requestData.requests.Length; i++)
         {
             RecipeDataRequests request = requestData.requests[i];
 
-            // Создаем экземпляр префаба
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р°
             GameObject instantiatedPrefab = Instantiate(prefab, parentObject);
             instantiatedPrefab.name = request.id;
             recipe_name = instantiatedPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -133,13 +133,13 @@ public class LoadAllRequests : MonoBehaviour
 
             recipe_name.text = request.request_name;
             metro.text = request.metro;
-            price.text = request.price + " руб";
+            price.text = request.price + " СЂСѓР±";
 
-            // Обновляем размер префаба в родительском объекте
+            // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ РїСЂРµС„Р°Р±Р° РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ
             LayoutRebuilder.ForceRebuildLayoutImmediate(parentObject);
         }
 
-        // Устанавливаем размер маски в соответствии с содержимым
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ РјР°СЃРєРё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СЃРѕРґРµСЂР¶РёРјС‹Рј
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 1f;
     }
@@ -151,15 +151,15 @@ public class LoadAllRequests : MonoBehaviour
 [Serializable]
 public class RecipeDataRequests
 {
-    public string id;           // Уникальный идентификатор рецепта
-    public string request_name; // Название рецепта
-    public string metro;        // Метро, связанное с рецептом
-    public string price;        // Стоимость рецепта
+    public string id;           // РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРµС†РµРїС‚Р°
+    public string request_name; // РќР°Р·РІР°РЅРёРµ СЂРµС†РµРїС‚Р°
+    public string metro;        // РњРµС‚СЂРѕ, СЃРІСЏР·Р°РЅРЅРѕРµ СЃ СЂРµС†РµРїС‚РѕРј
+    public string price;        // РЎС‚РѕРёРјРѕСЃС‚СЊ СЂРµС†РµРїС‚Р°
 }
 
 [Serializable]
 public class RootObjectRequests
 {
-    public RecipeDataRequests[] requests; // Массив данных рецептов, содержащихся в корневом объекте
+    public RecipeDataRequests[] requests; // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… СЂРµС†РµРїС‚РѕРІ, СЃРѕРґРµСЂР¶Р°С‰РёС…СЃСЏ РІ РєРѕСЂРЅРµРІРѕРј РѕР±СЉРµРєС‚Рµ
 }
 
