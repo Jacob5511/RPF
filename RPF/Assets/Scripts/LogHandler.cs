@@ -3,45 +3,45 @@ using UnityEngine.SceneManagement;
 
 public class LogHandler : MonoBehaviour
 {
-    public Animator anim; // Ссылка на компонент Animator для управления анимацией
-    private GameObject loading_screen; // Ссылка на объект экрана загрузки
+    public Animator anim; // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ Animator РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ Р°РЅРёРјР°С†РёРµР№
+    private GameObject loading_screen; // РЎСЃС‹Р»РєР° РЅР° РѕР±СЉРµРєС‚ СЌРєСЂР°РЅР° Р·Р°РіСЂСѓР·РєРё
 
-    // Вызывается при включении объекта
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё РІРєР»СЋС‡РµРЅРёРё РѕР±СЉРµРєС‚Р°
     private void OnEnable()
     {
-        anim = gameObject.GetComponent<Animator>(); // Получаем компонент Animator
-        Application.logMessageReceived += HandleException; // Регистрируем функцию HandleException для обработки сообщений об ошибках
+        anim = gameObject.GetComponent<Animator>(); // РџРѕР»СѓС‡Р°РµРј РєРѕРјРїРѕРЅРµРЅС‚ Animator
+        Application.logMessageReceived += HandleException; // Р РµРіРёСЃС‚СЂРёСЂСѓРµРј С„СѓРЅРєС†РёСЋ HandleException РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№ РѕР± РѕС€РёР±РєР°С…
     }
 
-    // Вызывается при выключении объекта
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё РІС‹РєР»СЋС‡РµРЅРёРё РѕР±СЉРµРєС‚Р°
     private void OnDisable()
     {
-        Application.logMessageReceived -= HandleException; // Отменяем регистрацию функции HandleException
+        Application.logMessageReceived -= HandleException; // РћС‚РјРµРЅСЏРµРј СЂРµРіРёСЃС‚СЂР°С†РёСЋ С„СѓРЅРєС†РёРё HandleException
     }
 
-    // Функция для обработки сообщений об ошибках и исключениях
+    // Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№ РѕР± РѕС€РёР±РєР°С… Рё РёСЃРєР»СЋС‡РµРЅРёСЏС…
     void HandleException(string logString, string stackTrace, LogType type)
     {
         if (type == LogType.Exception || type == LogType.Error)
         {
-            anim.SetTrigger("must"); // Запускаем анимацию ошибки
+            anim.SetTrigger("must"); // Р—Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ РѕС€РёР±РєРё
             if (logString.ToLower().Contains("gateway 502"))
             {
-                string current_scene = SceneManager.GetActiveScene().name; // Получаем имя текущей сцены
-                SceneManager.LoadScene(current_scene); // Перезагружаем текущую сцену
+                string current_scene = SceneManager.GetActiveScene().name; // РџРѕР»СѓС‡Р°РµРј РёРјСЏ С‚РµРєСѓС‰РµР№ СЃС†РµРЅС‹
+                SceneManager.LoadScene(current_scene); // РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ
             }
             try
             {
-                loading_screen = GameObject.FindGameObjectWithTag("loading_screen"); // Пытаемся найти объект экрана загрузки
+                loading_screen = GameObject.FindGameObjectWithTag("loading_screen"); // РџС‹С‚Р°РµРјСЃСЏ РЅР°Р№С‚Рё РѕР±СЉРµРєС‚ СЌРєСЂР°РЅР° Р·Р°РіСЂСѓР·РєРё
                 if (loading_screen.activeSelf)
                 {
-                    string current_scene = SceneManager.GetActiveScene().name; // Получаем имя текущей сцены
-                    SceneManager.LoadScene(current_scene); // Перезагружаем текущую сцену
+                    string current_scene = SceneManager.GetActiveScene().name; // РџРѕР»СѓС‡Р°РµРј РёРјСЏ С‚РµРєСѓС‰РµР№ СЃС†РµРЅС‹
+                    SceneManager.LoadScene(current_scene); // РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ
                 }
             }
             catch
             {
-                // Пустой блок catch для обработки исключений, если что-то пошло не так
+                // РџСѓСЃС‚РѕР№ Р±Р»РѕРє catch РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РёСЃРєР»СЋС‡РµРЅРёР№, РµСЃР»Рё С‡С‚Рѕ-С‚Рѕ РїРѕС€Р»Рѕ РЅРµ С‚Р°Рє
             }
         }
     }
