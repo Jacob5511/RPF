@@ -11,83 +11,83 @@ using System.Linq;
 public class About_Recipe : MonoBehaviour
 {
     string url = "http://22.cshse.beget.tech/about_recipe";
-    // URL для загрузки информации о рецепте из сети.
+    // URL РґР»СЏ Р·Р°РіСЂСѓР·РєРё РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРµС†РµРїС‚Рµ РёР· СЃРµС‚Рё.
 
     string send_estimate_url = "http://22.cshse.beget.tech/send_estimate";
-    // URL для отправки оценки рецепта.
+    // URL РґР»СЏ РѕС‚РїСЂР°РІРєРё РѕС†РµРЅРєРё СЂРµС†РµРїС‚Р°.
 
     string delete_recipe_url = "http://22.cshse.beget.tech/delete_recipe";
-    // URL для удаления рецепта.
+    // URL РґР»СЏ СѓРґР°Р»РµРЅРёСЏ СЂРµС†РµРїС‚Р°.
 
     int index_steps = 0;
-    // Индекс текущего шага приготовления.
+    // РРЅРґРµРєСЃ С‚РµРєСѓС‰РµРіРѕ С€Р°РіР° РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
 
     int star_count = 0;
-    // Количество выбранных звёзд для оценки рецепта.
+    // РљРѕР»РёС‡РµСЃС‚РІРѕ РІС‹Р±СЂР°РЅРЅС‹С… Р·РІС‘Р·Рґ РґР»СЏ РѕС†РµРЅРєРё СЂРµС†РµРїС‚Р°.
 
     string recipe_name, description, ingredients, stepsDescriptions, linksToPictures, timers, recipe_data_ingredients;
-    // Различные данные о рецепте, такие как название, описание, ингредиенты, описание шагов, ссылки на изображения, информация о таймерах.
+    // Р Р°Р·Р»РёС‡РЅС‹Рµ РґР°РЅРЅС‹Рµ Рѕ СЂРµС†РµРїС‚Рµ, С‚Р°РєРёРµ РєР°Рє РЅР°Р·РІР°РЅРёРµ, РѕРїРёСЃР°РЅРёРµ, РёРЅРіСЂРµРґРёРµРЅС‚С‹, РѕРїРёСЃР°РЅРёРµ С€Р°РіРѕРІ, СЃСЃС‹Р»РєРё РЅР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С‚Р°Р№РјРµСЂР°С….
 
     public string recipe_id;
-    // Идентификатор рецепта (public для доступа извне).
+    // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРµС†РµРїС‚Р° (public РґР»СЏ РґРѕСЃС‚СѓРїР° РёР·РІРЅРµ).
 
     Texture texture;
-    // Текстура изображения рецепта.
+    // РўРµРєСЃС‚СѓСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ СЂРµС†РµРїС‚Р°.
 
     public RawImage main_foto;
-    // Главное изображение рецепта.
+    // Р“Р»Р°РІРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ СЂРµС†РµРїС‚Р°.
 
     public TMP_Text recipe_name_text, desc, ingr;
-    // Текстовые поля для отображения информации о рецепте.
+    // РўРµРєСЃС‚РѕРІС‹Рµ РїРѕР»СЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРµС†РµРїС‚Рµ.
 
     public GameObject stepPrefab, ing_desc_con, timer_prefab, start_cook, cooking_1, home, previous_step, next_step, name_rawimage, finish, apply_object, buttons, name_object, buttons_down, loading_screen, scroll, download_recipe, delete_download_recipe;
-    // Различные игровые объекты и интерфейсные элементы.
+    // Р Р°Р·Р»РёС‡РЅС‹Рµ РёРіСЂРѕРІС‹Рµ РѕР±СЉРµРєС‚С‹ Рё РёРЅС‚РµСЂС„РµР№СЃРЅС‹Рµ СЌР»РµРјРµРЅС‚С‹.
 
     public Animator estimate, apply, are_you_sure_to_delete, loading_screen_anim;
-    // Аниматоры для различных действий и переходов в интерфейсе.
+    // РђРЅРёРјР°С‚РѕСЂС‹ РґР»СЏ СЂР°Р·Р»РёС‡РЅС‹С… РґРµР№СЃС‚РІРёР№ Рё РїРµСЂРµС…РѕРґРѕРІ РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
 
     GameObject timer, start_cook_destroy;
-    // Игровые объекты, используемые для таймеров и перехода к началу приготовления.
+    // РРіСЂРѕРІС‹Рµ РѕР±СЉРµРєС‚С‹, РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РґР»СЏ С‚Р°Р№РјРµСЂРѕРІ Рё РїРµСЂРµС…РѕРґР° Рє РЅР°С‡Р°Р»Сѓ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
 
     public RectTransform content;
-    // RectTransform для управления контентом внутри ScrollRect.
+    // RectTransform РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РєРѕРЅС‚РµРЅС‚РѕРј РІРЅСѓС‚СЂРё ScrollRect.
 
     public ScrollRect scrollRect;
-    // ScrollRect для прокрутки контента.
+    // ScrollRect РґР»СЏ РїСЂРѕРєСЂСѓС‚РєРё РєРѕРЅС‚РµРЅС‚Р°.
 
     string[] timers_list;
-    // Массив строк для хранения информации о таймерах.
+    // РњР°СЃСЃРёРІ СЃС‚СЂРѕРє РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚Р°Р№РјРµСЂР°С….
 
     public List<GameObject> step_prefab_list = new List<GameObject>();
-    // Список игровых объектов, представляющих шаги приготовления.
+    // РЎРїРёСЃРѕРє РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёС… С€Р°РіРё РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
 
     public List<GameObject> stars = new List<GameObject>();
-    // Список игровых объектов, представляющих звёзды для оценки рецепта.
+    // РЎРїРёСЃРѕРє РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёС… Р·РІС‘Р·РґС‹ РґР»СЏ РѕС†РµРЅРєРё СЂРµС†РµРїС‚Р°.
 
     public Sprite full_star, not_selected_star;
-    // Спрайты для полных и не выбранных звёзд.
+    // РЎРїСЂР°Р№С‚С‹ РґР»СЏ РїРѕР»РЅС‹С… Рё РЅРµ РІС‹Р±СЂР°РЅРЅС‹С… Р·РІС‘Р·Рґ.
 
     public GameManager game_manager;
-    // Ссылка на компонент GameManager, вероятно, для управления игровой логикой.
+    // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ GameManager, РІРµСЂРѕСЏС‚РЅРѕ, РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РёРіСЂРѕРІРѕР№ Р»РѕРіРёРєРѕР№.
 
 
 
     public void Start()
     {
-        // Устанавливаем целевую частоту кадров на 60 кадров в секунду.
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С†РµР»РµРІСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ РєР°РґСЂРѕРІ РЅР° 60 РєР°РґСЂРѕРІ РІ СЃРµРєСѓРЅРґСѓ.
         Application.targetFrameRate = 60;
 
-        // Проверяем подключение к интернету перед продолжением выполнения кода.
+        // РџСЂРѕРІРµСЂСЏРµРј РїРѕРґРєР»СЋС‡РµРЅРёРµ Рє РёРЅС‚РµСЂРЅРµС‚Сѓ РїРµСЂРµРґ РїСЂРѕРґРѕР»Р¶РµРЅРёРµРј РІС‹РїРѕР»РЅРµРЅРёСЏ РєРѕРґР°.
         StartCoroutine(game_manager.CheckInternetConnection(isConnected =>
         {
-            // Если нет подключения к интернету и ресурс еще не загружен, переходим на сцену "MainScene".
+            // Р•СЃР»Рё РЅРµС‚ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє РёРЅС‚РµСЂРЅРµС‚Сѓ Рё СЂРµСЃСѓСЂСЃ РµС‰Рµ РЅРµ Р·Р°РіСЂСѓР¶РµРЅ, РїРµСЂРµС…РѕРґРёРј РЅР° СЃС†РµРЅСѓ "MainScene".
             if (!isConnected && !BetweenScenes.is_downloaded)
             {
                 SceneManager.LoadScene("MainScene");
             }
         }));
 
-        // Получаем ссылку на изображение и настраиваем соотношение сторон.
+        // РџРѕР»СѓС‡Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РёР·РѕР±СЂР°Р¶РµРЅРёРµ Рё РЅР°СЃС‚СЂР°РёРІР°РµРј СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ СЃС‚РѕСЂРѕРЅ.
         RawImage cooking_1_image = cooking_1.transform.GetChild(0).GetChild(0).GetComponent<RawImage>();
         AspectRatioFitter cooking_1_image_aspect = cooking_1.transform.GetChild(0).GetChild(0).GetComponent<AspectRatioFitter>();
         texture = BetweenScenes.texture;
@@ -99,23 +99,23 @@ public class About_Recipe : MonoBehaviour
         main_foto.texture = texture;
         main_foto.name = BetweenScenes.recipe_file_name;
 
-        // Устанавливаем имя рецепта и его текстовое описание.
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёРјСЏ СЂРµС†РµРїС‚Р° Рё РµРіРѕ С‚РµРєСЃС‚РѕРІРѕРµ РѕРїРёСЃР°РЅРёРµ.
         recipe_name = BetweenScenes.recipe_name;
         recipe_name_text.text = recipe_name;
 
-        // Добавляем текущий шаг в список шагов.
+        // Р”РѕР±Р°РІР»СЏРµРј С‚РµРєСѓС‰РёР№ С€Р°Рі РІ СЃРїРёСЃРѕРє С€Р°РіРѕРІ.
         step_prefab_list.Add(cooking_1);
 
-        // Задаем путь для загрузки рецептов.
+        // Р—Р°РґР°РµРј РїСѓС‚СЊ РґР»СЏ Р·Р°РіСЂСѓР·РєРё СЂРµС†РµРїС‚РѕРІ.
         string download_path = Path.Combine(Application.persistentDataPath, "recipes");
 
         try
         {
-            // Пытаемся прочитать информацию о загруженных рецептах.
+            // РџС‹С‚Р°РµРјСЃСЏ РїСЂРѕС‡РёС‚Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… СЂРµС†РµРїС‚Р°С….
             string download_json = File.ReadAllText(Path.Combine(download_path, "text_info.txt"));
             DownloadRecipeObject download_recipe_object = JsonUtility.FromJson<DownloadRecipeObject>(download_json);
 
-            // Проверяем, существует ли рецепт с данным ID в списке загруженных, и активируем соответствующую кнопку.
+            // РџСЂРѕРІРµСЂСЏРµРј, СЃСѓС‰РµСЃС‚РІСѓРµС‚ Р»Рё СЂРµС†РµРїС‚ СЃ РґР°РЅРЅС‹Рј ID РІ СЃРїРёСЃРєРµ Р·Р°РіСЂСѓР¶РµРЅРЅС‹С…, Рё Р°РєС‚РёРІРёСЂСѓРµРј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰СѓСЋ РєРЅРѕРїРєСѓ.
             print(download_recipe_object.recipes.Length);
             for (int i = 0; i < download_recipe_object.recipes.Length; i++)
             {
@@ -128,11 +128,11 @@ public class About_Recipe : MonoBehaviour
         }
         catch
         {
-            // Если возникает ошибка при чтении файла, скрываем кнопку удаления рецепта.
+            // Р•СЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё С‡С‚РµРЅРёРё С„Р°Р№Р»Р°, СЃРєСЂС‹РІР°РµРј РєРЅРѕРїРєСѓ СѓРґР°Р»РµРЅРёСЏ СЂРµС†РµРїС‚Р°.
             delete_download_recipe.SetActive(false);
         }
 
-        // Если рецепт уже загружен, скрываем кнопку загрузки и выполняем необходимые действия.
+        // Р•СЃР»Рё СЂРµС†РµРїС‚ СѓР¶Рµ Р·Р°РіСЂСѓР¶РµРЅ, СЃРєСЂС‹РІР°РµРј РєРЅРѕРїРєСѓ Р·Р°РіСЂСѓР·РєРё Рё РІС‹РїРѕР»РЅСЏРµРј РЅРµРѕР±С…РѕРґРёРјС‹Рµ РґРµР№СЃС‚РІРёСЏ.
         if (BetweenScenes.is_downloaded)
         {
             download_recipe.SetActive(false);
@@ -142,13 +142,13 @@ public class About_Recipe : MonoBehaviour
         }
         else
         {
-            // В противном случае загружаем информацию о рецепте с удаленного сервера.
+            // Р’ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ Р·Р°РіСЂСѓР¶Р°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂРµС†РµРїС‚Рµ СЃ СѓРґР°Р»РµРЅРЅРѕРіРѕ СЃРµСЂРІРµСЂР°.
             StartCoroutine(Load_All_About_Recipe(url));
         }
     }
     public void Stars(GameObject go)
     {
-        // Оцениваем рецепт, устанавливая звезды.
+        // РћС†РµРЅРёРІР°РµРј СЂРµС†РµРїС‚, СѓСЃС‚Р°РЅР°РІР»РёРІР°СЏ Р·РІРµР·РґС‹.
         int index = stars.IndexOf(go);
         for (int i = 0; i < stars.Count; i++)
         {
@@ -163,7 +163,7 @@ public class About_Recipe : MonoBehaviour
 
     public void Open_Apply()
     {
-        // Открываем или закрываем окно подтверждения.
+        // РћС‚РєСЂС‹РІР°РµРј РёР»Рё Р·Р°РєСЂС‹РІР°РµРј РѕРєРЅРѕ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ.
         if (apply.GetBool("is_open"))
             apply.SetBool("is_open", false);
         else
@@ -172,19 +172,19 @@ public class About_Recipe : MonoBehaviour
 
     public void Open_Estimate()
     {
-        // Открываем окно оценки.
+        // РћС‚РєСЂС‹РІР°РµРј РѕРєРЅРѕ РѕС†РµРЅРєРё.
         estimate.SetBool("is_open", true);
     }
 
     public void Send_Estimate()
     {
-        // Отправляем оценку на сервер.
+        // РћС‚РїСЂР°РІР»СЏРµРј РѕС†РµРЅРєСѓ РЅР° СЃРµСЂРІРµСЂ.
         StartCoroutine(Send());
     }
 
     private IEnumerator Send()
     {
-        // Отправка оценки на сервер.
+        // РћС‚РїСЂР°РІРєР° РѕС†РµРЅРєРё РЅР° СЃРµСЂРІРµСЂ.
         WWWForm form = new WWWForm();
         form.AddField("recipe_id", recipe_id);
         form.AddField("star_count", star_count);
@@ -198,13 +198,13 @@ public class About_Recipe : MonoBehaviour
                 string answer = www.downloadHandler.text;
                 if (answer == "ok")
                 {
-                    // Если оценка отправлена успешно, переходим на главную сцену.
+                    // Р•СЃР»Рё РѕС†РµРЅРєР° РѕС‚РїСЂР°РІР»РµРЅР° СѓСЃРїРµС€РЅРѕ, РїРµСЂРµС…РѕРґРёРј РЅР° РіР»Р°РІРЅСѓСЋ СЃС†РµРЅСѓ.
                     SceneManager.LoadScene("MainScene");
                 }
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error);
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error);
             }
             www.Dispose();
         }
@@ -212,7 +212,7 @@ public class About_Recipe : MonoBehaviour
 
     public void Start_Cooking()
     {
-        // Начинаем приготовление рецепта.
+        // РќР°С‡РёРЅР°РµРј РїСЂРёРіРѕС‚РѕРІР»РµРЅРёРµ СЂРµС†РµРїС‚Р°.
         foreach (GameObject obj in step_prefab_list)
         {
             Timer[] t = FindObjectsOfType<Timer>();
@@ -240,7 +240,7 @@ public class About_Recipe : MonoBehaviour
 
     public void Next_Step()
     {
-        // Переход к следующему шагу приготовления.
+        // РџРµСЂРµС…РѕРґ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ С€Р°РіСѓ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
         if (index_steps + 1 < step_prefab_list.Count)
             index_steps += 1;
         if (index_steps >= 1)
@@ -258,7 +258,7 @@ public class About_Recipe : MonoBehaviour
 
     public void Previous_Step()
     {
-        // Возврат к предыдущему шагу приготовления.
+        // Р’РѕР·РІСЂР°С‚ Рє РїСЂРµРґС‹РґСѓС‰РµРјСѓ С€Р°РіСѓ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
         if (index_steps - 1 >= 0)
             index_steps -= 1;
         if (index_steps == 0)
@@ -276,7 +276,7 @@ public class About_Recipe : MonoBehaviour
 
     public void Delete_Recipe()
     {
-        // Удаление рецепта с запросом на подтверждение.
+        // РЈРґР°Р»РµРЅРёРµ СЂРµС†РµРїС‚Р° СЃ Р·Р°РїСЂРѕСЃРѕРј РЅР° РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ.
         if (are_you_sure_to_delete.GetBool("is_open"))
         {
             StartCoroutine(Delete_Recipe_Request());
@@ -287,13 +287,13 @@ public class About_Recipe : MonoBehaviour
 
     public void I_Made_Mistake()
     {
-        // Отмена удаления рецепта.
+        // РћС‚РјРµРЅР° СѓРґР°Р»РµРЅРёСЏ СЂРµС†РµРїС‚Р°.
         are_you_sure_to_delete.SetBool("is_open", false);
     }
 
     private IEnumerator Delete_Recipe_Request()
     {
-        // Отправка запроса на удаление рецепта на сервер.
+        // РћС‚РїСЂР°РІРєР° Р·Р°РїСЂРѕСЃР° РЅР° СѓРґР°Р»РµРЅРёРµ СЂРµС†РµРїС‚Р° РЅР° СЃРµСЂРІРµСЂ.
         WWWForm form = new WWWForm();
         form.AddField("recipe_id", recipe_id);
 
@@ -306,14 +306,14 @@ public class About_Recipe : MonoBehaviour
                 string answer = www.downloadHandler.text;
                 if (answer == "ok")
                 {
-                    // Если удаление рецепта прошло успешно, выводим сообщение и переходим на главную сцену.
-                    print("Рецепт успешно удален");
+                    // Р•СЃР»Рё СѓРґР°Р»РµРЅРёРµ СЂРµС†РµРїС‚Р° РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ Рё РїРµСЂРµС…РѕРґРёРј РЅР° РіР»Р°РІРЅСѓСЋ СЃС†РµРЅСѓ.
+                    print("Р РµС†РµРїС‚ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ");
                     SceneManager.LoadScene("MainScene");
                 }
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error);
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error);
             }
             www.Dispose();
         }
@@ -321,7 +321,7 @@ public class About_Recipe : MonoBehaviour
 
     public void Edit_Recipe()
     {
-        // Редактирование рецепта. Передаем данные о рецепте в сцену "UpdateRecipe".
+        // Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ СЂРµС†РµРїС‚Р°. РџРµСЂРµРґР°РµРј РґР°РЅРЅС‹Рµ Рѕ СЂРµС†РµРїС‚Рµ РІ СЃС†РµРЅСѓ "UpdateRecipe".
         BetweenScenes.texture = main_foto.texture;
         BetweenScenes.aspect_ratio = main_foto.GetComponent<AspectRatioFitter>().aspectRatio;
         BetweenScenes.recipe_name = recipe_name;
@@ -338,7 +338,7 @@ public class About_Recipe : MonoBehaviour
 
     private IEnumerator Load_All_About_Recipe(string url)
     {
-        // Загрузка информации о рецепте с удаленного сервера.
+        // Р—Р°РіСЂСѓР·РєР° РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРµС†РµРїС‚Рµ СЃ СѓРґР°Р»РµРЅРЅРѕРіРѕ СЃРµСЂРІРµСЂР°.
         WWWForm form = new WWWForm();
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
@@ -382,7 +382,7 @@ public class About_Recipe : MonoBehaviour
 
     public void AboutDownloadedRecipe()
     {
-        // Отображение информации о скачанном рецепте.
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЃРєР°С‡Р°РЅРЅРѕРј СЂРµС†РµРїС‚Рµ.
         string path = Path.Combine(Application.persistentDataPath, "recipes");
         string images_save_path = Path.Combine(path, "images");
         string all_except_images_save_path = Path.Combine(path, "text_info.txt");
@@ -407,12 +407,12 @@ public class About_Recipe : MonoBehaviour
     }
     private void Load(string json, bool is_downloaded,string path = "")
     {
-        // Загрузка данных о рецепте.
+        // Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рѕ СЂРµС†РµРїС‚Рµ.
         RecipeDataAboutRecipe recipeData = JsonUtility.FromJson<RecipeDataAboutRecipe>(json);
         recipe_name = recipeData.recipe_name;
         description = recipeData.description;
         recipe_data_ingredients = recipeData.ingredients;
-        // Обработка списка ингредиентов.
+        // РћР±СЂР°Р±РѕС‚РєР° СЃРїРёСЃРєР° РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ.
         string[] sp = recipeData.ingredients.Split("|&");
         foreach (string name_and_quantity in sp)
         {
@@ -424,7 +424,7 @@ public class About_Recipe : MonoBehaviour
         linksToPictures = recipeData.links_to_pictures;
         timers = recipeData.timers;
         recipe_id = recipeData.recipe_id;
-        // Обработка таймеров.
+        // РћР±СЂР°Р±РѕС‚РєР° С‚Р°Р№РјРµСЂРѕРІ.
         timers_list = timers.Split('|');
         int length;
         int.TryParse(timers_list[timers_list.Length - 1].Split('&')[0], out length);
@@ -435,7 +435,7 @@ public class About_Recipe : MonoBehaviour
         }
         int index = -100;
         bool is_index = true;
-        // Разбор информации о таймерах.
+        // Р Р°Р·Р±РѕСЂ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚Р°Р№РјРµСЂР°С….
         for (int i = 0; i < timers_list.Length; i++)
         {
             string[] l = timers_list[i].Split("&");
@@ -462,7 +462,7 @@ public class About_Recipe : MonoBehaviour
         cooking_1.transform.GetChild(1).GetComponent<TMP_Text>().text = recipe_name;
         cooking_1.transform.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = description;
         cooking_1.transform.GetChild(3).GetChild(1).GetComponent<TMP_Text>().text = ingredients;
-        // Обработка шагов приготовления.
+        // РћР±СЂР°Р±РѕС‚РєР° С€Р°РіРѕРІ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
         if (stepsDescriptions.Length != 0)
         {
             string[] stepsArray = stepsDescriptions.Split("|&");
@@ -475,8 +475,8 @@ public class About_Recipe : MonoBehaviour
                 TMP_Text stepDescription = stepObject.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
                 stepDescription.text = stepsArray[i];
                 RawImage stepImage = stepObject.transform.GetChild(2).GetChild(0).GetComponent<RawImage>();
-                step_text.text = $"Шаг {i + 1}";
-                // Обработка таймеров для текущего шага.
+                step_text.text = $"РЁР°Рі {i + 1}";
+                // РћР±СЂР°Р±РѕС‚РєР° С‚Р°Р№РјРµСЂРѕРІ РґР»СЏ С‚РµРєСѓС‰РµРіРѕ С€Р°РіР°.
                 if (index != -100 && is_index && i < ind.Count)
                 {
                     for (int j = 0; j < ind[i].Count; j++)
@@ -497,7 +497,7 @@ public class About_Recipe : MonoBehaviour
                 }
 
                 step_prefab_list.Add(stepObject);
-                // Загрузка изображений для шагов.
+                // Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ РґР»СЏ С€Р°РіРѕРІ.
                 if (is_downloaded)
                 {
                     StartCoroutine(LoadDownloadedImage(Path.Combine(path, Path.GetFileName(picturesArray[i])), stepImage));
@@ -513,7 +513,7 @@ public class About_Recipe : MonoBehaviour
     }
     private IEnumerator LoadDownloadedImage(string imagePath, RawImage image)
     {
-        // Загрузка изображения из локального хранилища.
+        // Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РёР· Р»РѕРєР°Р»СЊРЅРѕРіРѕ С…СЂР°РЅРёР»РёС‰Р°.
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("file://" + imagePath);
         yield return www.SendWebRequest();
 
@@ -533,7 +533,7 @@ public class About_Recipe : MonoBehaviour
     }
     private IEnumerator LoadImage(string imageURL, RawImage image, bool is_last_index)
     {
-        // Загрузка изображения из сети.
+        // Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РёР· СЃРµС‚Рё.
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL))
         {
             yield return www.SendWebRequest();
@@ -558,36 +558,36 @@ public class About_Recipe : MonoBehaviour
 [System.Serializable]
 public class RecipeDataAboutRecipe
 {
-    // Идентификатор рецепта.
+    // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРµС†РµРїС‚Р°.
     public string recipe_id;
 
-    // Имя автора рецепта.
+    // РРјСЏ Р°РІС‚РѕСЂР° СЂРµС†РµРїС‚Р°.
     public string chief_name;
 
-    // Название рецепта.
+    // РќР°Р·РІР°РЅРёРµ СЂРµС†РµРїС‚Р°.
     public string recipe_name;
 
-    // Описание рецепта.
+    // РћРїРёСЃР°РЅРёРµ СЂРµС†РµРїС‚Р°.
     public string description;
 
-    // Ингредиенты, необходимые для приготовления.
+    // РРЅРіСЂРµРґРёРµРЅС‚С‹, РЅРµРѕР±С…РѕРґРёРјС‹Рµ РґР»СЏ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
     public string ingredients;
 
-    // Описание шагов приготовления.
+    // РћРїРёСЃР°РЅРёРµ С€Р°РіРѕРІ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
     public string steps_descriptions;
 
-    // Ссылки на изображения, связанные с рецептом.
+    // РЎСЃС‹Р»РєРё РЅР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ СЂРµС†РµРїС‚РѕРј.
     public string links_to_pictures;
 
-    // Информация о таймерах для каждого шага приготовления.
+    // РРЅС„РѕСЂРјР°С†РёСЏ Рѕ С‚Р°Р№РјРµСЂР°С… РґР»СЏ РєР°Р¶РґРѕРіРѕ С€Р°РіР° РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
     public string timers;
 
-    // Ссылка на главное изображение рецепта.
+    // РЎСЃС‹Р»РєР° РЅР° РіР»Р°РІРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ СЂРµС†РµРїС‚Р°.
     public string main_picture;
 
-    // Рейтинг рецепта.
+    // Р РµР№С‚РёРЅРі СЂРµС†РµРїС‚Р°.
     public string score;
 
-    // Количество просмотров рецепта.
+    // РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕСЃРјРѕС‚СЂРѕРІ СЂРµС†РµРїС‚Р°.
     public string views;
 }
