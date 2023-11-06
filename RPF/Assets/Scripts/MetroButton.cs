@@ -10,19 +10,19 @@ public class MetroButton : MonoBehaviour
 
     private void Start()
     {
-        // Получаем ссылку на компонент AnimationsSearchMetro
+        // РџРѕР»СѓС‡Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РєРѕРјРїРѕРЅРµРЅС‚ AnimationsSearchMetro
         anim_search_metro = FindObjectOfType<AnimationsSearchMetro>();
     }
 
     public void Find()
     {
-        // Получаем ссылку на компонент AnimationsSearchMetro
+        // РџРѕР»СѓС‡Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РєРѕРјРїРѕРЅРµРЅС‚ AnimationsSearchMetro
         TMP_InputField text = GameObject.FindGameObjectWithTag("metro").transform.GetChild(0).GetComponent<TMP_InputField>();
         
-        // Устанавливаем текст поля ввода текста равным тексту name_station_for_prefab
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚ РїРѕР»СЏ РІРІРѕРґР° С‚РµРєСЃС‚Р° СЂР°РІРЅС‹Рј С‚РµРєСЃС‚Сѓ name_station_for_prefab
         text.text = name_station_for_prefab.text;
         
-        // Закрываем анимации и действия, связанные с поиском метро
+        // Р—Р°РєСЂС‹РІР°РµРј Р°РЅРёРјР°С†РёРё Рё РґРµР№СЃС‚РІРёСЏ, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ РїРѕРёСЃРєРѕРј РјРµС‚СЂРѕ
         anim_search_metro.Close();
     }
 }
