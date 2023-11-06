@@ -11,16 +11,16 @@ using System.Text;
 
 public class Authorization : MonoBehaviour
 {
-    private const string enterURL = "http://22.cshse.beget.tech/enter"; // URL для входа пользователя.
-    private const string registerURL = "http://22.cshse.beget.tech/registration"; // URL для регистрации пользователя.
-    private const string getHashURL = "http://22.cshse.beget.tech/get_hash"; // URL для получения хеша пароля.
+    private const string enterURL = "http://22.cshse.beget.tech/enter"; // URL РґР»СЏ РІС…РѕРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+    private const string registerURL = "http://22.cshse.beget.tech/registration"; // URL РґР»СЏ СЂРµРіРёСЃС‚СЂР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+    private const string getHashURL = "http://22.cshse.beget.tech/get_hash"; // URL РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ С…РµС€Р° РїР°СЂРѕР»СЏ.
 
-    public TMP_InputField username_reg, password_reg, repeat_password_reg, email_reg, username_ent, password_ent; // Поля для ввода имени пользователя, пароля и т. д.
-    public GameObject error; // Игровой объект для отображения ошибок.
-    public Animator all_fields_must, wrong_user, wrong_password, this_user_exist; // Аниматоры для анимации ошибок и уведомлений.
-    public int count; // Счетчик попыток входа.
-    public Toggle is_chief; // Переключатель для указания, является ли пользователь шеф-поваром.
-    string got_hash; // Полученный хеш пароля.
+    public TMP_InputField username_reg, password_reg, repeat_password_reg, email_reg, username_ent, password_ent; // РџРѕР»СЏ РґР»СЏ РІРІРѕРґР° РёРјРµРЅРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РїР°СЂРѕР»СЏ Рё С‚. Рґ.
+    public GameObject error; // РРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РѕС€РёР±РѕРє.
+    public Animator all_fields_must, wrong_user, wrong_password, this_user_exist; // РђРЅРёРјР°С‚РѕСЂС‹ РґР»СЏ Р°РЅРёРјР°С†РёРё РѕС€РёР±РѕРє Рё СѓРІРµРґРѕРјР»РµРЅРёР№.
+    public int count; // РЎС‡РµС‚С‡РёРє РїРѕРїС‹С‚РѕРє РІС…РѕРґР°.
+    public Toggle is_chief; // РџРµСЂРµРєР»СЋС‡Р°С‚РµР»СЊ РґР»СЏ СѓРєР°Р·Р°РЅРёСЏ, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ С€РµС„-РїРѕРІР°СЂРѕРј.
+    string got_hash; // РџРѕР»СѓС‡РµРЅРЅС‹Р№ С…РµС€ РїР°СЂРѕР»СЏ.
     
 
     private void Start()
@@ -35,7 +35,7 @@ public class Authorization : MonoBehaviour
 
     public void Register()
     {
-        // Регистрация пользователя.
+        // Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         if (username_reg.text.Trim() != "" && password_reg.text.Trim() != "" && repeat_password_reg.text.Trim() != "" && email_reg.text.Trim() != "")
         {
             if (password_reg.text != repeat_password_reg.text)
@@ -44,7 +44,7 @@ public class Authorization : MonoBehaviour
             {
                 string email_name = email_reg.text.Split('@')[0];
                 if (email_reg.text.Trim() == "" || email_name == email_reg.text || "_.-".Contains(email_name[0]) || "_.-".Contains(email_name[email_name.Length - 1]))
-                    print("Некорректно заполнены данные");
+                    print("РќРµРєРѕСЂСЂРµРєС‚РЅРѕ Р·Р°РїРѕР»РЅРµРЅС‹ РґР°РЅРЅС‹Рµ");
                 else
                     StartCoroutine(SendRequest(username_reg.text, HashPassword(password_reg.text), registerURL));
             }
@@ -57,7 +57,7 @@ public class Authorization : MonoBehaviour
 
     public void Enter()
     {
-        // Вход пользователя.
+        // Р’С…РѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         if (username_ent.text.Trim() == "" || password_ent.text.Trim() == "")
         {
             all_fields_must.SetTrigger("must");
@@ -70,7 +70,7 @@ public class Authorization : MonoBehaviour
 
     public IEnumerator GetHash(string username)
     {
-        // Получение хеша пароля для входа.
+        // РџРѕР»СѓС‡РµРЅРёРµ С…РµС€Р° РїР°СЂРѕР»СЏ РґР»СЏ РІС…РѕРґР°.
         WWWForm form = new WWWForm();
         form.AddField("username", username);
 
@@ -109,7 +109,7 @@ public class Authorization : MonoBehaviour
 
     public IEnumerator SendRequest(string username, string hash, string url)
     {
-        // Отправка запроса на сервер Flask для регистрации или входа.
+        // РћС‚РїСЂР°РІРєР° Р·Р°РїСЂРѕСЃР° РЅР° СЃРµСЂРІРµСЂ Flask РґР»СЏ СЂРµРіРёСЃС‚СЂР°С†РёРё РёР»Рё РІС…РѕРґР°.
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("hash", hash);
@@ -124,7 +124,7 @@ public class Authorization : MonoBehaviour
                 var answer = www.downloadHandler.text;
                 if (answer == "no")
                 {
-                    print("Что-то пошло не так. Попробуйте заново");
+                    print("Р§С‚Рѕ-С‚Рѕ РїРѕС€Р»Рѕ РЅРµ С‚Р°Рє. РџРѕРїСЂРѕР±СѓР№С‚Рµ Р·Р°РЅРѕРІРѕ");
                     this_user_exist.SetTrigger("must");
                 }
                 else
@@ -154,7 +154,7 @@ public class Authorization : MonoBehaviour
 
     public static string HashPassword(string password)
     {
-        // Хеширование пароля с использованием SHA-256.
+        // РҐРµС€РёСЂРѕРІР°РЅРёРµ РїР°СЂРѕР»СЏ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј SHA-256.
         using (var sha256 = SHA256.Create())
         {
             var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
