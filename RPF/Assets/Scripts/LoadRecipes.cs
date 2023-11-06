@@ -31,7 +31,7 @@ public class LoadRecipes : MonoBehaviour
 
     private IEnumerator Check_And_Load()
     {
-        // Проверяем интернет-соединение
+        // РџСЂРѕРІРµСЂСЏРµРј РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёРµ
         yield return StartCoroutine(game_manager.CheckInternetConnection(isConnected =>
         {
             if (!isConnected)
@@ -42,7 +42,7 @@ public class LoadRecipes : MonoBehaviour
             }
         }));
 
-        // Проверяем интернет-соединение
+        // РџСЂРѕРІРµСЂСЏРµРј РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёРµ
         search_bar.text = BetweenScenes.search_bar;
         rating_from_one.text = BetweenScenes.rating_from_one;
         rating_from_two.text = BetweenScenes.rating_from_two;
@@ -61,19 +61,19 @@ public class LoadRecipes : MonoBehaviour
             loading_screen.SetActive(false);
         }
 
-        // Загружаем рецепты
+        // Р—Р°РіСЂСѓР¶Р°РµРј СЂРµС†РµРїС‚С‹
         StartCoroutine(Main_Load_Ricipes());
     }
     public void Change_Input()
     {
-        // Если меняется ввод, сбрасываем сортировку по просмотрам
+        // Р•СЃР»Рё РјРµРЅСЏРµС‚СЃСЏ РІРІРѕРґ, СЃР±СЂР°СЃС‹РІР°РµРј СЃРѕСЂС‚РёСЂРѕРІРєСѓ РїРѕ РїСЂРѕСЃРјРѕС‚СЂР°Рј
         sort_by_views.isOn = false;
     }
     public void Change_Toggle()
     {
         if(sort_by_views.isOn)
         {
-            // Если включается сортировка по просмотрам, сбрасываем фильтры по просмотрам
+            // Р•СЃР»Рё РІРєР»СЋС‡Р°РµС‚СЃСЏ СЃРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РїСЂРѕСЃРјРѕС‚СЂР°Рј, СЃР±СЂР°СЃС‹РІР°РµРј С„РёР»СЊС‚СЂС‹ РїРѕ РїСЂРѕСЃРјРѕС‚СЂР°Рј
             views_from.text = "";
             views_to.text = "";
         }
@@ -84,7 +84,7 @@ public class LoadRecipes : MonoBehaviour
             +Convert.ToInt32(sort_by_views.isOn) + Convert.ToInt32(is_my_recipes.isOn) + Convert.ToInt32(downloaded_recipes.isOn);
         if (BetweenScenes.old_request != new_request)
         {
-            // Если изменился запрос, сбрасываем счетчик страниц и позицию скролла
+            // Р•СЃР»Рё РёР·РјРµРЅРёР»СЃСЏ Р·Р°РїСЂРѕСЃ, СЃР±СЂР°СЃС‹РІР°РµРј СЃС‡РµС‚С‡РёРє СЃС‚СЂР°РЅРёС† Рё РїРѕР·РёС†РёСЋ СЃРєСЂРѕР»Р»Р°
             count = 0;
             BetweenScenes.old_request = new_request;
             BetweenScenes.vertical_normalized_position = 1f;
@@ -110,7 +110,7 @@ public class LoadRecipes : MonoBehaviour
         }
         else
         {
-            // Запрос к серверу для получения рецептов
+            // Р—Р°РїСЂРѕСЃ Рє СЃРµСЂРІРµСЂСѓ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЂРµС†РµРїС‚РѕРІ
             string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
             User user = JsonUtility.FromJson<User>(json);
             WWWForm form = new WWWForm();
@@ -142,7 +142,7 @@ public class LoadRecipes : MonoBehaviour
                     }
                     else if (answer == "you_have_not_ingredients")
                     {
-                        print("у тебя нет ингредиентов в холодильнике");
+                        print("Сѓ С‚РµР±СЏ РЅРµС‚ РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ РІ С…РѕР»РѕРґРёР»СЊРЅРёРєРµ");
                         there_is_no_ingredient.SetTrigger("must");
                     }
                     else
@@ -162,7 +162,7 @@ public class LoadRecipes : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                    Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
                 }
                 www.Dispose();
             }
@@ -198,7 +198,7 @@ public class LoadRecipes : MonoBehaviour
         string all_except_images_save_path = Path.Combine(path, "text_info.txt");
         if (!File.Exists(all_except_images_save_path))
         {
-            print("У вас нет скачанных файлов");
+            print("РЈ РІР°СЃ РЅРµС‚ СЃРєР°С‡Р°РЅРЅС‹С… С„Р°Р№Р»РѕРІ");
             there_is_no_downloaded_recipes.SetTrigger("must");
             return;
         }
@@ -207,11 +207,11 @@ public class LoadRecipes : MonoBehaviour
 
         if(download_recipe_object.recipes.Length == 0)
         {
-            print("У вас нет скачанных файлов");
+            print("РЈ РІР°СЃ РЅРµС‚ СЃРєР°С‡Р°РЅРЅС‹С… С„Р°Р№Р»РѕРІ");
             there_is_no_downloaded_recipes.SetTrigger("must");
             return;
         }
-        // Делаем фильтрацию по имени рецепта
+        // Р”РµР»Р°РµРј С„РёР»СЊС‚СЂР°С†РёСЋ РїРѕ РёРјРµРЅРё СЂРµС†РµРїС‚Р°
         string prompt = search_bar.text.Trim();
         if (prompt.Length != 0)
         {
@@ -240,10 +240,10 @@ public class LoadRecipes : MonoBehaviour
                 break;
             }
             DownloadRecipeData recipe = download_recipe_object.recipes[i];
-            // Создаем экземпляр префаба
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р°
             GameObject instantiatedPrefab = Instantiate(prefab, parentObject);
             instantiatedPrefab.transform.GetChild(7).name = Path.GetFileName(recipe.main_picture);
-            // Получаем доступ к компонентам RawImage и TextMeshProUGUI
+            // РџРѕР»СѓС‡Р°РµРј РґРѕСЃС‚СѓРї Рє РєРѕРјРїРѕРЅРµРЅС‚Р°Рј RawImage Рё TextMeshProUGUI
             rawImageComponent = instantiatedPrefab.transform.GetChild(6).GetChild(0).GetComponent<RawImage>();
             GameObject circle_object = instantiatedPrefab.transform.GetChild(8).gameObject;
             circle_object.SetActive(false);
@@ -257,7 +257,7 @@ public class LoadRecipes : MonoBehaviour
             recipe_name.text = recipe.recipe_name;
             score.text = recipe.score;
             views.text = recipe.views;
-            // Обновляем размер префаба в родительском объекте
+            // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ РїСЂРµС„Р°Р±Р° РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ
             LayoutRebuilder.ForceRebuildLayoutImmediate(parentObject);
         }
         if (index_last_recipe == "-1")
@@ -301,7 +301,7 @@ public class LoadRecipes : MonoBehaviour
                 }
                 catch
                 {
-                    print("Raw image бфл удален");
+                    print("Raw image Р±С„Р» СѓРґР°Р»РµРЅ");
                 }
                 image.texture = texture;
                 circle.SetBool("is_circling", false);
@@ -320,13 +320,13 @@ public class LoadRecipes : MonoBehaviour
         for (int i = 0; i < recipeData.recipes.Length; i++)
         {
             RecipeData recipe = recipeData.recipes[i];
-            // Создаем экземпляр префаба
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р°
             GameObject instantiatedPrefab = Instantiate(prefab, parentObject);
             GameObject circle_object = instantiatedPrefab.transform.GetChild(8).gameObject;
             Animator circle = circle_object.GetComponent<Animator>();
             instantiatedPrefab.transform.GetChild(7).name = Path.GetFileName(recipe.picture);
             circle.SetBool("is_circling", true);
-            // Получаем доступ к компонентам RawImage и TextMeshProUGUI
+            // РџРѕР»СѓС‡Р°РµРј РґРѕСЃС‚СѓРї Рє РєРѕРјРїРѕРЅРµРЅС‚Р°Рј RawImage Рё TextMeshProUGUI
             rawImageComponent = instantiatedPrefab.transform.GetChild(6).GetChild(0).GetComponent<RawImage>();
             StartCoroutine(LoadImage($"http://22.cshse.beget.tech/foto/{Path.GetFileName(recipe.picture)}", rawImageComponent, circle_object, circle));
             recipe_name = instantiatedPrefab.GetComponentInChildren<TextMeshProUGUI>();
@@ -336,7 +336,7 @@ public class LoadRecipes : MonoBehaviour
             recipe_name.text = recipe.recipe_name;
             score.text = recipe.score;
             views.text = recipe.views;
-            // Обновляем размер префаба в родительском объекте
+            // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ РїСЂРµС„Р°Р±Р° РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ
             LayoutRebuilder.ForceRebuildLayoutImmediate(parentObject);
         }
         Canvas.ForceUpdateCanvases();
