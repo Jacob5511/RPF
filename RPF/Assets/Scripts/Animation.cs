@@ -5,26 +5,26 @@ using UnityEngine;
 public class Animation : MonoBehaviour
 {
     public GameObject sort_panel;
-    public Animator sort_panel_anim; // Аниматор для управления панелью фильтрации.
+    public Animator sort_panel_anim; // РђРЅРёРјР°С‚РѕСЂ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РїР°РЅРµР»СЊСЋ С„РёР»СЊС‚СЂР°С†РёРё.
     public Animator left_arrow, right_arrow;
 
     void Start()
     {
         sort_panel_anim = sort_panel.GetComponent <Animator>();
-        // Получение аниматора из объекта панели фильтрации при запуске сцены.
+        // РџРѕР»СѓС‡РµРЅРёРµ Р°РЅРёРјР°С‚РѕСЂР° РёР· РѕР±СЉРµРєС‚Р° РїР°РЅРµР»Рё С„РёР»СЊС‚СЂР°С†РёРё РїСЂРё Р·Р°РїСѓСЃРєРµ СЃС†РµРЅС‹.
     }
 
     public void Open_Panel()
     {
         left_arrow.SetTrigger("must");
         right_arrow.SetTrigger("must");
-        // Запуск анимаций для стрелок.
+        // Р—Р°РїСѓСЃРє Р°РЅРёРјР°С†РёР№ РґР»СЏ СЃС‚СЂРµР»РѕРє.
 
         if (!sort_panel_anim.GetBool("is_open"))
             sort_panel_anim.SetBool("is_open", true);
         else
             sort_panel_anim.SetBool("is_open", false);
-        // Открытие или закрытие панели сортировки в зависимости от текущего состояния.
+        // РћС‚РєСЂС‹С‚РёРµ РёР»Рё Р·Р°РєСЂС‹С‚РёРµ РїР°РЅРµР»Рё СЃРѕСЂС‚РёСЂРѕРІРєРё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РµРєСѓС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ.
     }
 
 }
