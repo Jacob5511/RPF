@@ -11,93 +11,93 @@ using UnityEngine.SceneManagement;
 
 public class ForPicture : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IScrollHandler, IPointerClickHandler
 {
-    private ScrollRect scrollRect;  // Объявление переменной ScrollRect.
+    private ScrollRect scrollRect;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ ScrollRect.
 
-    public static bool is_possible = true;  // Объявление статической переменной is_possible и установка её значения в true.
-    private string add_response_url = "http://22.cshse.beget.tech/add_response";  // Строка с URL для отправки ответа.
+    public static bool is_possible = true;  // РћР±СЉСЏРІР»РµРЅРёРµ СЃС‚Р°С‚РёС‡РµСЃРєРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ is_possible Рё СѓСЃС‚Р°РЅРѕРІРєР° РµС‘ Р·РЅР°С‡РµРЅРёСЏ РІ true.
+    private string add_response_url = "http://22.cshse.beget.tech/add_response";  // РЎС‚СЂРѕРєР° СЃ URL РґР»СЏ РѕС‚РїСЂР°РІРєРё РѕС‚РІРµС‚Р°.
 
-    public Add add;  // Объявление переменной типа Add.
-    public bool is_announcement;  // Булева переменная, указывающая, является ли объявлением.
-    public Animator add_announcement;  // Объявление переменной типа Animator для анимации объявления.
-    Animator success;  // Объявление переменной типа Animator для анимации успешного действия.
-    MyChiefAccount mca;  // Объявление переменной типа MyChiefAccount.
-    GameManager game_manager;  // Объявление переменной типа GameManager.
-    MyAccount my_account;  // Объявление переменной типа MyAccount.
-    public GameObject foto, chief_name, star, eye, views, score, about_announcecment;  // Объявление переменных GameObject для различных элементов.
+    public Add add;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ С‚РёРїР° Add.
+    public bool is_announcement;  // Р‘СѓР»РµРІР° РїРµСЂРµРјРµРЅРЅР°СЏ, СѓРєР°Р·С‹РІР°СЋС‰Р°СЏ, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РѕР±СЉСЏРІР»РµРЅРёРµРј.
+    public Animator add_announcement;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ С‚РёРїР° Animator РґР»СЏ Р°РЅРёРјР°С†РёРё РѕР±СЉСЏРІР»РµРЅРёСЏ.
+    Animator success;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ С‚РёРїР° Animator РґР»СЏ Р°РЅРёРјР°С†РёРё СѓСЃРїРµС€РЅРѕРіРѕ РґРµР№СЃС‚РІРёСЏ.
+    MyChiefAccount mca;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ С‚РёРїР° MyChiefAccount.
+    GameManager game_manager;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ С‚РёРїР° GameManager.
+    MyAccount my_account;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ С‚РёРїР° MyAccount.
+    public GameObject foto, chief_name, star, eye, views, score, about_announcecment;  // РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С… GameObject РґР»СЏ СЂР°Р·Р»РёС‡РЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ.
     public Animator circle;
 
     private void Start()
     {
-        game_manager = FindObjectOfType<GameManager>();  // Поиск объекта GameManager в сцене и присваивание его переменной game_manager.
-        mca = FindObjectOfType<MyChiefAccount>();  // Поиск объекта MyChiefAccount в сцене и присваивание его переменной mca.
-        scrollRect = GetComponentInParent<ScrollRect>();  // Получение компонента ScrollRect из родительского объекта и присваивание его переменной scrollRect.
-        my_account = FindObjectOfType<MyAccount>();  // Поиск объекта MyAccount в сцене и присваивание его переменной my_account.
+        game_manager = FindObjectOfType<GameManager>();  // РџРѕРёСЃРє РѕР±СЉРµРєС‚Р° GameManager РІ СЃС†РµРЅРµ Рё РїСЂРёСЃРІР°РёРІР°РЅРёРµ РµРіРѕ РїРµСЂРµРјРµРЅРЅРѕР№ game_manager.
+        mca = FindObjectOfType<MyChiefAccount>();  // РџРѕРёСЃРє РѕР±СЉРµРєС‚Р° MyChiefAccount РІ СЃС†РµРЅРµ Рё РїСЂРёСЃРІР°РёРІР°РЅРёРµ РµРіРѕ РїРµСЂРµРјРµРЅРЅРѕР№ mca.
+        scrollRect = GetComponentInParent<ScrollRect>();  // РџРѕР»СѓС‡РµРЅРёРµ РєРѕРјРїРѕРЅРµРЅС‚Р° ScrollRect РёР· СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р° Рё РїСЂРёСЃРІР°РёРІР°РЅРёРµ РµРіРѕ РїРµСЂРµРјРµРЅРЅРѕР№ scrollRect.
+        my_account = FindObjectOfType<MyAccount>();  // РџРѕРёСЃРє РѕР±СЉРµРєС‚Р° MyAccount РІ СЃС†РµРЅРµ Рё РїСЂРёСЃРІР°РёРІР°РЅРёРµ РµРіРѕ РїРµСЂРµРјРµРЅРЅРѕР№ my_account.
 
         try
         {
-            success = GameObject.FindGameObjectWithTag("success").GetComponent<Animator>();  // Попытка найти объект с тегом "success" и получить компонент Animator.
+            success = GameObject.FindGameObjectWithTag("success").GetComponent<Animator>();  // РџРѕРїС‹С‚РєР° РЅР°Р№С‚Рё РѕР±СЉРµРєС‚ СЃ С‚РµРіРѕРј "success" Рё РїРѕР»СѓС‡РёС‚СЊ РєРѕРјРїРѕРЅРµРЅС‚ Animator.
         }
         catch
         {
-            return;  // В случае ошибки, выход из функции Start.
+            return;  // Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё, РІС‹С…РѕРґ РёР· С„СѓРЅРєС†РёРё Start.
         }
     }
 
     public void OnBeginDrag(PointerEventData data)
     {
-        scrollRect.OnBeginDrag(data);  // Вызов метода OnBeginDrag компонента ScrollRect.
-        is_possible = false;  // Установка значения is_possible в false.
+        scrollRect.OnBeginDrag(data);  // Р’С‹Р·РѕРІ РјРµС‚РѕРґР° OnBeginDrag РєРѕРјРїРѕРЅРµРЅС‚Р° ScrollRect.
+        is_possible = false;  // РЈСЃС‚Р°РЅРѕРІРєР° Р·РЅР°С‡РµРЅРёСЏ is_possible РІ false.
     }
 
     public void OnDrag(PointerEventData data)
     {
-        scrollRect.OnDrag(data);  // Вызов метода OnDrag компонента ScrollRect.
+        scrollRect.OnDrag(data);  // Р’С‹Р·РѕРІ РјРµС‚РѕРґР° OnDrag РєРѕРјРїРѕРЅРµРЅС‚Р° ScrollRect.
     }
 
     public void OnEndDrag(PointerEventData data)
     {
-        scrollRect.OnEndDrag(data);  // Вызов метода OnEndDrag компонента ScrollRect.
-        is_possible = true;  // Установка значения is_possible в true.
+        scrollRect.OnEndDrag(data);  // Р’С‹Р·РѕРІ РјРµС‚РѕРґР° OnEndDrag РєРѕРјРїРѕРЅРµРЅС‚Р° ScrollRect.
+        is_possible = true;  // РЈСЃС‚Р°РЅРѕРІРєР° Р·РЅР°С‡РµРЅРёСЏ is_possible РІ true.
     }
 
     public void OnScroll(PointerEventData data)
     {
-        scrollRect.OnScroll(data);  // Вызов метода OnScroll компонента ScrollRect.
+        scrollRect.OnScroll(data);  // Р’С‹Р·РѕРІ РјРµС‚РѕРґР° OnScroll РєРѕРјРїРѕРЅРµРЅС‚Р° ScrollRect.
     }
 
     public void Delete_Response_For_Announcement()
     {
-        StartCoroutine(mca.LoadMyResponses(gameObject.name));  // Запуск корутины LoadMyResponses из объекта mca с параметром имени текущего объекта.
+        StartCoroutine(mca.LoadMyResponses(gameObject.name));  // Р—Р°РїСѓСЃРє РєРѕСЂСѓС‚РёРЅС‹ LoadMyResponses РёР· РѕР±СЉРµРєС‚Р° mca СЃ РїР°СЂР°РјРµС‚СЂРѕРј РёРјРµРЅРё С‚РµРєСѓС‰РµРіРѕ РѕР±СЉРµРєС‚Р°.
     }
 
     public void Add_Response_For_Announcement()
     {
-        add_announcement.SetBool("is_open", false);  // Установка параметра is_open объекта add_announcement в false.
-        StartCoroutine(Add_Response());  // Запуск корутины Add_Response.
+        add_announcement.SetBool("is_open", false);  // РЈСЃС‚Р°РЅРѕРІРєР° РїР°СЂР°РјРµС‚СЂР° is_open РѕР±СЉРµРєС‚Р° add_announcement РІ false.
+        StartCoroutine(Add_Response());  // Р—Р°РїСѓСЃРє РєРѕСЂСѓС‚РёРЅС‹ Add_Response.
     }
 
     private IEnumerator Add_Response()
     {
-        WWWForm form = new WWWForm();  // Создание новой формы для отправки данных.
-        string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));  // Чтение JSON-файла из пути Application.persistentDataPath.
-        User user = JsonUtility.FromJson<User>(json);  // Десериализация JSON-строки в объект User.
-        string username = user.username;  // Получение имени пользователя из объекта User.
-        form.AddField("username", username);  // Добавление данных в форму.
-        form.AddField("id", gameObject.name);  // Добавление данных в форму.
+        WWWForm form = new WWWForm();  // РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕР№ С„РѕСЂРјС‹ РґР»СЏ РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С….
+        string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));  // Р§С‚РµРЅРёРµ JSON-С„Р°Р№Р»Р° РёР· РїСѓС‚Рё Application.persistentDataPath.
+        User user = JsonUtility.FromJson<User>(json);  // Р”РµСЃРµСЂРёР°Р»РёР·Р°С†РёСЏ JSON-СЃС‚СЂРѕРєРё РІ РѕР±СЉРµРєС‚ User.
+        string username = user.username;  // РџРѕР»СѓС‡РµРЅРёРµ РёРјРµРЅРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РёР· РѕР±СЉРµРєС‚Р° User.
+        form.AddField("username", username);  // Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІ С„РѕСЂРјСѓ.
+        form.AddField("id", gameObject.name);  // Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІ С„РѕСЂРјСѓ.
 
-        using (UnityWebRequest www = UnityWebRequest.Post(add_response_url, form))  // Отправка POST-запроса на указанный URL с использованием формы.
+        using (UnityWebRequest www = UnityWebRequest.Post(add_response_url, form))  // РћС‚РїСЂР°РІРєР° POST-Р·Р°РїСЂРѕСЃР° РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ URL СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј С„РѕСЂРјС‹.
         {
-            yield return www.SendWebRequest();  // Ожидание завершения запроса.
+            yield return www.SendWebRequest();  // РћР¶РёРґР°РЅРёРµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р·Р°РїСЂРѕСЃР°.
 
-            if (www.result == UnityWebRequest.Result.Success)  // Если запрос выполнен успешно.
+            if (www.result == UnityWebRequest.Result.Success)  // Р•СЃР»Рё Р·Р°РїСЂРѕСЃ РІС‹РїРѕР»РЅРµРЅ СѓСЃРїРµС€РЅРѕ.
             {
-                success.SetTrigger("must");  // Запуск анимации "must" для объекта success.
+                success.SetTrigger("must");  // Р—Р°РїСѓСЃРє Р°РЅРёРјР°С†РёРё "must" РґР»СЏ РѕР±СЉРµРєС‚Р° success.
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");  // Вывод сообщения об ошибке.
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");  // Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ.
             }
-            www.Dispose();  // Освобождение ресурсов запроса.
+            www.Dispose();  // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ Р·Р°РїСЂРѕСЃР°.
         }
     }
 
@@ -121,21 +121,21 @@ public class ForPicture : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     {
         if (is_possible)
         {
-            string name_scene = SceneManager.GetActiveScene().name;  // Получение имени активной сцены.
-            string chief_name = gameObject.transform.GetChild(2).GetComponent<TMP_Text>().text;  // Получение имени "шефа" из дочернего объекта.
-            RawImage chief_image = gameObject.transform.GetChild(1).GetChild(0).GetComponent<RawImage>();  // Получение изображения "шефа" из дочернего объекта.
-            float aspect_ratio = gameObject.transform.GetChild(1).GetChild(0).GetComponent<AspectRatioFitter>().aspectRatio;  // Получение соотношения сторон изображения.
-            BetweenScenes.name = chief_name;  // Присвоение имени "шефа" переменной BetweenScenes.name.
-            BetweenScenes.texture = chief_image.texture;  // Присвоение текстуры изображения переменной BetweenScenes.texture.
-            BetweenScenes.aspect_ratio = aspect_ratio;  // Присвоение соотношения сторон переменной BetweenScenes.aspect_ratio.
+            string name_scene = SceneManager.GetActiveScene().name;  // РџРѕР»СѓС‡РµРЅРёРµ РёРјРµРЅРё Р°РєС‚РёРІРЅРѕР№ СЃС†РµРЅС‹.
+            string chief_name = gameObject.transform.GetChild(2).GetComponent<TMP_Text>().text;  // РџРѕР»СѓС‡РµРЅРёРµ РёРјРµРЅРё "С€РµС„Р°" РёР· РґРѕС‡РµСЂРЅРµРіРѕ РѕР±СЉРµРєС‚Р°.
+            RawImage chief_image = gameObject.transform.GetChild(1).GetChild(0).GetComponent<RawImage>();  // РџРѕР»СѓС‡РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ "С€РµС„Р°" РёР· РґРѕС‡РµСЂРЅРµРіРѕ РѕР±СЉРµРєС‚Р°.
+            float aspect_ratio = gameObject.transform.GetChild(1).GetChild(0).GetComponent<AspectRatioFitter>().aspectRatio;  // РџРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕС‚РЅРѕС€РµРЅРёСЏ СЃС‚РѕСЂРѕРЅ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ.
+            BetweenScenes.name = chief_name;  // РџСЂРёСЃРІРѕРµРЅРёРµ РёРјРµРЅРё "С€РµС„Р°" РїРµСЂРµРјРµРЅРЅРѕР№ BetweenScenes.name.
+            BetweenScenes.texture = chief_image.texture;  // РџСЂРёСЃРІРѕРµРЅРёРµ С‚РµРєСЃС‚СѓСЂС‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РїРµСЂРµРјРµРЅРЅРѕР№ BetweenScenes.texture.
+            BetweenScenes.aspect_ratio = aspect_ratio;  // РџСЂРёСЃРІРѕРµРЅРёРµ СЃРѕРѕС‚РЅРѕС€РµРЅРёСЏ СЃС‚РѕСЂРѕРЅ РїРµСЂРµРјРµРЅРЅРѕР№ BetweenScenes.aspect_ratio.
             if (name_scene != "MyAccount")
             {
-                game_manager.Save_Find_Chief();  // Вызов метода Save_Find_Chief из game_manager.
-                SceneManager.LoadScene("AboutChief");  // Загрузка сцены "AboutChief".
+                game_manager.Save_Find_Chief();  // Р’С‹Р·РѕРІ РјРµС‚РѕРґР° Save_Find_Chief РёР· game_manager.
+                SceneManager.LoadScene("AboutChief");  // Р—Р°РіСЂСѓР·РєР° СЃС†РµРЅС‹ "AboutChief".
             }
             else
             {
-                my_account.Load();  // Вызов метода Load из my_account.
+                my_account.Load();  // Р’С‹Р·РѕРІ РјРµС‚РѕРґР° Load РёР· my_account.
             }
         }
     }
