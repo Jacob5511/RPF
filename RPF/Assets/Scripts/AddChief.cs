@@ -13,44 +13,44 @@ using System;
 public class AddChief : MonoBehaviour
 {
     string url = "http://22.cshse.beget.tech/add_chief";
-    // URL-àäðåñ äëÿ îòïðàâêè äàííûõ íà ñåðâåð.
+    // URL-адрес для отправки данных на сервер.
 
     public Animator camera_but_anim, gallery_but_anim, all_fields_must;
-    // Àíèìàòîðû äëÿ àíèìàöèé êíîïîê êàìåðû, ãàëåðåè è ñîîáùåíèé îá îøèáêàõ.
+    // Аниматоры для анимаций кнопок камеры, галереи и сообщений об ошибках.
 
     public RawImage image;
     string imagePath = "";
-    // Ïåðåìåííûå äëÿ ðàáîòû ñ èçîáðàæåíèåì è åãî ïóòè.
+    // Переменные для работы с изображением и его пути.
 
     string template = "+7 (***) ***-**-**";
-    // Øàáëîí äëÿ îòîáðàæåíèÿ òåëåôîííîãî íîìåðà.
+    // Шаблон для отображения телефонного номера.
 
     public TMP_InputField phone_number, metro, short_about_yourself;
     public TMP_Text text, chief_name;
-    // Ïîëÿ äëÿ ââîäà òåêñòà è îòîáðàæåíèÿ èìåíè øåôà.
+    // Поля для ввода текста и отображения имени шефа.
 
     public GameObject placeholder;
     public int count = 0;
-    // Ïóñòîé îáúåêò-çàïîëíèòåëü äëÿ ïîëÿ ââîäà.
+    // Пустой объект-заполнитель для поля ввода.
 
 
     private void Start()
     {
-        // Èíèöèàëèçàöèÿ ïðè çàïóñêå ñöåíû.
+        // Инициализация при запуске сцены.
 
         Application.targetFrameRate = 60;
-        // Óñòàíîâêà öåëåâîé ÷àñòîòû êàäðîâ.
+        // Установка целевой частоты кадров.
 
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
         chief_name.text = user.username;
         
-        // Çàãðóçêà èìåíè ïîëüçîâàòåëÿ èç ôàéëà è îòîáðàæåíèå åãî íà ýêðàíå.
+        // Загрузка имени пользователя из файла и отображение его на экране.
     }
 
     public void SelectImage()
     {
-        // Âûáîð èçîáðàæåíèÿ èç ãàëåðåè èëè êàìåðû.
+        // Выбор изображения из галереи или камеры.
 
         if (!camera_but_anim.GetBool("is_open"))
         {
@@ -67,7 +67,7 @@ public class AddChief : MonoBehaviour
 
     void Anim()
     {
-        // Çàêðûòèå àíèìàöèè âûáîðà èçîáðàæåíèÿ.
+        // Закрытие анимации выбора изображения.
 
         if (camera_but_anim.GetBool("is_open"))
         {
@@ -80,7 +80,7 @@ public class AddChief : MonoBehaviour
 
     public void Camera()
     {
-        // Ñäåëàòü ôîòî ñ ïîìîùüþ êàìåðû.
+        // Сделать фото с помощью камеры.
 
         Anim();
         if (NativeCamera.IsCameraBusy())
@@ -90,7 +90,7 @@ public class AddChief : MonoBehaviour
 
     public void Gallery()
     {
-        // Âûáîð èçîáðàæåíèÿ èç ãàëåðåè.
+        // Выбор изображения из галереи.
 
         Anim();
         if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
@@ -103,14 +103,14 @@ public class AddChief : MonoBehaviour
 
     private void TakePicture(int maxSize)
     {
-        // Ñäåëàòü ôîòî ñ ïîìîùüþ êàìåðû.
+        // Сделать фото с помощью камеры.
 
         NativeCamera.Permission permission = NativeCamera.TakePicture((imagePath) =>
         {
             Debug.Log("Image path: " + imagePath);
             if (imagePath != null)
             {
-                // Ñîçäàíèå òåêñòóðû èç çàõâà÷åííîãî èçîáðàæåíèÿ
+                // Создание текстуры из захваченного изображения
                 Texture2D texture = NativeCamera.LoadImageAtPath(imagePath, maxSize, false, true);
                 if (texture == null)
                 {
@@ -130,7 +130,7 @@ public class AddChief : MonoBehaviour
 
     private IEnumerator LoadImageFromGallery()
     {
-        // Îòêðûòü ãàëåðåþ è äîæäàòüñÿ, ïîêà ïîëüçîâàòåëü âûáåðåò èçîáðàæåíèå.
+        // Открыть галерею и дождаться, пока пользователь выберет изображение.
 
         var pickImageOperation = NativeGallery.GetImageFromGallery((path) =>
         {
@@ -141,20 +141,20 @@ public class AddChief : MonoBehaviour
             }
         });
 
-        // Äîæäèòåñü çàâåðøåíèÿ îïåðàöèè âûáîðà èçîáðàæåíèÿ
+        // Дождитесь завершения операции выбора изображения
         yield return pickImageOperation;
     }
 
     private IEnumerator LoadImage(string imagePath)
     {
-        // Çàãðóçèòü èçîáðàæåíèå ïî óêàçàííîìó ïóòè.
+        // Загрузить изображение по указанному пути.
 
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("file://" + imagePath);
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
-            // Ïîëó÷èòü òåêñòóðó èç çàãðóæåííîãî èçîáðàæåíèÿ
+            // Получить текстуру из загруженного изображения
             Texture2D texture = DownloadHandlerTexture.GetContent(www);
             float c = (texture.width * 1.0f) / texture.height;
             AspectRatioFitter image_aspect = image.GetComponent<AspectRatioFitter>();
@@ -170,7 +170,7 @@ public class AddChief : MonoBehaviour
 
     public void UploadImage()
     {
-        // Çàãðóçêà èçîáðàæåíèÿ íà ñåðâåð.
+        // Загрузка изображения на сервер.
         if (imagePath == "" || phone_number.text == "" || metro.text == "" || short_about_yourself.text == "")
         {
             all_fields_must.SetTrigger("must");
@@ -181,14 +181,14 @@ public class AddChief : MonoBehaviour
 
     public void Update_Chief()
     {
-        // Îáíîâëåíèå èíôîðìàöèè î øåôå.
+        // Обновление информации о шефе.
 
         StartCoroutine(SendImage(true));
     }
 
     private IEnumerator SendImage(bool is_update)
     {
-        // Îòïðàâêà äàííûõ íà ñåðâåð.
+        // Отправка данных на сервер.
 
         WWWForm form = new WWWForm();
         form.AddField("username", chief_name.text);
@@ -211,12 +211,12 @@ public class AddChief : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success && www.downloadHandler.text == "ok")
             {
-                Debug.Log("Øåô äîáàâëåí èëè Èíôîðìàöèÿ îáíîâëåíà");
+                Debug.Log("Шеф добавлен или Информация обновлена");
                 SceneManager.LoadScene("MainForChief");
             }
             else
             {
-                Debug.LogError("Ëèáî îøèáêà ñî ñòîðîíû ñåðâåðà" + www.error + ", ëèáî òàêîé ðåöåïò âû óæå ïèñàëè");
+                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
             }
             www.Dispose();
         }
@@ -224,7 +224,7 @@ public class AddChief : MonoBehaviour
 
     public void OnChangesPhoneNumber()
     {
-        // Èçìåíåíèå ôîðìàòà ââîäà òåëåôîííîãî íîìåðà.
+        // Изменение формата ввода телефонного номера.
 
         if (phone_number.text.Length == count - 1)
         {
