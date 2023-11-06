@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class Stars : MonoBehaviour
 {
-    // Ссылка на объект About_Recipe.
+    // РЎСЃС‹Р»РєР° РЅР° РѕР±СЉРµРєС‚ About_Recipe.
     About_Recipe about_recipe;
 
-    // Метод, вызываемый при старте объекта.
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё СЃС‚Р°СЂС‚Рµ РѕР±СЉРµРєС‚Р°.
     private void Start()
     {
-        // Находим объект типа About_Recipe в сцене.
+        // РќР°С…РѕРґРёРј РѕР±СЉРµРєС‚ С‚РёРїР° About_Recipe РІ СЃС†РµРЅРµ.
         about_recipe = GameObject.FindObjectOfType<About_Recipe>();
     }
     public void Star()
     {
-        // Вызываем метод Stars у объекта about_recipe, передавая текущий объект (gameObject) в качестве аргумента.
+        // Р’С‹Р·С‹РІР°РµРј РјРµС‚РѕРґ Stars Сѓ РѕР±СЉРµРєС‚Р° about_recipe, РїРµСЂРµРґР°РІР°СЏ С‚РµРєСѓС‰РёР№ РѕР±СЉРµРєС‚ (gameObject) РІ РєР°С‡РµСЃС‚РІРµ Р°СЂРіСѓРјРµРЅС‚Р°.
         about_recipe.Stars(gameObject);
     }
 
