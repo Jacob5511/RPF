@@ -7,5 +7,44 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  m_configObjects: {}
+    guid: 3fc8acdd13e6c734bafef6554d6fdbcd
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 929b786783e7a214ead7a0268ad2afc1
+  - enabled: 1
+    path: Assets/Scenes/AboutRecipe.unity
+    guid: e4f64e2828df21748bcf2fe2dd3d3691
+  - enabled: 1
+    path: Assets/Scenes/Add.unity
+    guid: a44db8aed11167740966fb287a12a257
+  - enabled: 1
+    path: Assets/Scenes/AddForShief.unity
+    guid: cfe90fc96a69c30478dfffd76023f299
+  - enabled: 1
+    path: Assets/Scenes/ForChief.unity
+    guid: dada952a2578c0f47b03a283a5969978
+  - enabled: 1
+    path: Assets/Scenes/AboutChief.unity
+    guid: 08e5c7842b28ea44c9b02f35c9af8331
+  - enabled: 1
+    path: Assets/Scenes/MainForChief.unity
+    guid: 086adbe8066240f45add9a2066f3817b
+  - enabled: 1
+    path: Assets/Scenes/ShortChief.unity
+    guid: f4e22059e8efb604b89a4470d3674b9c
+  - enabled: 1
+    path: Assets/Scenes/MyAccount.unity
+    guid: be268d02b3f769e4f890062c73cf3bfa
+  - enabled: 1
+    path: Assets/Scenes/FindChief.unity
+    guid: 9c372789b557c87429c5cc7171ae47c6
+  - enabled: 1
+    path: Assets/Scenes/MyChiefAccount.unity
+    guid: 6eeb91b5d2d33ed4894f346eaf053900
+  - enabled: 1
+    path: Assets/Scenes/UpdateRecipe.unity
+    guid: 675c05fc26bac9346bb039640fc78a1e
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 261312fcc097d7f4a84bbb911faed25c, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: a31d0339e175de64caeff9c01f526a40, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: a6ddf6adb562ec844956d7097487be56, type: 2}

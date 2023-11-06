@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - camera
+  - gallery
+  - metro
+  - all_fields
+  - not_allowed
+  - success
+  - panel_units
+  - recipe_upload_successful
+  - loading_screen
   layers:
   - Default
   - TransparentFX
