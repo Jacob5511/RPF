@@ -10,26 +10,26 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    string check_chief_url = "http://22.cshse.beget.tech/check_chief"; // URL для проверки, является ли пользователь шеф-поваром.
-    string email_url = "http://22.cshse.beget.tech/email"; // URL для отправки электронной почты.
-    string change_password_url = "http://22.cshse.beget.tech/change_password"; // URL для изменения пароля.
-    string get_code = ""; // Переменная для хранения полученного кода.
-    public GameObject login, registration; // Ссылки на объекты для входа и регистрации.
-    public Toggle can_i_make_recipe, sort_by_views, is_my_recipes, is_downloaded; // Переключатели для настройки поиска.
+    string check_chief_url = "http://22.cshse.beget.tech/check_chief"; // URL РґР»СЏ РїСЂРѕРІРµСЂРєРё, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ С€РµС„-РїРѕРІР°СЂРѕРј.
+    string email_url = "http://22.cshse.beget.tech/email"; // URL РґР»СЏ РѕС‚РїСЂР°РІРєРё СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїРѕС‡С‚С‹.
+    string change_password_url = "http://22.cshse.beget.tech/change_password"; // URL РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РїР°СЂРѕР»СЏ.
+    string get_code = ""; // РџРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РїРѕР»СѓС‡РµРЅРЅРѕРіРѕ РєРѕРґР°.
+    public GameObject login, registration; // РЎСЃС‹Р»РєРё РЅР° РѕР±СЉРµРєС‚С‹ РґР»СЏ РІС…РѕРґР° Рё СЂРµРіРёСЃС‚СЂР°С†РёРё.
+    public Toggle can_i_make_recipe, sort_by_views, is_my_recipes, is_downloaded; // РџРµСЂРµРєР»СЋС‡Р°С‚РµР»Рё РґР»СЏ РЅР°СЃС‚СЂРѕР№РєРё РїРѕРёСЃРєР°.
     public TMP_InputField search_bar, rating_from_one, rating_from_two, rating_to_one, rating_to_two, views_from, views_to, metro, email, code, new_password, new_password_repeat,
-        search_data, price_from, price_to, metro_main_for_chief; // Поля ввода и настройки для поиска, электронной почты, пароля и других данных.
+        search_data, price_from, price_to, metro_main_for_chief; // РџРѕР»СЏ РІРІРѕРґР° Рё РЅР°СЃС‚СЂРѕР№РєРё РґР»СЏ РїРѕРёСЃРєР°, СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїРѕС‡С‚С‹, РїР°СЂРѕР»СЏ Рё РґСЂСѓРіРёС… РґР°РЅРЅС‹С….
     public Animator for_other_people, who_is_it_for, find_shief, reg_button, recover_button, enter, enter_but, for_animation, enter_your_email, incorrect_email, code_sent_successfully,
-        smth_went_wrong, invalid_code, password_updated_successfully, password_not_the_same; // Аниматоры для анимаций.
-    Authorization auth; // Ссылка на компонент авторизации.
+        smth_went_wrong, invalid_code, password_updated_successfully, password_not_the_same; // РђРЅРёРјР°С‚РѕСЂС‹ РґР»СЏ Р°РЅРёРјР°С†РёР№.
+    Authorization auth; // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ Р°РІС‚РѕСЂРёР·Р°С†РёРё.
 
     private void Start()
     {
-        auth = FindObjectOfType<Authorization>(); // Находит компонент авторизации в сцене.
+        auth = FindObjectOfType<Authorization>(); // РќР°С…РѕРґРёС‚ РєРѕРјРїРѕРЅРµРЅС‚ Р°РІС‚РѕСЂРёР·Р°С†РёРё РІ СЃС†РµРЅРµ.
     }
 
     public IEnumerator CheckInternetConnection(Action<bool> action)
     {
-        // Проверка наличия интернет-соединения.
+        // РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёСЏ.
         UnityWebRequest request = new UnityWebRequest("http://google.com");
         yield return request.SendWebRequest();
         if (request.error != null)
@@ -38,14 +38,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Интернет есть");
+            Debug.Log("РРЅС‚РµСЂРЅРµС‚ РµСЃС‚СЊ");
             action(true);
         }
     }
 
     public void Registration()
     {
-        // Открыть окно регистрации и скрыть окно входа.
+        // РћС‚РєСЂС‹С‚СЊ РѕРєРЅРѕ СЂРµРіРёСЃС‚СЂР°С†РёРё Рё СЃРєСЂС‹С‚СЊ РѕРєРЅРѕ РІС…РѕРґР°.
         if (enter_your_email.GetBool("is_open"))
         {
             enter_but.SetBool("is_close", false);
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     public void Enter()
     {
-        // Открыть окно входа и скрыть окно регистрации.
+        // РћС‚РєСЂС‹С‚СЊ РѕРєРЅРѕ РІС…РѕРґР° Рё СЃРєСЂС‹С‚СЊ РѕРєРЅРѕ СЂРµРіРёСЃС‚СЂР°С†РёРё.
         enter_but.SetBool("is_close", true);
         for_animation.SetBool("is_close", true);
         enter.SetBool("is_open", true);
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     public void Send_Email()
     {
-        // Попытка отправить электронное письмо.
+        // РџРѕРїС‹С‚РєР° РѕС‚РїСЂР°РІРёС‚СЊ СЌР»РµРєС‚СЂРѕРЅРЅРѕРµ РїРёСЃСЊРјРѕ.
         bool IsValidEmail(string email)
         {
             try
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SendEmail()
     {
-        // Отправка электронного письма с кодом подтверждения.
+        // РћС‚РїСЂР°РІРєР° СЌР»РµРєС‚СЂРѕРЅРЅРѕРіРѕ РїРёСЃСЊРјР° СЃ РєРѕРґРѕРј РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ.
         WWWForm form = new WWWForm();
         form.AddField("email", email.text);
 
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
                     code_sent_successfully.SetTrigger("must");
                     enter_your_email.SetTrigger("transit");
                 }
-                else if (response == "Такой почты нет")
+                else if (response == "РўР°РєРѕР№ РїРѕС‡С‚С‹ РЅРµС‚")
                 {
                     incorrect_email.SetTrigger("must");
                 }
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error);
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error);
             }
             www.Dispose();
         }
@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     public void Check_Code()
     {
-        // Проверка введенного кода подтверждения.
+        // РџСЂРѕРІРµСЂРєР° РІРІРµРґРµРЅРЅРѕРіРѕ РєРѕРґР° РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ.
         if (code.text == "")
         {
             auth.all_fields_must.SetTrigger("must");
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
 
     public void Update_Passwords()
     {
-        // Обновление пароля.
+        // РћР±РЅРѕРІР»РµРЅРёРµ РїР°СЂРѕР»СЏ.
         if (new_password.text == "" || new_password_repeat.text == "")
         {
             auth.all_fields_must.SetTrigger("must");
@@ -184,14 +184,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            print("Пароли не совпадают");
+            print("РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚");
             password_not_the_same.SetTrigger("must");
         }
     }
 
     private IEnumerator UpdatePasswords()
     {
-        // Отправка запроса на изменение пароля.
+        // РћС‚РїСЂР°РІРєР° Р·Р°РїСЂРѕСЃР° РЅР° РёР·РјРµРЅРµРЅРёРµ РїР°СЂРѕР»СЏ.
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
 
@@ -226,13 +226,13 @@ public class GameManager : MonoBehaviour
 
     public void Change_Steps_Recover_Password()
     {
-        // Этот метод запускает анимацию перехода к странице восстановления пароля
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ Р·Р°РїСѓСЃРєР°РµС‚ Р°РЅРёРјР°С†РёСЋ РїРµСЂРµС…РѕРґР° Рє СЃС‚СЂР°РЅРёС†Рµ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїР°СЂРѕР»СЏ
         enter_your_email.SetTrigger("transit");
     }
 
     public void Recover_Password()
     {
-        // Этот метод открывает страницу восстановления пароля, показывая необходимые элементы интерфейса
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ РѕС‚РєСЂС‹РІР°РµС‚ СЃС‚СЂР°РЅРёС†Сѓ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїР°СЂРѕР»СЏ, РїРѕРєР°Р·С‹РІР°СЏ РЅРµРѕР±С…РѕРґРёРјС‹Рµ СЌР»РµРјРµРЅС‚С‹ РёРЅС‚РµСЂС„РµР№СЃР°
         enter_your_email.SetBool("is_open", true);
         enter.SetBool("is_transit", true);
         recover_button.SetBool("is_change", true);
@@ -240,7 +240,7 @@ public class GameManager : MonoBehaviour
 
     public void Enter_To_Account()
     {
-        // Этот метод закрывает страницу восстановления пароля и возвращает пользователя на страницу входа
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ Р·Р°РєСЂС‹РІР°РµС‚ СЃС‚СЂР°РЅРёС†Сѓ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїР°СЂРѕР»СЏ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РІС…РѕРґР°
         enter.SetBool("is_transit", false);
         enter_your_email.SetBool("is_open", false);
         recover_button.SetBool("is_change", false);
@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
 
     public void Add_Recipe()
     {
-        // Этот метод сохраняет данные, открывает или закрывает всплывающее окно для выбора типа рецепта (для кого)
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ, РѕС‚РєСЂС‹РІР°РµС‚ РёР»Рё Р·Р°РєСЂС‹РІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РµРµ РѕРєРЅРѕ РґР»СЏ РІС‹Р±РѕСЂР° С‚РёРїР° СЂРµС†РµРїС‚Р° (РґР»СЏ РєРѕРіРѕ)
         Save();
         Save_Find_Chief();
 
@@ -260,19 +260,19 @@ public class GameManager : MonoBehaviour
 
     public void Add_For_Other_People()
     {
-        // Этот метод перенаправляет пользователя на страницу добавления рецепта для других пользователей
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РґРѕР±Р°РІР»РµРЅРёСЏ СЂРµС†РµРїС‚Р° РґР»СЏ РґСЂСѓРіРёС… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
         SceneManager.LoadScene("Add");
     }
 
     public void Add_For_Shief()
     {
-        // Этот метод перенаправляет пользователя на страницу добавления рецепта для шеф-поваров
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РґРѕР±Р°РІР»РµРЅРёСЏ СЂРµС†РµРїС‚Р° РґР»СЏ С€РµС„-РїРѕРІР°СЂРѕРІ
         SceneManager.LoadScene("AddForShief");
     }
 
     public void MainScene_Back()
     {
-        // Этот метод сохраняет данные и возвращает пользователя на главную страницу
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° РіР»Р°РІРЅСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ
         Save();
         Save_Find_Chief();
         SaveMainForChief();
@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviour
 
     public void ForChief()
     {
-        // Этот метод сохраняет данные, перенаправляет пользователя на страницу проверки прав шеф-повара и выполняет проверку
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ, РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РїСЂРѕРІРµСЂРєРё РїСЂР°РІ С€РµС„-РїРѕРІР°СЂР° Рё РІС‹РїРѕР»РЅСЏРµС‚ РїСЂРѕРІРµСЂРєСѓ
         Save();
         Save_Find_Chief();
         BetweenScenes.vertical_normalized_position = 1f;
@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CheckChief()
     {
-        // Этот метод выполняет проверку, является ли пользователь шеф-поваром, и перенаправляет его соответствующим образом
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ РІС‹РїРѕР»РЅСЏРµС‚ РїСЂРѕРІРµСЂРєСѓ, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ С€РµС„-РїРѕРІР°СЂРѕРј, Рё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РµРіРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРј РѕР±СЂР°Р·РѕРј
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
         User user = JsonUtility.FromJson<User>(json);
         WWWForm form = new WWWForm();
@@ -315,7 +315,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error);
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error);
             }
             www.Dispose();
         }
@@ -323,7 +323,7 @@ public class GameManager : MonoBehaviour
 
     public void Back_To_FindChief()
     {
-        // Этот метод сохраняет данные и перенаправляет пользователя на страницу поиска шеф-повара
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РїРѕРёСЃРєР° С€РµС„-РїРѕРІР°СЂР°
         Save();
         Save_Find_Chief();
         SceneManager.LoadScene("FindChief");
@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
 
     public void Exit_From_Account()
     {
-        // Этот метод завершает сеанс пользователя, сбрасывает сохраненные данные и возвращает пользователя на страницу входа
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ Р·Р°РІРµСЂС€Р°РµС‚ СЃРµР°РЅСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, СЃР±СЂР°СЃС‹РІР°РµС‚ СЃРѕС…СЂР°РЅРµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РІС…РѕРґР°
         User user = new User();
         user.count = 50;
         string json = JsonUtility.ToJson(user);
@@ -364,21 +364,21 @@ public class GameManager : MonoBehaviour
 
     public void MainForChief()
     {
-        // Этот метод сохраняет данные и перенаправляет пользователя на страницу "MainForChief"
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ "MainForChief"
         SaveMainForChief();
         SceneManager.LoadScene("MainForChief");
     }
 
     public void AddAnnouncement()
     {
-        // Этот метод сохраняет данные и перенаправляет пользователя на страницу добавления объявления шеф-повара
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РґРѕР±Р°РІР»РµРЅРёСЏ РѕР±СЉСЏРІР»РµРЅРёСЏ С€РµС„-РїРѕРІР°СЂР°
         SaveMainForChief();
         SceneManager.LoadScene("ShortChief");
     }
 
     public void Open()
     {
-        // Этот метод открывает всплывающее окно для выбора типа рецепта
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ РѕС‚РєСЂС‹РІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РµРµ РѕРєРЅРѕ РґР»СЏ РІС‹Р±РѕСЂР° С‚РёРїР° СЂРµС†РµРїС‚Р°
         for_other_people.SetBool("is_open", true);
         who_is_it_for.SetBool("is_open", true);
         find_shief.SetBool("is_open", true);
@@ -386,7 +386,7 @@ public class GameManager : MonoBehaviour
 
     public void Close()
     {
-        // Этот метод закрывает всплывающее окно для выбора типа рецепта
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ Р·Р°РєСЂС‹РІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РµРµ РѕРєРЅРѕ РґР»СЏ РІС‹Р±РѕСЂР° С‚РёРїР° СЂРµС†РµРїС‚Р°
         for_other_people.SetBool("is_open", false);
         who_is_it_for.SetBool("is_open", false);
         find_shief.SetBool("is_open", false);
@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
 
     public void ToMyAccount()
     {
-        // Этот метод сохраняет данные и перенаправляет пользователя на страницу своего аккаунта
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ СЃРІРѕРµРіРѕ Р°РєРєР°СѓРЅС‚Р°
         Save();
         Save_Find_Chief();
         SceneManager.LoadScene("MyAccount");
@@ -402,14 +402,14 @@ public class GameManager : MonoBehaviour
 
     public void ToMyChiefAccount()
     {
-        // Этот метод сохраняет данные и перенаправляет пользователя на страницу аккаунта шеф-повара
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ Р°РєРєР°СѓРЅС‚Р° С€РµС„-РїРѕРІР°СЂР°
         SaveMainForChief();
         SceneManager.LoadScene("MyChiefAccount");
     }
 
     public void Save_Find_Chief()
     {
-        // Этот метод сохраняет фильтры поиска шеф-повара, если пользователь находится на странице поиска шеф-повара
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ С„РёР»СЊС‚СЂС‹ РїРѕРёСЃРєР° С€РµС„-РїРѕРІР°СЂР°, РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅР°С…РѕРґРёС‚СЃСЏ РЅР° СЃС‚СЂР°РЅРёС†Рµ РїРѕРёСЃРєР° С€РµС„-РїРѕРІР°СЂР°
         if (SceneManager.GetActiveScene().name == "FindChief")
         {
             BetweenScenes.search_bar_find_chief = search_bar.text;
@@ -425,7 +425,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveMainForChief()
     {
-        // Этот метод сохраняет фильтры основной страницы для шеф-повара, если пользователь находится на этой странице
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ С„РёР»СЊС‚СЂС‹ РѕСЃРЅРѕРІРЅРѕР№ СЃС‚СЂР°РЅРёС†С‹ РґР»СЏ С€РµС„-РїРѕРІР°СЂР°, РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅР°С…РѕРґРёС‚СЃСЏ РЅР° СЌС‚РѕР№ СЃС‚СЂР°РЅРёС†Рµ
         if (SceneManager.GetActiveScene().name == "MainForChief")
         {
             BetweenScenes.search_data = search_data.text;
@@ -437,7 +437,7 @@ public class GameManager : MonoBehaviour
 
     public void Save()
     {
-        // Этот метод сохраняет фильтры на главной странице (MainScene)
+        // Р­С‚РѕС‚ РјРµС‚РѕРґ СЃРѕС…СЂР°РЅСЏРµС‚ С„РёР»СЊС‚СЂС‹ РЅР° РіР»Р°РІРЅРѕР№ СЃС‚СЂР°РЅРёС†Рµ (MainScene)
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
             BetweenScenes.search_bar = search_bar.text;
