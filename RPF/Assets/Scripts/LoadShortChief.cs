@@ -22,7 +22,7 @@ public class LoadShortChief : MonoBehaviour
         StartCoroutine(Main_Load_Ricipes(false));
     }
 
-    // Функция для обновления высоты паттерна и игрового объекта
+    // Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РІС‹СЃРѕС‚С‹ РїР°С‚С‚РµСЂРЅР° Рё РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
     private void UpdatePatterHeight(float newHeight)
     {
         Vector2 newSize = pattern_2.sizeDelta;
@@ -31,7 +31,7 @@ public class LoadShortChief : MonoBehaviour
         gameobject.sizeDelta = newSize;
     }
 
-    // Загрузка изображения по URL и установка в компонент RawImage
+    // Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РїРѕ URL Рё СѓСЃС‚Р°РЅРѕРІРєР° РІ РєРѕРјРїРѕРЅРµРЅС‚ RawImage
     private IEnumerator LoadImage(string imageURL, RawImage image)
     {
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL))
@@ -63,7 +63,7 @@ public class LoadShortChief : MonoBehaviour
         StartCoroutine(Main_Load_Ricipes(true, "0"));
     }
 
-    // Установка данных о шефе
+    // РЈСЃС‚Р°РЅРѕРІРєР° РґР°РЅРЅС‹С… Рѕ С€РµС„Рµ
     private void Assign(Chief answer_data)
     {
         chief_name_1.text = answer_data.name;
@@ -77,7 +77,7 @@ public class LoadShortChief : MonoBehaviour
         metro.text = answer_data.metro;
     }
 
-    // Отправка данных на сервер и получение ответа
+    // РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… РЅР° СЃРµСЂРІРµСЂ Рё РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
     private IEnumerator Main_Load_Ricipes(bool is_add, string action = "")
     {
         string json = File.ReadAllText(Path.Combine(Application.persistentDataPath, "user.txt"));
@@ -143,7 +143,7 @@ public class LoadShortChief : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
             }
             www.Dispose();
         }
