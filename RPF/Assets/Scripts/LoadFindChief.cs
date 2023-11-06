@@ -23,7 +23,7 @@ public class LoadFindChief : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
-        // Устанавливаем начальные значения полей поиска на основе предыдущих результатов
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РїРѕР»РµР№ РїРѕРёСЃРєР° РЅР° РѕСЃРЅРѕРІРµ РїСЂРµРґС‹РґСѓС‰РёС… СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
         search_bar.text = BetweenScenes.search_bar_find_chief;
         rating_from_one.text = BetweenScenes.rating_from_one_find_chief;
         rating_from_two.text = BetweenScenes.rating_from_two_find_chief;
@@ -37,7 +37,7 @@ public class LoadFindChief : MonoBehaviour
 
     private IEnumerator Main_Load_Ricipes()
     {
-        // Основной метод для загрузки данных о шеф-поварах
+        // РћСЃРЅРѕРІРЅРѕР№ РјРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… Рѕ С€РµС„-РїРѕРІР°СЂР°С…
         WWWForm form = new WWWForm();
         form.AddField("rating_from_one", rating_from_one.text);
         form.AddField("rating_from_two", rating_from_two.text);
@@ -47,7 +47,7 @@ public class LoadFindChief : MonoBehaviour
         form.AddField("views_to", views_to.text);
         form.AddField("search_data", search_bar.text);
         form.AddField("metro", metro.text);
-        // Создание формы для отправки критериев поиска на сервер
+        // РЎРѕР·РґР°РЅРёРµ С„РѕСЂРјС‹ РґР»СЏ РѕС‚РїСЂР°РІРєРё РєСЂРёС‚РµСЂРёРµРІ РїРѕРёСЃРєР° РЅР° СЃРµСЂРІРµСЂ
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
@@ -56,14 +56,14 @@ public class LoadFindChief : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 string json = www.downloadHandler.text;
-                // Если запрос был успешным, получаем JSON-данные
+                // Р•СЃР»Рё Р·Р°РїСЂРѕСЃ Р±С‹Р» СѓСЃРїРµС€РЅС‹Рј, РїРѕР»СѓС‡Р°РµРј JSON-РґР°РЅРЅС‹Рµ
 
                 print(json);
                 if (json == "no_results")
                 {
                     no_results.Play("No_Results");
                     no_results_text.Play("No_Results_text");
-                    // Если нет результатов, проигрываем анимации отсутствия результатов
+                    // Р•СЃР»Рё РЅРµС‚ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ, РїСЂРѕРёРіСЂС‹РІР°РµРј Р°РЅРёРјР°С†РёРё РѕС‚СЃСѓС‚СЃС‚РІРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
                 }
                 else
                 {
@@ -72,51 +72,51 @@ public class LoadFindChief : MonoBehaviour
                     {
                         Destroy(parentObject.GetChild(i).gameObject);
                     }
-                    // Удаляем существующие элементы списка
+                    // РЈРґР°Р»СЏРµРј СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°
                     loading_screen.SetActive(false);
                     loading_screen_anim.SetTrigger("must_close");
                     scroll.SetActive(true);
-                    // Отключаем экран загрузки и отображаем элементы списка
+                    // РћС‚РєР»СЋС‡Р°РµРј СЌРєСЂР°РЅ Р·Р°РіСЂСѓР·РєРё Рё РѕС‚РѕР±СЂР°Р¶Р°РµРј СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°
                     Load(json);
-                    // Загружаем данные о шеф-поварах из JSON
+                    // Р—Р°РіСЂСѓР¶Р°РµРј РґР°РЅРЅС‹Рµ Рѕ С€РµС„-РїРѕРІР°СЂР°С… РёР· JSON
                 }
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
             }
             www.Dispose();
         }
     }
     public void Filter()
     {
-        // Запускаем анимацию открытия панели с фильтрами
+        // Р—Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ РѕС‚РєСЂС‹С‚РёСЏ РїР°РЅРµР»Рё СЃ С„РёР»СЊС‚СЂР°РјРё
         animation_script.Open_Panel();
         //open_panel.SetBool("is_open", false);
 
-        // Выполняем загрузку шеф-поваров с учетом фильтров
+        // Р’С‹РїРѕР»РЅСЏРµРј Р·Р°РіСЂСѓР·РєСѓ С€РµС„-РїРѕРІР°СЂРѕРІ СЃ СѓС‡РµС‚РѕРј С„РёР»СЊС‚СЂРѕРІ
         StartCoroutine(Main_Load_Ricipes());
     }
     public void Send_Data()
     {
-        // Удаляем начальные и конечные пробелы из строки поиска
+        // РЈРґР°Р»СЏРµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ Рё РєРѕРЅРµС‡РЅС‹Рµ РїСЂРѕР±РµР»С‹ РёР· СЃС‚СЂРѕРєРё РїРѕРёСЃРєР°
         search_bar.text = search_bar.text.Trim();
         if (search_bar.text.Length == 0)
         {
-            // Если строка поиска пуста, проигрываем анимацию "Пустой запрос"
+            // Р•СЃР»Рё СЃС‚СЂРѕРєР° РїРѕРёСЃРєР° РїСѓСЃС‚Р°, РїСЂРѕРёРіСЂС‹РІР°РµРј Р°РЅРёРјР°С†РёСЋ "РџСѓСЃС‚РѕР№ Р·Р°РїСЂРѕСЃ"
             empty_request_text.Play("Empty_Request");
         }
         if (animation_script.sort_panel_anim.GetBool("is_open"))
         {
-            // Если строка поиска пуста, проигрываем анимацию "Пустой запрос"
+            // Р•СЃР»Рё СЃС‚СЂРѕРєР° РїРѕРёСЃРєР° РїСѓСЃС‚Р°, РїСЂРѕРёРіСЂС‹РІР°РµРј Р°РЅРёРјР°С†РёСЋ "РџСѓСЃС‚РѕР№ Р·Р°РїСЂРѕСЃ"
             animation_script.Open_Panel();
         }
 
-        // Выполняем загрузку шеф-поваров
+        // Р’С‹РїРѕР»РЅСЏРµРј Р·Р°РіСЂСѓР·РєСѓ С€РµС„-РїРѕРІР°СЂРѕРІ
         StartCoroutine(Main_Load_Ricipes());
     }
 
-    // Метод для загрузки изображения по URL
+    // РњРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РїРѕ URL
     private IEnumerator LoadImage(string imageURL, RawImage image, Animator circle)
     {
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL))
@@ -125,7 +125,7 @@ public class LoadFindChief : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                // Если загрузка изображения прошла успешно, устанавливаем текстуру и соотношение сторон
+                // Р•СЃР»Рё Р·Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСЃС‚СѓСЂСѓ Рё СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ СЃС‚РѕСЂРѕРЅ
                 Texture2D texture = DownloadHandlerTexture.GetContent(www);
                 float c = (texture.width * 1.0f) / texture.height;
                 AspectRatioFitter image_aspect = image.GetComponent<AspectRatioFitter>();
@@ -136,24 +136,24 @@ public class LoadFindChief : MonoBehaviour
             }
             else
             {
-                // В случае ошибки выводим сообщение в лог
+                // Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РІ Р»РѕРі
                 Debug.LogError("Failed to load image: " + www.error);
             }
-            // В случае ошибки выводим сообщение в лог
+            // Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РІ Р»РѕРі
             www.Dispose();
         }
     }
-    // Метод для загрузки данных о шеф-поварах и создания соответствующих элементов
+    // РњРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… Рѕ С€РµС„-РїРѕРІР°СЂР°С… Рё СЃРѕР·РґР°РЅРёСЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… СЌР»РµРјРµРЅС‚РѕРІ
     private void Load(string json)
     {
         FindChiefObject itemseData = JsonUtility.FromJson<FindChiefObject>("{\"items\":" + json + "}");
         for (int i = 0; i < itemseData.items.Length; i++)
         {
             FindChiefData item = itemseData.items[i];
-            // Создаем экземпляр префаба
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРµС„Р°Р±Р°
             GameObject instantiatedPrefab = Instantiate(prefab, parentObject);
 
-            // Получаем доступ к компонентам RawImage и TextMeshProUGUI
+            // РџРѕР»СѓС‡Р°РµРј РґРѕСЃС‚СѓРї Рє РєРѕРјРїРѕРЅРµРЅС‚Р°Рј RawImage Рё TextMeshProUGUI
             rawImageComponent = instantiatedPrefab.transform.GetChild(1).GetChild(0).GetComponent<RawImage>();
             Animator circle = instantiatedPrefab.transform.GetChild(7).GetComponent<Animator>();
             circle.SetBool("is_circling", true);
@@ -165,10 +165,10 @@ public class LoadFindChief : MonoBehaviour
             score.text = item.score;
             views.text = item.views;
 
-            // Обновляем размер префаба в родительском объекте
+            // РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ РїСЂРµС„Р°Р±Р° РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РѕР±СЉРµРєС‚Рµ
             LayoutRebuilder.ForceRebuildLayoutImmediate(parentObject);
         }
-        // Устанавливаем размер маски в соответствии с содержимым
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ РјР°СЃРєРё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СЃРѕРґРµСЂР¶РёРјС‹Рј
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 1f;
     }
@@ -177,14 +177,14 @@ public class LoadFindChief : MonoBehaviour
 [Serializable]
 public class FindChiefData
 {
-    public string image_path; // Путь к изображению шеф-повара
-    public string chief_name; // Имя шеф-повара
-    public string views; // Количество просмотров профиля шеф-повара
-    public string score; // Оценка шеф-повара
+    public string image_path; // РџСѓС‚СЊ Рє РёР·РѕР±СЂР°Р¶РµРЅРёСЋ С€РµС„-РїРѕРІР°СЂР°
+    public string chief_name; // РРјСЏ С€РµС„-РїРѕРІР°СЂР°
+    public string views; // РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕСЃРјРѕС‚СЂРѕРІ РїСЂРѕС„РёР»СЏ С€РµС„-РїРѕРІР°СЂР°
+    public string score; // РћС†РµРЅРєР° С€РµС„-РїРѕРІР°СЂР°
 }
 
 [Serializable]
 public class FindChiefObject
 {
-    public FindChiefData[] items; // Массив данных о шеф-поварах
+    public FindChiefData[] items; // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… Рѕ С€РµС„-РїРѕРІР°СЂР°С…
 }
