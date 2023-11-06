@@ -6,16 +6,16 @@ using UnityEngine.Android;
 
 public class Timer : MonoBehaviour
 {
-    int notification_id;  // Идентификатор уведомления
-    public int duration;  // Длительность таймера
-    string for_what;  // Назначение таймера
-    public bool is_play = false;  // Флаг, указывающий, работает ли таймер
-    public GameObject cooking, not_cooking, time, play;  // Ссылки на игровые объекты
-    TMP_Text time_text;  // Текст, отображающий оставшееся время
+    int notification_id;  // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СѓРІРµРґРѕРјР»РµРЅРёСЏ
+    public int duration;  // Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ С‚Р°Р№РјРµСЂР°
+    string for_what;  // РќР°Р·РЅР°С‡РµРЅРёРµ С‚Р°Р№РјРµСЂР°
+    public bool is_play = false;  // Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№, СЂР°Р±РѕС‚Р°РµС‚ Р»Рё С‚Р°Р№РјРµСЂ
+    public GameObject cooking, not_cooking, time, play;  // РЎСЃС‹Р»РєРё РЅР° РёРіСЂРѕРІС‹Рµ РѕР±СЉРµРєС‚С‹
+    TMP_Text time_text;  // РўРµРєСЃС‚, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РёР№ РѕСЃС‚Р°РІС€РµРµСЃСЏ РІСЂРµРјСЏ
 
     private void Start()
     {
-        // Проверка и запрос разрешения на отправку уведомлений (для Android)
+        // РџСЂРѕРІРµСЂРєР° Рё Р·Р°РїСЂРѕСЃ СЂР°Р·СЂРµС€РµРЅРёСЏ РЅР° РѕС‚РїСЂР°РІРєСѓ СѓРІРµРґРѕРјР»РµРЅРёР№ (РґР»СЏ Android)
         if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
         {
             Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
@@ -28,13 +28,13 @@ public class Timer : MonoBehaviour
 
     public void Play()
     {
-        // Запуск или остановка таймера
+        // Р—Р°РїСѓСЃРє РёР»Рё РѕСЃС‚Р°РЅРѕРІРєР° С‚Р°Р№РјРµСЂР°
         if (!is_play)
         {
             play.SetActive(false);
             CancelInvoke("Counter");
             InvokeRepeating("Counter", 1, 1);
-            SendNotification();  // Отправка уведомления
+            SendNotification();  // РћС‚РїСЂР°РІРєР° СѓРІРµРґРѕРјР»РµРЅРёСЏ
             time.SetActive(true);
             is_play = true;
         }
@@ -50,7 +50,7 @@ public class Timer : MonoBehaviour
 
     void Counter()
     {
-        // Обратный отсчет времени
+        // РћР±СЂР°С‚РЅС‹Р№ РѕС‚СЃС‡РµС‚ РІСЂРµРјРµРЅРё
         if (is_play)
         {
             if (duration > 0)
@@ -63,7 +63,7 @@ public class Timer : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
-        // Обработка события приложения в фоновом режиме (приостановка или восстановление)
+        // РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ РІ С„РѕРЅРѕРІРѕРј СЂРµР¶РёРјРµ (РїСЂРёРѕСЃС‚Р°РЅРѕРІРєР° РёР»Рё РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ)
         if (pause)
         {
             CancelInvoke("Counter");
@@ -77,25 +77,25 @@ public class Timer : MonoBehaviour
 
     void EndDuration()
     {
-        // Обработка завершения времени таймера (здесь примерно вибрация)
+        // РћР±СЂР°Р±РѕС‚РєР° Р·Р°РІРµСЂС€РµРЅРёСЏ РІСЂРµРјРµРЅРё С‚Р°Р№РјРµСЂР° (Р·РґРµСЃСЊ РїСЂРёРјРµСЂРЅРѕ РІРёР±СЂР°С†РёСЏ)
         Handheld.Vibrate();
         //SendNotification();
     }
 
     public void Change()
     {
-        // Смена состояния интерфейса
+        // РЎРјРµРЅР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРЅС‚РµСЂС„РµР№СЃР°
         cooking.SetActive(true);
         not_cooking.SetActive(false);
     }
 
     private void Awake()
     {
-        // Регистрация канала уведомлений
+        // Р РµРіРёСЃС‚СЂР°С†РёСЏ РєР°РЅР°Р»Р° СѓРІРµРґРѕРјР»РµРЅРёР№
         AndroidNotificationChannel channel = new AndroidNotificationChannel()
         {
             Name = "RPF",
-            Description = "Таймер",
+            Description = "РўР°Р№РјРµСЂ",
             Id = "timer",
             Importance = Importance.High
         };
@@ -105,11 +105,11 @@ public class Timer : MonoBehaviour
 
     public void SendNotification()
     {
-        // Отправка уведомления
+        // РћС‚РїСЂР°РІРєР° СѓРІРµРґРѕРјР»РµРЅРёСЏ
         AndroidNotification notification = new AndroidNotification()
         {
-            Title = "Время вышло",
-            Text = "Время вышло!!! Пора продолжать готовить",
+            Title = "Р’СЂРµРјСЏ РІС‹С€Р»Рѕ",
+            Text = "Р’СЂРµРјСЏ РІС‹С€Р»Рѕ!!! РџРѕСЂР° РїСЂРѕРґРѕР»Р¶Р°С‚СЊ РіРѕС‚РѕРІРёС‚СЊ",
             FireTime = System.DateTime.Now.AddSeconds(duration),
             SmallIcon = "small",
             LargeIcon = "large"
@@ -122,5 +122,5 @@ public class Timer : MonoBehaviour
 [System.Serializable]
 public class SaveTimer
 {
-    public string saved_timers; // Строка для хранения сериализованных данных таймеров
+    public string saved_timers; // РЎС‚СЂРѕРєР° РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЃРµСЂРёР°Р»РёР·РѕРІР°РЅРЅС‹С… РґР°РЅРЅС‹С… С‚Р°Р№РјРµСЂРѕРІ
 }
