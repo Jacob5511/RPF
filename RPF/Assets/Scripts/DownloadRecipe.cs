@@ -8,46 +8,46 @@ using UnityEngine.Networking;
 
 public class DownloadRecipe : MonoBehaviour
 {
-    // URL для загрузки рецепта с сервера
+    // URL РґР»СЏ Р·Р°РіСЂСѓР·РєРё СЂРµС†РµРїС‚Р° СЃ СЃРµСЂРІРµСЂР°
     string download_recipe_url = "http://22.cshse.beget.tech/download_recipe";
     
-    // Идентификатор рецепта
+    // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРµС†РµРїС‚Р°
     string recipe_id = BetweenScenes.recipes_id;
     
-    // Путь для сохранения данных рецепта
+    // РџСѓС‚СЊ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… СЂРµС†РµРїС‚Р°
     string path;
     
-    // Ссылка на компонент AboutRecipe, который отображает информацию о рецепте
+    // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ AboutRecipe, РєРѕС‚РѕСЂС‹Р№ РѕС‚РѕР±СЂР°Р¶Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂРµС†РµРїС‚Рµ
     public About_Recipe about_recipe;
     
-    // Аниматор для анимации удаления рецепта и успешной загрузки рецепта
+    // РђРЅРёРјР°С‚РѕСЂ РґР»СЏ Р°РЅРёРјР°С†РёРё СѓРґР°Р»РµРЅРёСЏ СЂРµС†РµРїС‚Р° Рё СѓСЃРїРµС€РЅРѕР№ Р·Р°РіСЂСѓР·РєРё СЂРµС†РµРїС‚Р°
     public Animator recipe_deleted, recipe_downloaded;
    
-    // Метод для загрузки рецепта
+    // РњРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё СЂРµС†РµРїС‚Р°
     public void Download_Recipe()
     {
         StartCoroutine(Download());
     }
     
-    // Метод для выполнения загрузки рецепта
+    // РњРµС‚РѕРґ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РіСЂСѓР·РєРё СЂРµС†РµРїС‚Р°
     private IEnumerator Download()
     {
-        // Путь для сохранения данных рецепта в локальном хранилище
+        // РџСѓС‚СЊ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… СЂРµС†РµРїС‚Р° РІ Р»РѕРєР°Р»СЊРЅРѕРј С…СЂР°РЅРёР»РёС‰Рµ
         path = Path.Combine(Application.persistentDataPath, "recipes");
         
-        // Путь для сохранения изображений рецепта
+        // РџСѓС‚СЊ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№ СЂРµС†РµРїС‚Р°
         string images_save_path = Path.Combine(path, "images");
         
-        // Путь для сохранения всех данных, кроме изображений
+        // РџСѓС‚СЊ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РІСЃРµС… РґР°РЅРЅС‹С…, РєСЂРѕРјРµ РёР·РѕР±СЂР°Р¶РµРЅРёР№
         string all_except_images_save_path = Path.Combine(path, "text_info.txt");
         
-        // Создаем директорию для сохранения изображений, если она не существует
+        // РЎРѕР·РґР°РµРј РґРёСЂРµРєС‚РѕСЂРёСЋ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№, РµСЃР»Рё РѕРЅР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
         if (!Directory.Exists(Path.GetDirectoryName(images_save_path)))
         {
             Directory.CreateDirectory(Path.GetDirectoryName(images_save_path));
         }
         
-        // Форма для отправки запроса на сервер
+        // Р¤РѕСЂРјР° РґР»СЏ РѕС‚РїСЂР°РІРєРё Р·Р°РїСЂРѕСЃР° РЅР° СЃРµСЂРІРµСЂ
         WWWForm form = new WWWForm();
         form.AddField("recipe_id", recipe_id);
 
@@ -61,13 +61,13 @@ public class DownloadRecipe : MonoBehaviour
                 bool flag = false;
                 DownloadRecipeData download_recipe_data = JsonUtility.FromJson<DownloadRecipeData>(answer);
                 
-                // Сохранили текстовую информацию, короче все, кроме изображений.
+                // РЎРѕС…СЂР°РЅРёР»Рё С‚РµРєСЃС‚РѕРІСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ, РєРѕСЂРѕС‡Рµ РІСЃРµ, РєСЂРѕРјРµ РёР·РѕР±СЂР°Р¶РµРЅРёР№.
                 try
                 {
                     string json = File.ReadAllText(all_except_images_save_path);
                     DownloadRecipeObject download_recipe_object = JsonUtility.FromJson<DownloadRecipeObject>(json);
                     
-                    // Создаем новый объект DownloadRecipeData
+                    // РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ DownloadRecipeData
                     DownloadRecipeData newRecipe = JsonUtility.FromJson<DownloadRecipeData>(answer);
                     for (int i = 0; i < download_recipe_object.recipes.Length; i++)
                     {
@@ -78,39 +78,39 @@ public class DownloadRecipe : MonoBehaviour
                         }    
                     }
 
-                    // Копируем существующие данные в новый список рецептов
+                    // РљРѕРїРёСЂСѓРµРј СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ РґР°РЅРЅС‹Рµ РІ РЅРѕРІС‹Р№ СЃРїРёСЃРѕРє СЂРµС†РµРїС‚РѕРІ
                     List<DownloadRecipeData> recipeList = new List<DownloadRecipeData>(download_recipe_object.recipes);
 
-                    // Добавляем новый объект в список
+                    // Р”РѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ РІ СЃРїРёСЃРѕРє
                     recipeList.Add(newRecipe);
 
-                    // Обновляем массив рецептов в объекте DownloadRecipeObject
+                    // РћР±РЅРѕРІР»СЏРµРј РјР°СЃСЃРёРІ СЂРµС†РµРїС‚РѕРІ РІ РѕР±СЉРµРєС‚Рµ DownloadRecipeObject
                     download_recipe_object.recipes = recipeList.ToArray();
                     answer = JsonUtility.ToJson(download_recipe_object);
                 }
                 catch
                 {
-                    // Файл еще не существует, создаем новый объект DownloadRecipeObject
+                    // Р¤Р°Р№Р» РµС‰Рµ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ DownloadRecipeObject
                     DownloadRecipeObject download_recipe_object = new DownloadRecipeObject();
 
-                    // Создаем новый объект DownloadRecipeData
+                    // РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ DownloadRecipeData
                     DownloadRecipeData newRecipe = JsonUtility.FromJson<DownloadRecipeData>(answer);
 
-                    // Добавляем новый объект в список рецептов
+                    // Р”РѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ РІ СЃРїРёСЃРѕРє СЂРµС†РµРїС‚РѕРІ
                     List<DownloadRecipeData> recipeList = new List<DownloadRecipeData>();
                     recipeList.Add(newRecipe);
 
-                    // Обновляем массив рецептов в объекте DownloadRecipeObject
+                    // РћР±РЅРѕРІР»СЏРµРј РјР°СЃСЃРёРІ СЂРµС†РµРїС‚РѕРІ РІ РѕР±СЉРµРєС‚Рµ DownloadRecipeObject
                     download_recipe_object.recipes = recipeList.ToArray();
                     answer = JsonUtility.ToJson(download_recipe_object);
                 }
                 if (flag)
                     yield break;
 
-                // Сохраняем информацию о рецепте, кроме изображений
+                // РЎРѕС…СЂР°РЅСЏРµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂРµС†РµРїС‚Рµ, РєСЂРѕРјРµ РёР·РѕР±СЂР°Р¶РµРЅРёР№
                 File.WriteAllText(all_except_images_save_path, answer);
 
-                // Сохраняем изображения рецепта
+                // РЎРѕС…СЂР°РЅСЏРµРј РёР·РѕР±СЂР°Р¶РµРЅРёСЏ СЂРµС†РµРїС‚Р°
                 string path_for_each_image = Path.Combine(images_save_path, Path.GetFileName(download_recipe_data.main_picture));
 
                 Texture2D main_picture_texture = (Texture2D)about_recipe.main_foto.texture;
@@ -125,18 +125,18 @@ public class DownloadRecipe : MonoBehaviour
                     saveImage(path_for_each_image, description_image_bytes);
                 }
 
-                // Запускаем анимацию успешной загрузки рецепта
+                // Р—Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ СѓСЃРїРµС€РЅРѕР№ Р·Р°РіСЂСѓР·РєРё СЂРµС†РµРїС‚Р°
                 recipe_downloaded.SetTrigger("must");
             }
             else
             {
-                Debug.LogError("Либо ошибка со стороны сервера" + www.error + ", либо такой рецепт вы уже писали");
+                Debug.LogError("Р›РёР±Рѕ РѕС€РёР±РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°" + www.error + ", Р»РёР±Рѕ С‚Р°РєРѕР№ СЂРµС†РµРїС‚ РІС‹ СѓР¶Рµ РїРёСЃР°Р»Рё");
             }
             www.Dispose();
         }
     }
 
-    // Метод для удаления рецепта из локального хранилища
+    // РњРµС‚РѕРґ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ СЂРµС†РµРїС‚Р° РёР· Р»РѕРєР°Р»СЊРЅРѕРіРѕ С…СЂР°РЅРёР»РёС‰Р°
     public void DeleteDownloadRecipe()
     {
         string recipe_id = about_recipe.recipe_id;
@@ -146,7 +146,7 @@ public class DownloadRecipe : MonoBehaviour
         DownloadRecipeObject download_recipe_object = JsonUtility.FromJson<DownloadRecipeObject>(json);
         List<DownloadRecipeData> new_download_sp = new List<DownloadRecipeData>();
 
-        // Проходим по списку сохраненных рецептов и удаляем выбранный
+        // РџСЂРѕС…РѕРґРёРј РїРѕ СЃРїРёСЃРєСѓ СЃРѕС…СЂР°РЅРµРЅРЅС‹С… СЂРµС†РµРїС‚РѕРІ Рё СѓРґР°Р»СЏРµРј РІС‹Р±СЂР°РЅРЅС‹Р№
         for (int i = 0; i < download_recipe_object.recipes.Length; i++)
         {
             DownloadRecipeData download_recipe_data = download_recipe_object.recipes[i];
@@ -156,7 +156,7 @@ public class DownloadRecipe : MonoBehaviour
             }
             else
             {
-                // Удаляем изображения, связанные с рецептом
+                // РЈРґР°Р»СЏРµРј РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ СЂРµС†РµРїС‚РѕРј
                 string path_to_delete_main_picture = Path.Combine(images_save_path, Path.GetFileName(download_recipe_data.main_picture));
                 print(path_to_delete_main_picture);
                 File.Delete(path_to_delete_main_picture);
@@ -171,21 +171,21 @@ public class DownloadRecipe : MonoBehaviour
             }
         }
 
-        // Обновляем список сохраненных рецептов
+        // РћР±РЅРѕРІР»СЏРµРј СЃРїРёСЃРѕРє СЃРѕС…СЂР°РЅРµРЅРЅС‹С… СЂРµС†РµРїС‚РѕРІ
         download_recipe_object.recipes = new_download_sp.ToArray();
         string new_json = JsonUtility.ToJson(download_recipe_object);
         print(new_json);
         string all_except_images_save_path = Path.Combine(path, "text_info.txt");
         File.WriteAllText(all_except_images_save_path, new_json);
 
-        // Запускаем анимацию успешного удаления рецепта
+        // Р—Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ СѓСЃРїРµС€РЅРѕРіРѕ СѓРґР°Р»РµРЅРёСЏ СЂРµС†РµРїС‚Р°
         recipe_deleted.SetTrigger("must");
     }
 
-    // Метод для сохранения изображения
+    // РњРµС‚РѕРґ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
     void saveImage(string path, byte[] imageBytes)
     {
-        //Создаем директорию если не существует
+        //РЎРѕР·РґР°РµРј РґРёСЂРµРєС‚РѕСЂРёСЋ РµСЃР»Рё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
         if (!Directory.Exists(Path.GetDirectoryName(path)))
         {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
@@ -206,27 +206,27 @@ public class DownloadRecipe : MonoBehaviour
 [Serializable]
 public class DownloadRecipeData
 {
-    public string recipe_id;           // Идентификатор рецепта.
-    public string main_picture;        // Главное изображение рецепта.
-    public string recipe_name;        // Название рецепта.
-    public string score;              // Оценка рецепта.
-    public string views;              // Просмотры рецепта.
-    public string description;         // Описание рецепта.
-    public string ingredients;         // Ингредиенты рецепта.
-    public string steps_descriptions;  // Описания шагов приготовления.
-    public string links_to_pictures;   // Ссылки на изображения рецепта.
-    public string timers;             // Таймеры рецепта.
+    public string recipe_id;           // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРµС†РµРїС‚Р°.
+    public string main_picture;        // Р“Р»Р°РІРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ СЂРµС†РµРїС‚Р°.
+    public string recipe_name;        // РќР°Р·РІР°РЅРёРµ СЂРµС†РµРїС‚Р°.
+    public string score;              // РћС†РµРЅРєР° СЂРµС†РµРїС‚Р°.
+    public string views;              // РџСЂРѕСЃРјРѕС‚СЂС‹ СЂРµС†РµРїС‚Р°.
+    public string description;         // РћРїРёСЃР°РЅРёРµ СЂРµС†РµРїС‚Р°.
+    public string ingredients;         // РРЅРіСЂРµРґРёРµРЅС‚С‹ СЂРµС†РµРїС‚Р°.
+    public string steps_descriptions;  // РћРїРёСЃР°РЅРёСЏ С€Р°РіРѕРІ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ.
+    public string links_to_pictures;   // РЎСЃС‹Р»РєРё РЅР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ СЂРµС†РµРїС‚Р°.
+    public string timers;             // РўР°Р№РјРµСЂС‹ СЂРµС†РµРїС‚Р°.
 }
 
 [Serializable]
 public class DownloadRecipeObject
 {
-    public DownloadRecipeData[] recipes;  // Массив данных о скачанных рецептах.
+    public DownloadRecipeData[] recipes;  // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… Рѕ СЃРєР°С‡Р°РЅРЅС‹С… СЂРµС†РµРїС‚Р°С….
 }
 
 [Serializable]
 public class RecipeObject
 {
-    public RecipeDataAboutRecipe[] recipes;  // Массив данных о рецептах
+    public RecipeDataAboutRecipe[] recipes;  // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… Рѕ СЂРµС†РµРїС‚Р°С…
 }
 
