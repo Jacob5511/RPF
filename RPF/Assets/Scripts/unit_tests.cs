@@ -4,43 +4,43 @@ using UnityEngine;
 
 public class unit_tests : MonoBehaviour
 {
-    public Authorization auth;  // Компонент для авторизации
-    public MyAccount my_account;  // Компонент для управления аккаунтом
+    public Authorization auth;  // РљРѕРјРїРѕРЅРµРЅС‚ РґР»СЏ Р°РІС‚РѕСЂРёР·Р°С†РёРё
+    public MyAccount my_account;  // РљРѕРјРїРѕРЅРµРЅС‚ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ Р°РєРєР°СѓРЅС‚РѕРј
 
     private void test1(string username, string password, string enter_url)
     {
-        // Метод для регистрации пользователя
-        // username: имя пользователя
-        // password: пароль пользователя
-        // enter_url: URL, по которому отправляется запрос на регистрацию
+        // РњРµС‚РѕРґ РґР»СЏ СЂРµРіРёСЃС‚СЂР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        // username: РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        // password: РїР°СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        // enter_url: URL, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РѕС‚РїСЂР°РІР»СЏРµС‚СЃСЏ Р·Р°РїСЂРѕСЃ РЅР° СЂРµРіРёСЃС‚СЂР°С†РёСЋ
         StartCoroutine(auth.SendRequest(username, Authorization.HashPassword(password), enter_url));
     }
 
     private void test2(string username)
     {
-        // Метод для входа пользователя
-        // username: имя пользователя
+        // РњРµС‚РѕРґ РґР»СЏ РІС…РѕРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        // username: РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         StartCoroutine(auth.GetHash(username));
     }
 
     private void test3(string username)
     {
-        // Метод для загрузки информации о поваре
-        // username: имя пользователя повара
+        // РњРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РёРЅС„РѕСЂРјР°С†РёРё Рѕ РїРѕРІР°СЂРµ
+        // username: РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕРІР°СЂР°
         StartCoroutine(my_account.Load_About_Chief(username));
     }
 
     private void test4(string username)
     {
-        // Метод для получения информации о холодильнике
-        // username: имя пользователя
+        // РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С…РѕР»РѕРґРёР»СЊРЅРёРєРµ
+        // username: РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         StartCoroutine(my_account.GetFridge(username));
     }
 
     private void test5(string username)
     {
-        // Метод для получения всех откликов поваров на объявления клиента
-        // username: имя пользователя клиента
+        // РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РІСЃРµС… РѕС‚РєР»РёРєРѕРІ РїРѕРІР°СЂРѕРІ РЅР° РѕР±СЉСЏРІР»РµРЅРёСЏ РєР»РёРµРЅС‚Р°
+        // username: РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РєР»РёРµРЅС‚Р°
         StartCoroutine(my_account.Get_Responses(username));
     }
 
