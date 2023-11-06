@@ -7,36 +7,36 @@ using UnityEngine.EventSystems;
 
 public class OnClick : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IScrollHandler, IPointerClickHandler
 {
-    // Ссылка на компонент ScrollRect для управления прокруткой.
+    // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ ScrollRect РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РїСЂРѕРєСЂСѓС‚РєРѕР№.
     private ScrollRect scrollRect;
 
-    // Флаг для предотвращения множественных нажатий и прокрутки.
+    // Р¤Р»Р°Рі РґР»СЏ РїСЂРµРґРѕС‚РІСЂР°С‰РµРЅРёСЏ РјРЅРѕР¶РµСЃС‚РІРµРЅРЅС‹С… РЅР°Р¶Р°С‚РёР№ Рё РїСЂРѕРєСЂСѓС‚РєРё.
     bool is_possible = true;
 
-    // Ссылки на текстовые поля названия рецепта, оценки и просмотров.
+    // РЎСЃС‹Р»РєРё РЅР° С‚РµРєСЃС‚РѕРІС‹Рµ РїРѕР»СЏ РЅР°Р·РІР°РЅРёСЏ СЂРµС†РµРїС‚Р°, РѕС†РµРЅРєРё Рё РїСЂРѕСЃРјРѕС‚СЂРѕРІ.
     [SerializeField] private TMP_Text recipe_name, score, views;
 
-    // Ссылка на компонент RawImage для отображения изображения рецепта.
+    // РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ RawImage РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ СЂРµС†РµРїС‚Р°.
     [SerializeField] private RawImage pick_foto;
 
-    // Ссылания на другие компоненты и объекты в сцене.
+    // РЎСЃС‹Р»Р°РЅРёСЏ РЅР° РґСЂСѓРіРёРµ РєРѕРјРїРѕРЅРµРЅС‚С‹ Рё РѕР±СЉРµРєС‚С‹ РІ СЃС†РµРЅРµ.
     GameManager game_manager;
     public Animator circle;
     LoadRecipes load_recipes;
 
-    // Метод, вызываемый при старте объекта.
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё СЃС‚Р°СЂС‚Рµ РѕР±СЉРµРєС‚Р°.
     private void Start()
     {
-        // Находим и сохраняем ссылки на компоненты и объекты.
+        // РќР°С…РѕРґРёРј Рё СЃРѕС…СЂР°РЅСЏРµРј СЃСЃС‹Р»РєРё РЅР° РєРѕРјРїРѕРЅРµРЅС‚С‹ Рё РѕР±СЉРµРєС‚С‹.
         game_manager = FindObjectOfType<GameManager>();
         scrollRect = GetComponentInParent<ScrollRect>();
         load_recipes = FindObjectOfType<LoadRecipes>();
     }
 
-    // Метод, вызываемый при клике на элементе рецепта.
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё РєР»РёРєРµ РЅР° СЌР»РµРјРµРЅС‚Рµ СЂРµС†РµРїС‚Р°.
     public void onClick()
     {
-        // Проверяем условия для перехода к подробной информации о рецепте.
+        // РџСЂРѕРІРµСЂСЏРµРј СѓСЃР»РѕРІРёСЏ РґР»СЏ РїРµСЂРµС…РѕРґР° Рє РїРѕРґСЂРѕР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРµС†РµРїС‚Рµ.
         if (!is_possible || circle.GetBool("is_circling")) return;
         if (load_recipes.downloaded_recipes.isOn)
             BetweenScenes.is_downloaded = true;
@@ -50,32 +50,32 @@ public class OnClick : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         {
             BetweenScenes.vertical_normalized_position = 1f;
         }
-        // Проверяем интернет-соединение.
+        // РџСЂРѕРІРµСЂСЏРµРј РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёРµ.
         StartCoroutine(game_manager.CheckInternetConnection(isConnected =>
         {
             if (!isConnected)
             {
-                // Если нет интернет-соединения, показываем сообщение и завершаем.
+                // Р•СЃР»Рё РЅРµС‚ РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёСЏ, РїРѕРєР°Р·С‹РІР°РµРј СЃРѕРѕР±С‰РµРЅРёРµ Рё Р·Р°РІРµСЂС€Р°РµРј.
                 load_recipes.no_internet.SetTrigger("must");
                 if (!load_recipes.downloaded_recipes.isOn)
                     return;
             }
         }));
 
-        // Сохраняем необходимые данные для передачи в следующую сцену.
+        // РЎРѕС…СЂР°РЅСЏРµРј РЅРµРѕР±С…РѕРґРёРјС‹Рµ РґР°РЅРЅС‹Рµ РґР»СЏ РїРµСЂРµРґР°С‡Рё РІ СЃР»РµРґСѓСЋС‰СѓСЋ СЃС†РµРЅСѓ.
         BetweenScenes.texture = pick_foto.texture;
         BetweenScenes.recipe_file_name = gameObject.name;
         BetweenScenes.recipe_name = recipe_name.text;
         BetweenScenes.recipes_id = gameObject.transform.parent.name;
 
-        // Сохраняем состояние игры.
+        // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹.
         game_manager.Save();
 
-        // Загружаем следующую сцену.
+        // Р—Р°РіСЂСѓР¶Р°РµРј СЃР»РµРґСѓСЋС‰СѓСЋ СЃС†РµРЅСѓ.
         SceneManager.LoadScene("AboutRecipe");
     }
 
-    // Методы для обработки начала, окончания и перемещения при перетаскивании элемента.
+    // РњРµС‚РѕРґС‹ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РЅР°С‡Р°Р»Р°, РѕРєРѕРЅС‡Р°РЅРёСЏ Рё РїРµСЂРµРјРµС‰РµРЅРёСЏ РїСЂРё РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёРё СЌР»РµРјРµРЅС‚Р°.
     public void OnBeginDrag(PointerEventData data)
     {
         scrollRect.OnBeginDrag(data);
@@ -92,7 +92,7 @@ public class OnClick : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         scrollRect.OnEndDrag(data);
         is_possible = true;
 
-        // Если прокрутка внизу списка, загрузить больше рецептов.
+        // Р•СЃР»Рё РїСЂРѕРєСЂСѓС‚РєР° РІРЅРёР·Сѓ СЃРїРёСЃРєР°, Р·Р°РіСЂСѓР·РёС‚СЊ Р±РѕР»СЊС€Рµ СЂРµС†РµРїС‚РѕРІ.
         if (scrollRect.verticalNormalizedPosition < 0f)
         {
             int child_count = load_recipes.parentObject.childCount;
@@ -105,7 +105,7 @@ public class OnClick : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         scrollRect.OnScroll(data);
     }
 
-    // Метод для обработки клика на элементе.
+    // РњРµС‚РѕРґ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєР»РёРєР° РЅР° СЌР»РµРјРµРЅС‚Рµ.
     public void OnPointerClick(PointerEventData eventData)
     {
         onClick();
