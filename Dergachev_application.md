@@ -1,3 +1,123 @@
+## ENGLISH VERSION
+
+
+**Author:** Dergachev Yakov (11i3)  
+**Contact:** yakov.dergachev.06@mail.ru  
+
+---
+
+## Project Title
+
+**RPF**
+
+---
+
+## Problem Field
+
+Nowadays, more and more people eat at restaurants, cafes, and similar establishments. This leads to a growing issue: people are forgetting how to cook and no longer remember recipes. In addition, many parents no longer teach their children how to cook.
+
+After analyzing the market for similar products, I found that many of them lack the following:
+
+1. No built-in timer for cooking steps — not everyone has a separate timer at home.
+2. No **"What’s in the fridge?"** feature to suggest recipes based on available ingredients.
+3. No option to **hire a chef (by hour/dish)** or, for chefs, to find clients.
+
+The proposed software product will address these problems, combine the best features of existing apps, introduce new ones, and provide an intuitive and rich user experience.
+
+---
+
+## Target Audience
+
+This product is aimed at a wide audience. The potential users are people aged **14 to 50** who either don’t know how to cook or are looking for recipes.
+
+---
+
+## Hardware Requirements
+
+- Platform: **Android 7.0+**
+- Storage: **500 MB** free space
+- RAM: **100 MB** available memory
+
+---
+
+## Functional Requirements
+
+The application will include the following features:
+
+- View recipes **online and offline**
+- Create and **publish your own recipes**
+- **Find a chef** (for an hour or per dish)
+- **Chefs can find clients**
+- **Delete recipes**
+- View recipes you can make with ingredients **currently in your fridge**
+- **Chef rating** system
+
+---
+
+## Similar / Competing Products
+
+### 1. Cookpad – Recipe Search
+- No offline access
+- Paid subscription
+- No timer
+- No weekly planner
+
+### 2. Find a Recipe
+- Contains ads
+- PRO version required for features
+- No rating system
+- No meal planner
+- Unpleasant interface
+
+### 3. Simple Recipes
+- Contains ads
+- PRO version required
+- No timer or rating system
+
+### 4. arg-o.ru
+- Cannot hire a chef for a short period or a single dish
+
+### 5. annyc.ru
+- Must submit a request to view chef information
+- No chef feed or short-term hire options
+
+---
+
+## Development Tools
+
+- **Unity**  
+- **Flask**  
+- **phpMyAdmin**  
+- **Adobe Illustrator**
+
+---
+
+## Development Stages
+
+1. Develop user scenarios  
+2. Design user interface  
+3. Populate the database  
+4. Connect the database  
+5. Set up and connect the server  
+6. Launch Android version  
+7. Test and debug  
+8. Prepare project for final presentation
+
+---
+
+## Possible Risks
+
+- Poor optimization  
+- Application size exceeds **500 MB**  
+- Unattractive or confusing interface
+
+
+
+
+
+## RUSSIAN VERSION
+
+
 Дергачев Яков 11и3
 
 Для связи: yakov.dergachev.06@mail.ru
